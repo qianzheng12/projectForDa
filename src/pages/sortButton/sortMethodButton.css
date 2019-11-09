@@ -1,0 +1,16 @@
+.sortButton{
+    float: left;
+    width: 70px;
+    font-family: Calibri, sans-serif;
+    color: black;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    font-size: 0.7vw;
+    box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.2);
+    border-radius:0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 20px;
+}
+.sortingSelection div:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,151 @@
+.askQuestionForm{
+    position: absolute;
+    width: 45%;
+    min-height: 600px;
+    border: 1px solid #282828;
+    top: 100px;
+    left: 20%;
+    background: white;
+    opacity: 1;
+}
+.askQuestionForm h1{
+    color: #906604;
+    font-size: 1.5vw;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    left: 10%;
+    float: left;
+    top:20px;
+}
+.askQuestionFormClose{
+    height:50px;
+    float: right;
+}
+.askQuestionFormHeader{
+    height:50px;
+}
+.askQuestionInputArea{
+    width: 80%;
+    height: 55vh;
+    position: relative;
+    left: 10%;
+    top:10px;
+}
+.questionTitleInput{
+    padding-top: 20px;
+    height:45px;
+}
+.questionTitleInput #titleInput{
+    padding-left: 1%;
+    width: 60%;
+    height: 25px;
+    float: left;
+    border: 1px solid rgba(0, 0, 0, 0.52);
+}
+
+.questionTitleInput #anonymouslyCheck{
+    width: 15px;
+    position: relative;
+    top: 5px;
+    left: 5%;
+    height: 15px;
+    float: left;
+}
+
+.questionTitleInput p{
+    margin: 0;
+    position: relative;
+    top: 5px;
+    left: 5%;
+    float: left;
+    font-size: 0.8em;
+}
+.questionDescriptionInputArea{
+    height: 90px;
+    padding: 5px 0 10px 0 ;
+}
+.questionDescriptionInputArea input{
+    width: 98%;
+    padding-left: 1%;
+    border: 1px solid rgba(0, 0, 0, 0.52);
+    height: 100%;
+}
+.questionDescriptionAdvice{
+    width: 100%;
+    min-height: 70px;
+
+}
+.questionDescriptionAdvice ul{
+    margin-top:0;
+    padding-left: 3%;
+    font-size: 0.9em;
+}
+.topicInputArea{
+    min-height: 150px;
+    padding-top: 10px;
+}
+.topicInputArea #topicInputArea{
+    position: relative;
+    width: 40%;
+    height: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.52);
+}
+
+.topicInputArea #topicInputArea{
+    position: relative;
+    width: 40%;
+    height: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.52);
+}
+
+.topicsPresentArea{
+    height: 100px;
+    margin-top:20px;
+    width:100%;
+    overflow: auto;
+    border: 1px solid rgba(0, 0, 0, 0.52);
+}
+.enteredTopic{
+    font-size: 0.8em;
+    padding:4px 0 1px 0;
+    text-align: center;
+    border-radius: 100px / 100px;
+    background: rgba(64, 72, 67, 0.33);
+    height: 25px;
+    width: 100px;
+    position: relative;
+    margin-left:30px;
+    margin-top:10px;
+    float: left;
+}
+.topicAdvice{
+    padding-top: 10px;
+    width: 100%;
+    min-height: 70px;
+}
+.topicAdvice ul{
+    margin-top:0;
+    padding-left: 3%;
+    font-size: 0.9em;
+}
+.footer {
+    min-height: 50px;
+    position: relative;
+}
+.footer span{
+    left:30%;
+    top:10px
+}
+.footer input{
+    margin:0;
+    position: relative;
+    padding: 0;
+    top:5px;
+    float: left;
+}
+.footer p{
+    margin:0 0 0 10px;
+    padding: 0;
+    float: left;
+}

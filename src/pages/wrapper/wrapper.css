@@ -1,0 +1,162 @@
+.wrapper{
+    background: #F8F8F8;
+    height: 100vh;
+}
+.navBar{
+    background: white;
+    height: 58px;
+    width: 100%;
+    display: block;
+    box-shadow: 0 6px 6px -6px #343434;
+    border-bottom: 1px solid black;
+    margin:0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    position: fixed;
+}
+.logo{
+    width: 8%;
+    font-size: 1.5vw;
+    margin:15px 0 0 0;
+    left:15%;
+    bottom: 7px;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+    position:relative;
+    float: left;
+    color: #906604;
+
+}
+.tags{
+    left:15%;
+    height: 100%;
+    position:relative;
+    float:left;
+    width: 30%;
+}
+.tags li a {
+    display:block;
+    height: 30px;
+    text-decoration: none;
+    color: black;
+    font-size: 1.0vw;
+}
+.tags li{
+    height: 50%;
+    border-right: 1px solid #906604;
+    padding:0 5% 0 5%;
+    margin:20px 0 10px 0;
+    float: left;
+    list-style-type:none;
+    text-decoration:none;
+    color: black;
+}
+.tags li:after {
+    margin-bottom: 10px;
+    content: '';
+    display: inline-block;
+    width: 100%;
+    border-bottom: 3px solid #906604;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+    -webkit-transform: scale(0,1);
+    transform: scale(0,1);
+}
+.tags li:hover:after {
+    opacity: 1;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+.tags ol{
+    margin:0;
+    text-align: left;
+    padding: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+}
+.inputArea{
+    top: 40%;
+    float: left;
+    width: 30%;
+    position: relative;
+    left: 10%;
+}
+.inputArea input{
+    float: left;
+    position: relative;
+    bottom: 2px;
+    height: 20px;
+    width: 60%;
+}
+.inputArea img{
+    position: absolute;
+    left: 58%;
+    color: #906604;
+}
+.inputArea img:hover{
+    cursor: pointer;
+}
+nav{
+    height: 100%;
+    width: 100%;
+}
+.askButton{
+    background: white;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    float: left;
+    width: 100px;
+    position: relative;
+    height: 30px;
+    top: 18px;
+    left: 2%;
+    border-radius: 50px / 50px;
+}
+.askButton:hover{
+    cursor: pointer;
+}
+.askButton span{
+    position: relative;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+    left: 35%;
+    top:5px;
+    color: #906604;
+    font-size: 1em;
+}
+.accountIcon{
+
+    float: left;
+    width: 5%;
+    height: 30px;
+    position: relative;
+    top:14px;
+    left: 3%;
+}
+.accountIcon:hover{
+    cursor: pointer;
+}
+.accountIcon svg{
+    width: 40px;
+    height: 40px;
+    color: #906604;
+}
+.askQuestionPage{
+    position: fixed;
+    left: 0;
+    top: 58px;
+    width: 100vw;
+    height: 92%;
+    z-index: 2;
+    overflow: auto;
+}
+.askQuestionPageBackGround{
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    background-color: rgba(62, 62, 62, 0.5);
+    height: 100vh;
+    opacity:0.5;
+    filter: alpha(opacity=50)
+}
+
+
