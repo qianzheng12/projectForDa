@@ -16,7 +16,7 @@ const client = new ApolloClient({
     uri: 'https://8p8g3orno1.execute-api.eu-west-2.amazonaws.com/dev',
 });
 const Wrapper = () => {
-    const [askQuestionMode, toggleAskQuestionMode] = useState(true);
+    const [askQuestionMode, toggleAskQuestionMode] = useState(false);
     return (
         <ApolloProvider client={client}>
             <div className="wrapper">

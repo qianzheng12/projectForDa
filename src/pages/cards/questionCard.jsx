@@ -25,7 +25,7 @@ const QuestionCard = ({question}) => {
             </div>
             <div className="questionDescription">
                 <Typography variant="body2" color="textSecondary" component="p">
-                    <div dangerouslySetInnerHTML={{ __html: editorState }} />
+                    <div dangerouslySetInnerHTML={{ __html: question.description} } />
 
                 </Typography>
             </div>

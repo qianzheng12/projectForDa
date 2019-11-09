@@ -42,7 +42,7 @@ const AskQuestionPage = ({askQuestionMode,toggleAskQuestionMode}) => {
                         <div className="topicsPresentArea">
                             {topics.map(topic => (
                                 <div className="enteredTopic">
-                                    {topic}
+                                    #{topic}
                                 </div>
                             ))}
                         </div>
