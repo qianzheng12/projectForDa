@@ -1,0 +1,203 @@
+.card {
+    background: white;
+    box-shadow: 0 6px 8px 1px rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    padding:20px 0 0 0;
+    margin-top:10px;
+    width: 100%;
+    min-height: 95%;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+}
+.questionHeader a{
+    list-style-type:none;
+    text-decoration:none;
+}
+.questionHeader{
+    position:relative;
+    width: 80%;
+    height: 40px;
+    padding-left: 5%;
+}
+.questionHeader span{
+    color: rgba(51, 51, 51, 0.53);
+    font-size:0.8vw;
+}
+.questionHeader h3{
+    margin:0;
+    width: 80%;
+    color: #906604;
+    font-size:1vw;
+}
+.questionHeader p{
+    margin:0;
+    float:left;
+    position: relative;
+    font-size:0.6vw;
+    color: rgba(52, 52, 52, 0.78);
+}
+.questionStarterInformation{
+    height: 50px;
+
+}
+.questionStarterInformation img{
+    position: relative;
+    float: left;
+    left:5%;
+}
+.questionStarterIntro span{
+    float: left;
+}
+.questionStarterIntro{
+
+    float: left;
+    font-size:0.8vw;
+    left:5%;
+    width: 80%;
+}
+
+.questionStarterIntro h2{
+    position: relative;
+    margin: 4px 0 0 5%;
+    float: left;
+    color: rgba(52, 52, 52, 0.78);
+    font-size: 0.6vw;
+}
+.questionStarterIntro h3{
+    position: relative;
+    float: left;
+    margin: 0 0 0 0;
+    color: rgba(52, 52, 52, 0.78);
+    font-size: 0.8vw;
+    width: 100%;
+}
+.questionDescription{
+    position: relative;
+    width: 90%;
+    top:20px;
+    height: 200px;
+    padding: 0 5% 0 5%;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.questionDescription p{
+    overflow: hidden;
+    height: 80%;
+    color: black;
+    font-size: 0.7vw;
+    left: 0;
+    margin:0;
+}
+.questionActions{
+    height: 50px;
+    width: 90%;
+    position: relative;
+    padding: 0 4% 0 4%;
+    margin-bottom: 20px;
+}
+.postButton{
+    background: white;
+    box-shadow: 0 4px 8px 1px rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(0, 0, 0, 0.09);
+    float: right;
+    width: 100px;
+    position: relative;
+    height: 40px;
+    border-radius: 100px / 100px;
+}
+.postButton span{
+    position: relative;
+    bottom: 10px;
+    color: #906604;
+    font-size: 1em;
+}
+.postButton:hover{
+    cursor: pointer;
+    background: rgba(52, 52, 52, 0.16);
+}
+.answerActions{
+    position: relative;
+    left:3%;
+}
+
+.answerUserInformation{
+
+    position:relative;
+    top:10px;
+    height: 50px
+}
+.answerUserInformation img{
+    position: relative;
+    float: left;
+    left:5%;
+}
+.answerUserDetail span{
+    float: left;
+    position: relative;
+    top: 0;
+}
+.answerUserDetail{
+    margin-left: 3%;
+    position: relative;
+    float: left;
+    font-size:0.8vw;
+    left:5%;
+    width: 70%;
+}
+
+.answerUserDetail h2{
+    position: relative;
+    margin: 4px 0 0 5%;
+    float: left;
+    color: rgba(52, 52, 52, 0.78);
+    font-size: 0.6vw;
+}
+.answerUserDetail h3{
+    position: relative;
+    float: left;
+    margin: 0 0 0 0;
+    color: rgba(52, 52, 52, 0.78);
+    font-size: 0.8vw;
+    width: 100%;
+}
+.answerContents{
+    height: 180px;
+    padding: 0 5% 0 5%;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.commentUserInformation{
+
+    position:relative;
+    top:5px;
+    height: 50px
+}
+
+.commentsForAnswer{
+    border-top: 1px solid rgba(73, 73, 73, 0.62);
+    position: relative;
+    left: 4%;
+    margin: 30px 0 0 0;
+    background: white;
+    width: 90%;
+    min-height: 300px;
+}
+.comment{
+    width: 100%;
+    min-height: 100px;
+    margin-top:30px;
+}
+.commentContent{
+    height: 50px;
+    padding: 0 5% 0 5%;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.answerInputArea{
+    width: 90%;
+    height: 350px;
+    position: relative;
+    left:5%;
+}
+.quill {
+    height: 70%;
+}

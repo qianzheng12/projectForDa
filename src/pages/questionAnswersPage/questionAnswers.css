@@ -1,0 +1,49 @@
+.questionAnswerWrapper{
+    overflow: auto;
+    height: 94vh;
+    width: 100%;
+    position: fixed;
+    top: 60px;
+}
+.question{
+    width: 70%;
+    position: relative;
+    left:15%;
+    min-height: 350px;
+}
+.answers{
+    width: 70%;
+    height: 1200px;
+    position: relative;
+    left:15%;
+    top:70px;
+}
+.answer{
+    position:relative;
+    min-height: 300px;
+    width: 100%;
+}
+.questionAnswerGap{
+    width: 70%;
+    background: #906604;
+    position: relative;
+    top: 30px;
+    left: 15%;
+}
+
+.questionAnswerGap p{
+    position: relative;
+    left: 0;
+    margin: 0;
+    float: left;
+}
+
+.sortingSelection{
+    position: relative;
+    bottom: 10px;
+    float: right;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.13);
+}
+
+

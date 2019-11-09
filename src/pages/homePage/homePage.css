@@ -1,0 +1,54 @@
+.homePage{
+    position: fixed;
+    top: 60px;
+    width: 100%;
+    height: 92%;
+    margin:0;
+    overflow: auto;
+}
+.feedAnswers{
+    position: relative;
+    left: 20%;
+    width: 45%;
+    height: 80%;
+    float: left;
+}
+.topics{
+    background: white;
+    margin-top:10px;
+    box-shadow: 0 6px 8px 1px rgba(0, 0, 0, 0.36);
+    min-height: 80%;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    width: 15%;
+    position: relative;
+    left: 21%;
+    float: left;
+}
+.topicHeader{
+    padding-left: 20%;
+    font-size: 1.1vw;
+    font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+}
+.topics li{
+    padding: 10px 10px 10px 10px;
+    list-style-type:none;
+    text-decoration:none;
+}
+.topics img{
+    position: relative;
+    left: 15%;
+}
+.topics span{
+    font-size: 0.8vw;
+    position: relative;
+    left: 15%;
+    bottom:5px;
+}
+.topics span:hover{
+    cursor: pointer;
+}
+.feedAnswer{
+    width: 100%;
+    min-height: 350px;
+
+}
