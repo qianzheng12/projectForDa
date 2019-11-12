@@ -1,9 +1,14 @@
 import React, {useState} from 'react'
 import './askQuestionPage.css';
 import CloseIcon from '@material-ui/icons/Close';
+import { useMutation } from '@apollo/react-hooks';
+import {ASK_QUESTION} from '../graphQL/mutations';
 const AskQuestionPage = ({askQuestionMode,toggleAskQuestionMode}) => {
     const [topics,addTopic] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
+    const [askQuestion] = useMutation(ASK_QUESTION);
+    const [title,setTitle] = useState("");
+    const [description,setDescription] = useState("");
     const enterTopic = (e) => {
         if(e.key === 'Enter'){
             const newTopicList = topics.concat(e.target.value);
@@ -11,6 +16,13 @@ const AskQuestionPage = ({askQuestionMode,toggleAskQuestionMode}) => {
             console.log(topics);
             setCurrentTopicValue("");
         }
+    };
+    const submitQuestion = ()=>{
+        askQuestion({ variables: { title,description:description}}).then(
+            (data)=>{
+                toggleAskQuestionMode();
+            }
+        )
     }
     return (
         <div>
@@ -23,12 +35,12 @@ const AskQuestionPage = ({askQuestionMode,toggleAskQuestionMode}) => {
                 </div>
                 <div className="askQuestionInputArea">
                     <div  className="questionTitleInput">
-                        <input placeholder="What is your question?" id="titleInput" />
+                        <input onChange={(e)=>{setTitle(e.target.value)}} value={title} placeholder="What is your question?" id="titleInput" />
                         <input id="anonymouslyCheck" type="checkbox"/>
                         <p>post anonymously</p>
                     </div>
                     <div className="questionDescriptionInputArea">
-                        <input placeholder="Describe your question in more detail for better quality answers!" />
+                        <input onChange={(e)=>{setDescription(e.target.value)}} value={description} placeholder="Describe your question in more detail for better quality answers!" />
                     </div>
                     <div className="questionDescriptionAdvice">
                         <ul>
@@ -56,7 +68,7 @@ const AskQuestionPage = ({askQuestionMode,toggleAskQuestionMode}) => {
                     </div>
                     <div className="footer">
                         <input id="mySchool" value={currentTopicValue} onChange={(e)=>setCurrentTopicValue(e.target.value)} type="checkbox"/><p>my school</p>
-                        <div className="postButton">
+                        <div onClick={submitQuestion} className="postButton">
                             <span>Ask</span>
                         </div>
                     </div>

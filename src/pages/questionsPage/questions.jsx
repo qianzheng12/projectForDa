@@ -6,18 +6,8 @@ import './questions.css';
 const FEED_QUESTIONS = gql`
     {
         questions {
+            id
             title
-            answers {
-                content
-                user {
-                    id
-                    firstName
-                    lastName
-                    school
-
-                }
-                lastUpdated
-            }
             description
             lastUpdated
             user {
@@ -34,9 +24,10 @@ const mockQuestions = [{title:"My friend is stupid", answers:[{content:"You have
     description:"He keep being stupid and act like idiot",lastUpdate:"two days ago",user:{id:"zhengda",firstName:"Da",lastName:"Zheng",school:"Imperial College"}}];
 const Questions = () => {
     const { loading, error, data } = useQuery(FEED_QUESTIONS);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :({error})</p>;
-    const questions = mockQuestions;
+    if (loading) return <div></div>;
+    if (error) return <div></div>;
+    const {questions} = data;
+    console.log(questions)
     return (
         <div className="questionsPageWrapper">
             <div className="feedQuestions">
