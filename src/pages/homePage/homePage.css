@@ -4,12 +4,17 @@
     width: 100%;
     height: 92%;
     margin:0;
+    align-content: center;
     overflow: auto;
+}
+.homePageContent{
+    width: 850px;
+    height: 100%;
 }
 .feedAnswers{
     position: relative;
-    left: 20%;
-    width: 45%;
+    left: 0;
+    width: 600px;
     height: 80%;
     float: left;
 }
@@ -19,14 +24,14 @@
     box-shadow: 0 6px 8px 1px rgba(0, 0, 0, 0.36);
     min-height: 80%;
     border: 1px solid rgba(0, 0, 0, 0.24);
-    width: 15%;
+    width:25%;
     position: relative;
-    left: 21%;
+    left: 20px;
     float: left;
 }
 .topicHeader{
     padding-left: 20%;
-    font-size: 1.1vw;
+    font-size: 1.3em;
     font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
 }
 .topics li{
@@ -39,7 +44,7 @@
     left: 15%;
 }
 .topics span{
-    font-size: 0.8vw;
+    font-size: 0.8em;
     position: relative;
     left: 15%;
     bottom:5px;

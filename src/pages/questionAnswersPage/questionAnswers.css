@@ -5,30 +5,28 @@
     position: fixed;
     top: 60px;
 }
-.question{
-    width: 70%;
+.questionAnswerContent{
+    width: 40%;
     position: relative;
-    left:15%;
+    left:20%;
+}
+
+.question{
     min-height: 350px;
 }
 .answers{
-    width: 70%;
     height: 1200px;
     position: relative;
-    left:15%;
     top:70px;
 }
 .answer{
     position:relative;
     min-height: 300px;
-    width: 100%;
 }
 .questionAnswerGap{
-    width: 70%;
     background: #906604;
     position: relative;
     top: 30px;
-    left: 15%;
 }
 
 .questionAnswerGap p{

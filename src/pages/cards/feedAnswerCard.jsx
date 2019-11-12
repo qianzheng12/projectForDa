@@ -14,6 +14,7 @@ const FeedAnswerCard = ({question}) => {
         setThumbUpColor(color);
     };
     const {user,answers} = question;
+    console.log(answers)
     return (
         <div className="card">
             <div className="questionHeader">
