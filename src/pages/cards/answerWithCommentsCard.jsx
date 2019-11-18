@@ -1,16 +1,35 @@
-import React, {useState} from 'react'
-import IconButton from "@material-ui/core/IconButton";
+import React from 'react'
 import Typography from '@material-ui/core/Typography';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ShareIcon from '@material-ui/icons/Share';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import ChatIcon from '@material-ui/icons/Chat';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import ShareRoundedIcon from '@material-ui/icons/ShareRounded';
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import CommentsCard from "./commentsCard";
-
+import './answerCard.css'
+import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
+import {useVotesState} from '../hooks/answerStates'
+import {useCommentState} from "../hooks/commentStates";
+import Button from "@material-ui/core/Button";
+import {SEND_COMMENT} from "../graphQL/mutations";
+import {useMutation} from "@apollo/react-hooks";
 const AnswerWithCommentsCard = ({answer}) => {
     const {user} = answer;
     const {comments} = answer;
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
+    const [sendCommentMutation] = useMutation(SEND_COMMENT);
+    console.log(answer)
+    const sendComment = () => {
+        if (commentContent === ''){
+            setEmptyCommentError(true)
+        }
+        else{
+            sendCommentMutation({ variables: { answerId:answer.id,commentContent}}).then();
+            setEmptyCommentError(false);
+            setCommentMode(false);
+        }
+    };
     return (
         <div className="card">
             <div className="answerUserInformation">
@@ -27,24 +46,32 @@ const AnswerWithCommentsCard = ({answer}) => {
                 </Typography>
             </div>
             <div className="answerActions">
-                <IconButton aria-label="Thumb Up">
-                    <ThumbUpIcon />
-                </IconButton>
-                <IconButton aria-label="Thumb Down">
-                    <ThumbDownIcon/>
-                </IconButton>
-
-                <IconButton aria-label="comment">
-                    <ChatIcon/>
-                </IconButton>
-                <IconButton aria-label="comment">
-                    <ShareIcon/>
-                </IconButton>
-                <IconButton aria-label="comment">
-                    <BookmarkIcon/>
-                </IconButton>
+                <div className="thumbWrapper">
+                    {!thumbUp && <ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/>}
+                    {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
+                    <span>{upVotes}</span>
+                </div>
+                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}
+                {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
+                <div className="rightAnswerActions">
+                    <div className="commentsIconWrapper">
+                        <AddCommentOutlinedIcon onClick={()=>setCommentMode(!commentMode)}/>
+                        <span>90</span>
+                    </div>
+                    <ShareRoundedIcon/>
+                    <BookmarkBorderOutlinedIcon/>
+                </div>
             </div>
-            {comments && (
+            {commentMode &&
+            <div className="commentInputArea">
+                <input onChange={e=>setCommentContent(e.target.value)} placeholder="Write your comment"/>
+                <Button onClick={sendComment}>
+                    <span>{"Send"}</span>
+                </Button>
+                {emptyCommentError && <h2>Please enter comment before send.</h2>}
+            </div>}
+            <div className="dividerBetweenAnswerAndComments"/>
+            {comments&&comments.length>=1 && (
                 <div className="commentsForAnswer">
                     {comments.map(comment => (
 

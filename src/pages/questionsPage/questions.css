@@ -6,14 +6,23 @@
     margin:0;
     overflow: auto;
 }
+.questionPageContent{
+    width: 850px;
+    height: 100%;
+}
 .feedQuestions{
     position: relative;
-    left: 20%;
-    width: 45%;
+    left: 0;
+    width: 500px;
     height: 80%;
     float: left;
 }
 .feedQuestion{
     width: 100%;
-    min-height: 350px;
+    min-height: 300px;
+}
+.topicsWrapper{
+    position: relative;
+    left:400px;
+    height: 100%;
 }

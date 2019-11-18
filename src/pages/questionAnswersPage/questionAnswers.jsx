@@ -1,17 +1,16 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './questionAnswers.css'
 import QuestionCard from "../cards/questionCard";
 import {useQuery} from "@apollo/react-hooks";
 import AnswerWithCommentsCard from "../cards/answerWithCommentsCard";
 import SortMethodButton from "../sortButton/sortMethodButton";
 import {GET_QUESTION} from "../graphQL/query";
-const QuestionAnswers = () => {
-    const { loading, error, data } = useQuery(GET_QUESTION,{ variables: { id:"012c8e9e-68ec-4992-95e1-0c57803468e7" },});
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error :({error})</p>;
-    console.log(data)
-    const {answers} = data.getQuestion
-    ;
+const QuestionAnswers = props => {
+    let id = props.match.params.id;
+    const { loading, error, data } = useQuery(GET_QUESTION,{ variables: { id:id },});
+    if (loading) return <div/>;
+    if (error) return <div/>;
+    const {answers} = data.getQuestion;
     return (
         <div className="questionAnswerWrapper">
             <div className="questionAnswerContent">

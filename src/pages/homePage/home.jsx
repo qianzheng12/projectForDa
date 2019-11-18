@@ -26,12 +26,13 @@ const mockQuestions = [{
         lastUpdate: "two days ago",
         user: {id: "zhengda", firstName: "Da", lastName: "Zheng", school: "Imperial College"}
     }];
-const Home = () => {
+const Home = props => {
     const {loading, error, data} = useQuery(GET_FEED_ANSWERS);
     const [leftMargin, setLeftMargin] = useState("20vw");
     const [showTopic, toggleShowTopic] = useState(true);
+    props.setSelectedPage("Home");
     useEffect(() => {
-        window.addEventListener("resize", () => {
+        /*window.addEventListener("resize", () => {
             console.log(window.innerWidth);
 
             if (window.innerWidth < 900) {
@@ -43,22 +44,25 @@ const Home = () => {
             }
         });
         return window.removeEventListener("resize", () => {
-        });
+        });*/
     });
     if (loading) return <div/>;
     if (error) return <div/>;
-    const questions = mockQuestions;
-    console.log(leftMargin);
+    console.log(data);
+    const {questions} = data;
     return (
         <div className="homePage">
             <div className="homePageContent" style={{marginLeft: leftMargin}}>
                 <div className="feedAnswers">
                     {questions.map(question => {
-                        return (
-                            <div className="feedAnswer">
-                                <FeedAnswerCard key={question.id} question={question}/>
-                            </div>
-                        )
+                        if(question.answers.length >= 1){
+                            return (
+                                <div className="feedAnswer">
+                                    <FeedAnswerCard key={question.id} question={question}/>
+                                </div>
+                            )
+                        }
+                        return null;
                     })}
                 </div>
                 {showTopic &&

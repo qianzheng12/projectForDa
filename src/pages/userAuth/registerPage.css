@@ -1,0 +1,137 @@
+.registerWrapper{
+    width: 100%;
+    top: 60px;
+    position: fixed;
+    overflow: auto;
+    height: 92%;
+}
+
+.registerForm{
+    box-shadow: 0 6px 8px 1px rgba(0, 0, 0, 0.36);
+    width: 300px;
+    min-height: 430px;
+    position:relative;
+    margin-left:35%;
+    top:50px;
+    background: white;
+    border: 1px solid black;
+    padding:30px 50px 50px 50px;
+}
+.signUpHeader{
+    height: 40px;
+    width: 100%;
+    color: #906604;
+}
+.signUpHeader h1{
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+}
+.signUpInput{
+    min-height:30px;
+    width: 100%;
+    margin-top:10px;
+    padding-top:10px;
+}
+.signUpInput h3{
+    color: #906604;
+    padding: 0;
+    margin: 0;
+    font-size: 0.8em;
+}
+.signUpInput .monthPicker{
+    float: left;
+    height: 30px;
+    width: 100px;
+    position: relative;
+    left:0;
+}
+.signUpInput .dayPicker{
+    float: left;
+    height: 30px;
+    width: 70px;
+    position: relative;
+    left:20px;
+}
+.signUpInput .yearPicker{
+    float: left;
+    height: 30px;
+    width: 80px;
+    position: relative;
+    left:35px;
+}
+.signUpInput .Dropdown-control{
+    padding-top: 5px;
+    height: 100%;
+}
+.signUpInput #firstName{
+    width: 120px;
+    height: 25px;
+    float: left;
+}
+
+.signUpInput #lastName{
+    width: 120px;
+    height: 25px;
+    float: right;
+}
+.signUpInput #fullLongInput{
+    width: 280px;
+    height: 25px;
+}
+.signUpInput #major{
+    width: 200px;
+    height: 25px;
+}
+.CAPTCHA{
+    margin-top:10px;
+    height: 80px;
+    width: 100%;
+}
+.toS{
+    height: 20px;
+    width: 100%;
+}
+.nextSignUpPageButton{
+    margin-top:5px;
+    height: 40px;
+    width: 100%;
+}
+
+.nextSignUpPageButton button{
+    width: 100%;
+    height: 100%;
+    background: white;
+    border: 1px solid black;
+}
+
+.universityHeader{
+    height: 20px;
+    margin-top:10px;
+    width: 100%;
+}
+
+.universityHeader h2{
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+}
+.nextSignUpPageButton button:hover{
+    cursor: pointer;
+}
+.educationOptionalInput{
+    margin-top:30px;
+}
+.addEducation{
+    margin-top:20px;
+    height: 30px;
+    width: 100%;
+}
+.addEducation h2{
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
+}
+.addEducation h2:hover{
+    cursor: pointer;
+}

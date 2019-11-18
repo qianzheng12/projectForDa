@@ -1,0 +1,111 @@
+
+.answerUserInformation{
+
+    position:relative;
+    top:10px;
+    height: 50px
+}
+.answerUserInformation img{
+    position: relative;
+    float: left;
+}
+.answerUserDetail span{
+    float: left;
+    position: relative;
+    top: 0;
+    font-weight: bold;
+}
+.answerUserDetail{
+    margin-left: 2%;
+    position: relative;
+    float: left;
+    font-size:1em;
+    width: 50%;
+}
+
+.answerUserDetail h2{
+    position: relative;
+    margin: 4px 0 0 0;
+    left: 20px;
+    float: left;
+    color: rgba(52, 52, 52, 0.78);
+    font-size: 0.8em;
+}
+.answerUserDetail h3{
+    position: relative;
+    float: left;
+    margin: 0 0 0 0;
+    color: rgba(52, 52, 52, 0.78);
+    font-size: 1em;
+    width: 100%;
+}
+.answerContents{
+    height: 140px;
+    width: 90%;
+    padding: 10px 0 0 0;
+    word-wrap: break-word;
+    overflow: hidden;
+
+}
+.answerContents p{
+    color: black;
+}
+.commentUserInformation{
+
+    position:relative;
+    top:5px;
+    height: 50px
+}
+
+.commentsForAnswer{
+    position: relative;
+    left: 4%;
+    margin: 0 0 0 0;
+    background: white;
+    width: 90%;
+    min-height: 300px;
+}
+.comment{
+    width: 100%;
+    min-height: 100px;
+    margin-top:30px;
+}
+.commentContent{
+    height: 50px;
+    padding: 0 0 0 0;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+.quill {
+    height: 70%;
+}
+.answerActions{
+    width: 100%;
+    position: relative;
+    height: 30px;
+}
+.answerActions svg{
+    height: 25px;
+    margin-left: 10px;
+    width: 25px;
+    margin-top:5px;
+    float: left;
+}
+.answerActions svg:hover{
+    cursor: pointer;
+}
+.rightAnswerActions{
+    float: right;
+    width: 140px;
+    height: 100%;
+}
+.commentsIconWrapper{
+    height: 50px;
+    width: 70px;
+    float: left;
+}
+.commentsIconWrapper span{
+    margin-left: 10px;
+    position: relative;
+    top:5px;
+}

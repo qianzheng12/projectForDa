@@ -3,11 +3,11 @@ import { gql } from 'apollo-boost';
 export const GET_FEED_ANSWERS = gql`
     {
         questions {
+            id
             title
-            answers{
+            answers(orderBy: RECENT, limit:1){
                 content
             }
-            description
             lastUpdated
             user {
                 id
@@ -26,6 +26,7 @@ export const GET_QUESTION = gql` query($id:GUID!)
             title
             id
             answers {
+                id
                 content
                 user {
                     id
