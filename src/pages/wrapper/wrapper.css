@@ -23,7 +23,7 @@
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
     position:relative;
     float: left;
-    color: #906604;
+    color: #FF9240;
 
 }
 .tags{
@@ -41,7 +41,7 @@
 }
 .tags li{
     height: 50%;
-    border-right: 1px solid #906604;
+    border-right: 1px solid #FF9240;
     padding:0 5% 0 5%;
     margin:20px 0 10px 0;
     float: left;
@@ -49,18 +49,21 @@
     text-decoration:none;
     color: black;
 }
-.tags li:after {
-    margin-bottom: 10px;
+.tags li a{
+    height:34px;
+}
+.tags .unActiveLink:after {
+    margin-bottom: 15px;
     content: '';
     display: inline-block;
     width: 100%;
-    border-bottom: 3px solid #906604;
+    border-bottom: 3px solid #FF9240;
     -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
     transition: opacity 0.35s, transform 0.35s;
     -webkit-transform: scale(0,1);
     transform: scale(0,1);
 }
-.tags li:hover:after {
+.tags .unActiveLink:hover:after {
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
@@ -72,26 +75,27 @@
     width: 100%;
     height: 100%;
 }
+.tags .activeLink a{
+    border-bottom: 3px solid #FF9240;
+}
 .inputArea{
     top: 40%;
     float: left;
-    width: 250px;
+    width: 220px;
     position: relative;
 }
 .inputArea input{
     float: left;
     position: relative;
+    left:0;
     bottom: 2px;
     height: 20px;
     width: 180px;
 }
-.inputArea img{
-    position: absolute;
-    right:60px;
-    color: #906604;
-}
-.inputArea img:hover{
-    cursor: pointer;
+
+.inputArea svg{
+    position: relative;
+    right:25px;
 }
 nav{
     position: relative;
@@ -99,27 +103,34 @@ nav{
     height: 100%;
     width: 1000px;
 }
-.askButton{
-    background: white;
-    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(0, 0, 0, 0.09);
+.askQuestionWrapper{
+    width: 200px;
+    height: 100%;
+    position: relative;
     float: left;
-    width: 100px;
+}
+
+.askQuestionWrapper button{
+    float: left;
+    border: 1px solid #FF9240;
     position: relative;
     height: 30px;
     top: 18px;
-    border-radius: 50px / 50px;
+    padding:1px 0 0 0;
 }
-.askButton:hover{
-    cursor: pointer;
+
+.askQuestionWrapper #askQuestionButton{
+    width: 100px;
 }
-.askButton span{
-    position: relative;
-    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
-    left: 35%;
-    top:5px;
-    color: #906604;
-    font-size: 1em;
+
+.askQuestionWrapper #postArticleButton{
+    width: 80px;
+    margin-left: 20px;
+}
+
+.askQuestionWrapper span{
+    font-size: 0.9em;
+    color: #FF9240;
 }
 .accountIcon{
 
@@ -128,7 +139,7 @@ nav{
     height: 30px;
     position: relative;
     top:14px;
-    left: 3%;
+    left: 10px;
 }
 .accountIcon:hover{
     cursor: pointer;
@@ -156,5 +167,6 @@ nav{
     opacity:0.5;
     filter: alpha(opacity=50)
 }
-
-
+.is-active{
+    color: #09d3ac;
+}

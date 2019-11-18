@@ -1,25 +1,25 @@
-import React, {useState} from 'react'
-import IconButton from '@material-ui/core/IconButton';
+import React from 'react'
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import Typography from '@material-ui/core/Typography';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ShareIcon from '@material-ui/icons/Share';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import ChatIcon from '@material-ui/icons/Chat';
-import BookmarkIcon from '@material-ui/icons/Bookmark';
+import TextsmsOutlinedIcon from '@material-ui/icons/TextsmsOutlined';
+import ShareRoundedIcon from '@material-ui/icons/ShareRounded';
+import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
+import './answerCard.css'
+
 import {Link} from 'react-router-dom'
+import {useVotesState} from "../hooks/answerStates";
+
 const FeedAnswerCard = ({question}) => {
-    const [thumbUpColor, setThumbUpColor] = useState();
-    const thumbUp = () => {
-        const color = thumbUpColor === 'secondary' ? undefined : 'secondary';
-        setThumbUpColor(color);
-    };
-    const {user,answers} = question;
-    console.log(answers)
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const {user, answers} = question;
+
     return (
         <div className="card">
             <div className="questionHeader">
                 <span>{question.description}</span>
-                <Link to='/questions/1'> <h3>{question.title}</h3></Link>
+                <Link to={`/questions/${question.id}`}><h3>{question.title}</h3></Link>
 
             </div>
             <div className="answerUserInformation">
@@ -36,23 +36,23 @@ const FeedAnswerCard = ({question}) => {
                 </Typography>
             </div>
             <div className="answerActions">
-                <IconButton onClick={thumbUp} aria-label="Thumb Up">
-                    <ThumbUpIcon color={thumbUpColor}/>
-                </IconButton>
-                <IconButton aria-label="Thumb Down">
-                    <ThumbDownIcon/>
-                </IconButton>
-
-                <IconButton aria-label="comment">
-                    <ChatIcon/>
-                </IconButton>
-                <IconButton aria-label="comment">
-                    <ShareIcon/>
-                </IconButton>
-                <IconButton aria-label="comment">
-                    <BookmarkIcon/>
-                </IconButton>
+                <div className="thumbWrapper">
+                    {!thumbUp && <ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/>}
+                    {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
+                    <span>{upVotes}</span>
+                </div>
+                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}
+                {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
+                <div className="rightAnswerActions">
+                    <div className="commentsIconWrapper">
+                        <TextsmsOutlinedIcon/>
+                        <span>90</span>
+                    </div>
+                    <ShareRoundedIcon/>
+                    <BookmarkBorderOutlinedIcon/>
+                </div>
             </div>
+
         </div>
     )
 };

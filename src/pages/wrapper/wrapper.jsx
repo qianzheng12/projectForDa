@@ -11,12 +11,14 @@ import {Helmet} from "react-helmet";
 import {ApolloProvider} from '@apollo/react-hooks';
 import QuestionAnswers from "../questionAnswersPage/questionAnswers";
 import AskQuestionPage from "../askQuestion/askQuestionPage";
+import RegisterPage from "../userAuth/register";
 
 const client = new ApolloClient({
     uri: 'https://8p8g3orno1.execute-api.eu-west-2.amazonaws.com/dev',
 });
 const Wrapper = () => {
-    const [askQuestionMode, toggleAskQuestionMode] = useState(false);
+    const [askQuestionMode, toggleAskQuestionMode] = useState(true);
+    const [selectedPage, setSelectedPage] = useState("Home");
     return (
         <ApolloProvider client={client}>
             <div className="wrapper">
@@ -27,19 +29,21 @@ const Wrapper = () => {
                 </Helmet>
                 <Router>
                     <Navigator askQuestionMode={askQuestionMode}
-                               toggleAskQuestionMode={toggleAskQuestionMode}/>
+                               toggleAskQuestionMode={toggleAskQuestionMode}
+                               selectedPage={selectedPage}/>
                     <Switch>
                         <Route path="/home">
-                            <Home/>
+                            <Home setSelectedPage={setSelectedPage}/>
                         </Route>
                         <Route path="/explore">
-                            <Explore/>
+                            <Explore setSelectedPage={setSelectedPage}/>
                         </Route>
                         <Route path="/answer">
-                            <Questions/>
+                            <Questions setSelectedPage={setSelectedPage}/>
                         </Route>
-                        <Route path="/questions/:id">
-                            <QuestionAnswers/>
+                        <Route path="/questions/:id" component={QuestionAnswers}/>
+                        <Route path="/register">
+                            <RegisterPage/>
                         </Route>
                     </Switch>
                     {askQuestionMode &&

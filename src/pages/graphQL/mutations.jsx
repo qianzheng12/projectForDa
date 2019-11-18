@@ -15,3 +15,14 @@ export const ANSWER_QUESTION = gql`mutation($questionId:GUID,$answerContent:Stri
         id
     }
 }`;
+
+export const SEND_COMMENT = gql`mutation($answerId:GUID,$commentContent:String){
+    createComment(input:
+    {
+        userID:"1805b324-61a5-40a3-a150-4b6e67e4895f",
+        content:$commentContent,
+        answerID:$answerId})
+    {
+        id
+    }
+}`;

@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Explore = () => {
+const Explore = props => {
+    props.setSelectedPage("Explore");
     return (
         <div>
 

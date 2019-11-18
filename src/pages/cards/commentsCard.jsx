@@ -1,12 +1,14 @@
 import React from 'react'
-import IconButton from "@material-ui/core/IconButton";
 import Typography from '@material-ui/core/Typography';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbDownIcon from '@material-ui/icons/ThumbDown';
-import ChatIcon from '@material-ui/icons/Chat';
+import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+
+import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import {useVotesState} from "../hooks/answerStates";
 
 const CommentsCard = ({comments}) => {
     const {user} = comments;
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
     return (
         <div>
             <div className="answerUserInformation">
@@ -22,16 +24,16 @@ const CommentsCard = ({comments}) => {
                 </Typography>
             </div>
             <div className="answerActions">
-                <IconButton aria-label="Thumb Up">
-                    <ThumbUpIcon/>
-                </IconButton>
-                <IconButton aria-label="Thumb Down">
-                    <ThumbDownIcon/>
-                </IconButton>
+                <div className="thumbWrapper">
+                    {!thumbUp && <ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/>}
+                    {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
+                    <span>{upVotes}</span>
+                </div>
+                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}
+                {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
+                <div className="rightAnswerActions">
 
-                <IconButton aria-label="comment">
-                    <ChatIcon/>
-                </IconButton>
+                </div>
             </div>
         </div>
     );

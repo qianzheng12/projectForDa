@@ -1,26 +1,36 @@
 import React, {useState} from 'react'
 import Typography from "@material-ui/core/Typography";
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import IconButton from "@material-ui/core/IconButton";
-import ReportIcon from '@material-ui/icons/Report';
-import FaceIcon from '@material-ui/icons/Face';
-import CreateIcon from '@material-ui/icons/Create';
-import ReactQuill from "react-quill";
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import {ANSWER_QUESTION} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";
+import Button from '@material-ui/core/Button';
+import SvgIcon from '@material-ui/core/SvgIcon';
 const QuestionCard = ({question}) => {
     const {user} = question;
     console.log(question.id)
     const [answerMode,toggleAnswerButton] = useState(false);
     const [editorState, setEditorState] = useState("");
     const [answerQuestion] = useMutation(ANSWER_QUESTION);
+    const [showWarning, setShowWarning] = useState(false);
     const onPost = ()=>{
        if(answerMode){
-            answerQuestion({ variables: { questionId:question.id, answerContent:editorState}}).then((result)=>{
-                console.log(result);
-            });
+           if(editorState===""){
+               setShowWarning(true);
+           }
+           else{
+               answerQuestion({ variables: { questionId:question.id, answerContent:editorState}}).then((result)=>{
+                   console.log(result);
+               });
+               toggleAnswerButton(!answerMode);
+               setShowWarning(false);
+           }
         }
-        toggleAnswerButton(!answerMode);
+       else{
+           toggleAnswerButton(!answerMode);
+       }
+
 
     };
 
@@ -38,23 +48,20 @@ const QuestionCard = ({question}) => {
 
                 </Typography>
             </div>
-            { answerMode &&<div className="answerInputArea">
+            { answerMode &&
+            <div className="answerInputArea">
                 <textarea value={editorState}
                        onChange={(e)=>{setEditorState(e.target.value)}}/>
+                {showWarning && <h2>Please enter your answer</h2>}
             </div>}
             <div className='questionActions'>
-                <IconButton aria-label="Favorite">
-                    <FavoriteBorderIcon/>
-                </IconButton>
-                <IconButton aria-label="Favorite">
-                    <FaceIcon/>
-                </IconButton>
-                <IconButton aria-label="Favorite">
-                    <ReportIcon/>
-                </IconButton>
-
-                <div onClick={onPost} className="postButton">
-                    <CreateIcon style={{marginLeft:'10%',marginTop:'8%'}}/> <span>{answerMode?"Post":"Answer"}</span>
+                <StarBorderIcon color="yellow"/>
+                <EmojiPeopleIcon/>
+                <FlagOutlinedIcon/>
+                <div className="postButton">
+                    <Button onClick={onPost} >
+                        <span>{answerMode?"Post":"Answer"}</span>
+                    </Button>
                 </div>
                 { answerMode &&<p onClick={()=>toggleAnswerButton(!answerMode)}>cancel</p>}
             </div>
