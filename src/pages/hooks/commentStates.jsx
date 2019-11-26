@@ -2,7 +2,7 @@ import {useState} from "react";
 
 export const useCommentState = ()=>{
     const [commentContent, setCommentContent] = useState('');
-    const [commentMode, setCommentMode] = useState(true);
+    const [commentMode, setCommentMode] = useState(false);
     const [emptyCommentError,setEmptyCommentError] = useState(false);
 
 

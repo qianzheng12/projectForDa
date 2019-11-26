@@ -30,7 +30,7 @@ const RegisterPageOne = ({goToNextPage}) => {
     };
     return (
         <Formik
-            initialValues={{firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}}
+            initialValues={{firstName: '', lastName: '', email: '', password: '', confirmPassword: '', university:''}}
             validate={values => {
                 const errors = {};
                 if (!values.email) {
@@ -46,7 +46,7 @@ const RegisterPageOne = ({goToNextPage}) => {
                 return errors;
             }}
             onSubmit={(values, {setSubmitting}) => {
-                goToNextPage()
+                goToNextPage(values)
             }}
         >
             {({
@@ -97,14 +97,34 @@ const RegisterPageOne = ({goToNextPage}) => {
                                    id="fullLongInput"/>
                         </div>
                         <div className="signUpInput">
-                            <input required type="password"
-                                   name="confirmPassword"
+                        <input required type="password"
+                               name="confirmPassword"
+                               onChange={handleChange}
+                               onBlur={handleBlur}
+                               value={values.confirmPassword}
+                               placeholder="Confirm Password:"
+                               id="fullLongInput"/>
+                        <h3>{errors.confirmPassword}</h3>
+                        </div>
+                        <div className="signUpInput">
+                            <input required type=""
+                                   name="university"
                                    onChange={handleChange}
                                    onBlur={handleBlur}
-                                   value={values.confirmPassword}
-                                   placeholder="Confirm Password:"
+                                   value={values.university}
+                                   placeholder="Current university/College"
                                    id="fullLongInput"/>
-                            <h3>{errors.confirmPassword}</h3>
+                        </div>
+                        <div className="majorInput">
+                            <input required type=""
+                                   name="university"
+                                   onChange={handleChange}
+                                   onBlur={handleBlur}
+                                   value={values.university}
+                                   placeholder="Major"
+                                   id="fullLongInput"/>
+                            <Dropdown required options={yearRange} onChange={selectYear} value={selectedYear}
+                                      className="majorYearPicker" placeholder="Year"/>
                         </div>
                         <div className="CAPTCHA">
                             <ReCAPTCHA

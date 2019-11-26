@@ -40,15 +40,27 @@
     width: 100%;
 }
 .answerContents{
-    height: 140px;
+    min-height: 140px;
     width: 90%;
     padding: 10px 0 0 0;
     word-wrap: break-word;
-    overflow: hidden;
 
+}
+.answerContents span{
+    margin: 0;
 }
 .answerContents p{
     color: black;
+}
+.answerContents h3{
+    margin: 0;
+    color: #3f56ff;
+    width: 70px;
+    font-size: 0.8em;
+}
+.answerContents h3:hover{
+    cursor: pointer;
+
 }
 .commentUserInformation{
 
@@ -99,6 +111,16 @@
     width: 140px;
     height: 100%;
 }
+.rightCommentActions{
+    float: right;
+    width: 140px;
+    height: 100%;
+}
+.rightCommentActions svg{
+    float: right;
+    position: relative;
+    right: 10px;
+}
 .commentsIconWrapper{
     height: 50px;
     width: 70px;
@@ -108,4 +130,8 @@
     margin-left: 10px;
     position: relative;
     top:5px;
+    color: black;
+}
+.commentsIconWrapper a{
+    color: black;
 }

@@ -14,7 +14,7 @@
 .feedAnswers{
     position: relative;
     left: 0;
-    width: 500px;
+    width: 604px;
     height: 80%;
     float: left;
 }
@@ -26,7 +26,7 @@
     border: 1px solid rgba(0, 0, 0, 0.24);
     width:25%;
     position: relative;
-    left: 120px;
+    left:20px;
     float: left;
 }
 .topicHeader{
@@ -56,11 +56,20 @@
     left: 15%;
     bottom:5px;
 }
+.topics a{
+    text-decoration: none;
+    color:black;
+}
 .topics span:hover{
     cursor: pointer;
 }
 .feedAnswer{
-    width: 100%;
-    min-height: 310px;
+    width: 500px;
+    min-height: 250px;
+    padding:16px 51px 23px 51px;
+    background: white;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    margin-top:10px;
 
 }

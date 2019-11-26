@@ -13,7 +13,12 @@
 
 .question{
     width: 746px;
-    min-height: 350px;
+    min-height: 280px;
+    padding:16px 51px 23px 51px;
+    background: white;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    margin-top:10px;
 }
 .answers{
     height: 1200px;
@@ -23,7 +28,13 @@
 }
 .answer{
     position:relative;
-    min-height: 300px;
+    width: 746px;
+    min-height: 250px;
+    padding:16px 51px 23px 51px;
+    background: white;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    margin-top:10px;
 }
 .questionAnswerGap{
     background: #906604;
@@ -53,7 +64,7 @@
 }
 .commentInputArea input{
     height: 30px;
-    width: 580px;
+    width: 80%;
     padding-left: 10px;
 }
 .commentInputArea button{

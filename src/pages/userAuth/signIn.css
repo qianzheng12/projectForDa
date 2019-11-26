@@ -1,0 +1,19 @@
+.signInPageWrapper{
+    width: 100vw;
+    height: 100vh;
+}
+.loginFormWrapper{
+    height: 100px;
+    width: 500px;
+    float: right;
+}
+.loginFormWrapper input{
+    height: 30px;
+    margin-left: 10px;
+}
+.loginFormWrapper button{
+    height: 35px;
+    margin-left: 20px;
+    color: #fff7e5;
+    background: #55a7ff;
+}

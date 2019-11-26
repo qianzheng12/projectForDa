@@ -1,0 +1,13 @@
+.articleWrapper{
+    min-height: 600px;
+    width: 746px;
+    padding:16px 51px 23px 51px;
+    background: white;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    margin-top:10px;
+}
+.commentsWrapper{
+    min-height: 300px;
+    width: 100%;
+}

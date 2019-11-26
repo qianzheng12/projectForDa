@@ -7,6 +7,9 @@ export const GET_FEED_ANSWERS = gql`
             title
             answers(orderBy: RECENT, limit:1){
                 content
+                comments{
+                    id
+                }
             }
             lastUpdated
             user {
@@ -20,6 +23,51 @@ export const GET_FEED_ANSWERS = gql`
     }
 `;
 
+export const QUESTIONS_BY_TOPIC = gql`query($topicName:[String!])
+    {
+        questions(topics:$topicName) {
+            id
+            title
+            answers(orderBy: RECENT, limit:1){
+                content
+                comments{
+                    id
+                }
+            }
+            lastUpdated
+            user {
+                id
+                firstName
+                lastName
+                school
+
+            }
+        }
+    }
+`;
+
+export const SEARCH_ANSWER = gql` query($searchString:String!)
+    {
+        search(searchString:$searchString) {
+            id
+            title
+            answers(orderBy: RECENT, limit:1){
+                content
+                comments{
+                    id
+                }
+            }
+            lastUpdated
+            user {
+                id
+                firstName
+                lastName
+                school
+
+            }
+        }
+    }
+`;
 export const GET_QUESTION = gql` query($id:GUID!)
     {
         getQuestion(questionID:$id) {
@@ -37,13 +85,24 @@ export const GET_QUESTION = gql` query($id:GUID!)
                 }
                 lastUpdated
                 comments{
+                    id
                     user {
                         id
                         firstName
                         lastName
                     }
                     content
+                    replies{
+                        user{
+                            firstName
+                            lastName
+                        }
+                        content
+                    }
                 }
+            }
+            topics{
+                name
             }
             description
             lastUpdated
@@ -54,6 +113,35 @@ export const GET_QUESTION = gql` query($id:GUID!)
                 school
 
             }
+        }
+    }
+`;
+
+export const FEED_QUESTIONS = gql`
+    {
+        questions {
+            id
+            title
+            description
+            lastUpdated
+            topics{
+                name
+            }
+            user {
+                id
+                firstName
+                lastName
+                school
+
+            }
+        }
+    }
+`;
+
+export const GET_TOPICS = gql`
+    {
+        topics{
+            name,
         }
     }
 `;

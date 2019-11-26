@@ -1,59 +1,59 @@
 import React, {useState} from 'react'
-import Typography from '@material-ui/core/Typography';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
-import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
+import Typography from "@material-ui/core/Typography";
+import {ANSWER_QUESTION, SEND_COMMENT} from "../graphQL/mutations";
+import {useMutation} from "@apollo/react-hooks";import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ShareRoundedIcon from '@material-ui/icons/ShareRounded';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import CommentCard from "./commentCard";
-import './answerCard.css'
-import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
-import {useVotesState} from '../hooks/answerStates'
-import {useCommentState} from "../hooks/commentStates";
-import Button from "@material-ui/core/Button";
-import {SEND_COMMENT} from "../graphQL/mutations";
-import {useMutation} from "@apollo/react-hooks";
 import Truncate from "react-truncate";
-const AnswerWithCommentsCard = ({answer,client}) => {
-    const {user} = answer;
-    const {comments} = answer;
+import {Link} from "react-router-dom";
+import {useVotesState} from "../hooks/answerStates";
+import './articleCard.css'
+import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
+import Button from "@material-ui/core/Button";
+import {useCommentState} from "../hooks/commentStates";
+const ArticleCard = ({question}) => {
+    const {user} = question;
+    console.log(question)
+    const [answerMode,toggleAnswerButton] = useState(false);
+    const [editorState, setEditorState] = useState("");
+    const [answerQuestion] = useMutation(ANSWER_QUESTION);
+    const [showWarning, setShowWarning] = useState(false);
+    const [lineOfContent, setLineOfContent] = useState(5);
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
+
     const [sendCommentMutation] = useMutation(SEND_COMMENT);
-    const [lineOfContent, setLineOfContent] = useState(5);
-    const sendComment = () => {
-        if (commentContent === ''){
-            setEmptyCommentError(true)
-        }
-        else{
-            sendCommentMutation({ variables: { answerId:answer.id,commentContent}}).then(
-                (result)=>{
-                    console.log(result)
-                    client.writeData({
-                        answer:[]
-                    })
-                }
-            );
-            setEmptyCommentError(false);
-            setCommentMode(false);
-        }
-    };
+
     return (
         <div className="card">
+            <div className="questionHeader">
+                <Link to={`/question/${question.id}`}><h3>{question.title}</h3></Link>
+
+            </div>
             <div className="answerUserInformation">
                 <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
+                { user &&
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2>{answer.lastUpdated}</h2>
+                    <h2>{question.lastUpdated}</h2>
                     <h3>{user.school}</h3>
                 </div>
+
+                }
             </div>
-            <div className="answerContents">
+            <div className="articleContent">
                 <Typography variant="body2" color="textSecondary" component="p">
                     <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
-                        <div dangerouslySetInnerHTML={{ __html: answer.content} } />
+                        <div dangerouslySetInnerHTML={{ __html: question.description} } />
                     </Truncate>
                 </Typography>
+            </div>
+            <div className="articleTopicWrapper">
+                Topics: {question.topics.map( topic => {
+                    return (<span>#{topic.name}</span>)
+                })}
             </div>
             <div className="answerActions">
                 <div className="thumbWrapper">
@@ -66,7 +66,7 @@ const AnswerWithCommentsCard = ({answer,client}) => {
                 <div className="rightAnswerActions">
                     <div className="commentsIconWrapper">
                         <AddCommentOutlinedIcon onClick={()=>setCommentMode(!commentMode)}/>
-                        <span>{answer.comments.length}</span>
+                        <span>{10}</span>
                     </div>
                     <ShareRoundedIcon/>
                     <BookmarkBorderOutlinedIcon/>
@@ -75,24 +75,16 @@ const AnswerWithCommentsCard = ({answer,client}) => {
             {commentMode &&
             <div className="commentInputArea">
                 <input onChange={e=>setCommentContent(e.target.value)} placeholder="Write your comment"/>
-                <Button onClick={sendComment}>
+                <Button>
                     <span>{"Send"}</span>
                 </Button>
                 {emptyCommentError && <h2>Please enter comment before send.</h2>}
             </div>}
-            <div className="dividerBetweenAnswerAndComments"/>
-            {comments&&comments.length>=1 && (
-                <div className="commentsForAnswer">
-                    {comments.map(comment => (
 
-                        <div className="comment">
-                            <CommentCard comment={comment} client={client}/>
-                        </div>)
-                    )}
-                </div>
-            )}
+
         </div>
     );
 };
 
-export default AnswerWithCommentsCard
+
+export default ArticleCard;
