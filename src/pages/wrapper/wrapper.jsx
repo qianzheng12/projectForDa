@@ -20,6 +20,7 @@ import TopicPage from '../topic/topicPage.jsx'
 import {AddArticle} from "../article/addArticle";
 import ArticlePage from "../article/articlePage";
 import HomePage from "../homePage/homePage";
+Amplify.configure(awsconfig);
 
 const Wrapper = () => {
     const [askQuestionMode, toggleAskQuestionMode] = useState(false);
