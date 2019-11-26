@@ -131,6 +131,10 @@ nav{
 .askQuestionWrapper span{
     font-size: 0.9em;
     color: #FF9240;
+    text-decoration: none;
+}
+.askQuestionWrapper a{
+    text-decoration: none;
 }
 .accountIcon{
 

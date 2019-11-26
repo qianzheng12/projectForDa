@@ -30,7 +30,7 @@ const Navigator = props => {
                         <AddBoxOutlinedIcon/><span>Question</span>
                     </Button>
                     <Button id="postArticleButton">
-                        <AddBoxOutlinedIcon/><span>Article</span>
+                        <AddBoxOutlinedIcon/><Link to='/addArticle'><span>Article</span></Link>
                     </Button>
                 </div>
                 <div className="accountIcon">
