@@ -1,11 +1,6 @@
 .card {
-    background: white;
-    box-shadow: 0 6px 8px 1px rgba(0, 0, 0, 0.36);
-    border: 1px solid rgba(0, 0, 0, 0.24);
-    padding:16px 51px 23px 51px;
-    margin-top:10px;
     width: 100%;
-    min-height: 95%;
+    min-height: 100%;
     font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
 }
 .questionHeader a{
@@ -17,9 +12,10 @@
     width: 80%;
     height: 40px;
 }
-.questionHeader span{
+.questionTopics span{
     color: rgba(51, 51, 51, 0.53);
     font-size:1em;
+    margin-right: 10px;
 }
 .questionHeader h3{
     margin:0;
@@ -33,6 +29,11 @@
     position: relative;
     font-size:0.8em;
     color: rgba(52, 52, 52, 0.78);
+}
+.questionTopics{
+    height: 30px;
+    width: 100%;
+    overflow: hidden;
 }
 .questionStarterInformation{
     height: 50px;

@@ -4,8 +4,14 @@ import SearchInput from "./searchInput";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Button from "@material-ui/core/Button";
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
+import { Auth } from 'aws-amplify';
 const Navigator = props => {
     const {askQuestionMode,toggleAskQuestionMode,selectedPage} = props;
+    const signOut = () => {
+        Auth.signOut()
+            .then(data => window.location.reload())
+            .catch(err => console.log(err));
+    };
     console.log(selectedPage);
     return (
         <div className="navBar">
@@ -20,15 +26,18 @@ const Navigator = props => {
                 </div>
                 <SearchInput/>
                 <div className="askQuestionWrapper">
-                <Button id="askQuestionButton" onClick={()=>toggleAskQuestionMode(!askQuestionMode)}>
-                    <AddBoxOutlinedIcon/><span>Question</span>
-                </Button>
-                <Button id="postArticleButton">
-                    <AddBoxOutlinedIcon/><span>Article</span>
-                </Button>
+                    <Button id="askQuestionButton" onClick={()=>toggleAskQuestionMode(!askQuestionMode)}>
+                        <AddBoxOutlinedIcon/><span>Question</span>
+                    </Button>
+                    <Button id="postArticleButton">
+                        <AddBoxOutlinedIcon/><span>Article</span>
+                    </Button>
                 </div>
                 <div className="accountIcon">
                     <AccountCircleIcon/>
+                </div>
+                <div className="logOut">
+                    <Button onClick={signOut}>Log out </Button>
                 </div>
 
             </nav>

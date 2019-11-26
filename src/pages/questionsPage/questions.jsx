@@ -4,27 +4,13 @@ import {gql} from "apollo-boost";
 import QuestionCard from "../cards/questionCard";
 import './questions.css';
 import TopicWrapper from "../homePage/topicWrapper";
-const FEED_QUESTIONS = gql`
-    {
-        questions {
-            id
-            title
-            description
-            lastUpdated
-            user {
-                id
-                firstName
-                lastName
-                school
+import {FEED_QUESTIONS} from "../graphQL/query";
 
-            }
-        }
-    }
-`;
 const Questions = props => {
     const { loading, error, data } = useQuery(FEED_QUESTIONS);
     if (loading) return <div></div>;
     if (error) return <div></div>;
+    console.log(data)
     props.setSelectedPage("Questions");
     const {questions} = data;
     return (

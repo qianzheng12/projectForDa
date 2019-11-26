@@ -1,11 +1,13 @@
-import React, {useEffect, useMemo, useState} from 'react'
-import './questionAnswers.css'
+import React from 'react'
 import QuestionCard from "../cards/questionCard";
 import {useQuery} from "@apollo/react-hooks";
 import AnswerWithCommentsCard from "../cards/answerWithCommentsCard";
 import SortMethodButton from "../sortButton/sortMethodButton";
 import {GET_QUESTION} from "../graphQL/query";
-const QuestionAnswers = props => {
+import ArticleCard from "../cards/articleCard";
+import './articlePage.css';
+import CommentCard from "../cards/commentCard";
+const ArticlePage = props => {
     let id = props.match.params.id;
 
     const { loading, error, data,client } = useQuery(GET_QUESTION,{ variables: { id },});
@@ -18,19 +20,13 @@ const QuestionAnswers = props => {
     return (
         <div className="questionAnswerWrapper">
             <div className="questionAnswerContent">
-                <div className="question">
-                    <QuestionCard question={(data.getQuestion)}/>
+                <div className="articleWrapper">
+                    <ArticleCard question={(data.getQuestion)}/>
                 </div>
-                <div className="questionAnswerGap">
-                    <p>
-                        The question has {answers.length} answers
-                    </p>
-                    <SortMethodButton/>
-                </div>
-                <div className="answers">
+                <div className="commentsWrapper">
                     {answers.map((answer) => (
                         <div className="answer">
-                            <AnswerWithCommentsCard answer={answer} clinet={client}/>
+                            <CommentCard comment={answer.comments[0]} clinet={client}/>
                         </div>)
                     )}
                 </div>
@@ -39,4 +35,4 @@ const QuestionAnswers = props => {
     );
 };
 
-export default QuestionAnswers;
+export default ArticlePage;

@@ -1,0 +1,51 @@
+.repliesWrapper{
+    width: 500px;
+    position: relative;
+    left: 80px;
+    text-align: center;
+
+}
+.expandRepliesButton{
+    color: #3354ff;
+}
+.expandRepliesButton p:hover{
+    cursor: pointer;
+}
+.repliesContent{
+    min-height: 150px;
+    width: 100%;
+    margin-top:20px;
+}
+.reply{
+    width: 100%;
+    min-height: 80px;
+}
+.replyHeader{
+    height: 20px;
+    width: 100%;
+}
+.replyHeader h1{
+    float: left;
+    margin:0;
+    font-size: 1em;
+    font-weight: bold;
+}
+.replyHeader h2{
+    float: left;
+    margin:0 0 0 10px;
+    font-size: 1em;
+    color: rgba(47, 49, 52, 0.53);
+}
+.replyContent{
+    text-align: left;
+    min-height: 40px;
+    color: black;
+    font-size: 0.9em;
+}
+.replyContent span{
+    float: left;
+    color: #55a7ff;
+}
+.replyContent pre{
+    float: left;
+}

@@ -1,0 +1,27 @@
+.topicLeftDiv{
+    float: left;
+    padding: 20px 20px 20px 0;
+    width: 25%;
+    height: 100%;
+}
+
+.topicRightDiv{
+    float: right;
+    padding: 20px 0 20px 0;
+    width: 65%;
+    height: 100%;
+}
+.topicRightDiv h1{
+    margin: 0;
+    font-size: 1.2em;
+}
+.topicDescription{
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+}
+.topicDescription p{
+    margin: 0;
+
+
+}

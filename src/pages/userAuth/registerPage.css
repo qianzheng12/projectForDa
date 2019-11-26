@@ -20,7 +20,7 @@
 .signUpHeader{
     height: 40px;
     width: 100%;
-    color: #906604;
+    color: #FF9240;
 }
 .signUpHeader h1{
     margin: 0;
@@ -28,36 +28,39 @@
     font-size: 1.5em;
 }
 .signUpInput{
-    min-height:30px;
+    min-height:20px;
     width: 100%;
     margin-top:10px;
     padding-top:10px;
 }
 .signUpInput h3{
-    color: #906604;
+    color: #FF9240;
     padding: 0;
     margin: 0;
     font-size: 0.8em;
 }
 .signUpInput .monthPicker{
     float: left;
-    height: 30px;
+    height: 25px;
     width: 100px;
     position: relative;
+    font-size: 0.7em;
     left:0;
 }
 .signUpInput .dayPicker{
     float: left;
-    height: 30px;
+    height: 25px;
     width: 70px;
     position: relative;
+    font-size: 0.7em;
     left:20px;
 }
 .signUpInput .yearPicker{
     float: left;
-    height: 30px;
+    height: 25px;
     width: 80px;
     position: relative;
+    font-size: 0.7em;
     left:35px;
 }
 .signUpInput .Dropdown-control{
@@ -66,13 +69,13 @@
 }
 .signUpInput #firstName{
     width: 120px;
-    height: 25px;
+    height: 20px;
     float: left;
 }
 
 .signUpInput #lastName{
     width: 120px;
-    height: 25px;
+    height: 20px;
     float: right;
 }
 .signUpInput #fullLongInput{
@@ -105,33 +108,26 @@
     border: 1px solid black;
 }
 
-.universityHeader{
-    height: 20px;
+.majorInput{
+    min-height:30px;
+    width: 100%;
     margin-top:10px;
-    width: 100%;
+    padding-top:10px;
 }
-
-.universityHeader h2{
-    margin: 0;
-    padding: 0;
-    font-size: 1em;
+.majorInput input{
+    float: left;
+    height: 20px;
+    width: 50%;
 }
-.nextSignUpPageButton button:hover{
-    cursor: pointer;
+.majorInput .majorYearPicker{
+    float: right;
+    height: 25px;
+    width: 80px;
+    position: relative;
+    right:10px;
 }
-.educationOptionalInput{
-    margin-top:30px;
-}
-.addEducation{
-    margin-top:20px;
-    height: 30px;
-    width: 100%;
-}
-.addEducation h2{
-    font-size: 1em;
-    margin: 0;
-    padding: 0;
-}
-.addEducation h2:hover{
-    cursor: pointer;
+.majorInput .Dropdown-control{
+    padding-top: 5px;
+    height: 100%;
+    font-size: 0.7em;
 }
