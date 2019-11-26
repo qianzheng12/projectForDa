@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import FeedAnswerCard from "../cards/feedAnswerCard";
-import TopicWrapper from "../homePage/topicWrapper";
+import TopicWrapper from "../feedAnswers/topicWrapper";
 import './topicPage.css'
 import {useQuery} from "@apollo/react-hooks";
 import {GET_FEED_ANSWERS, QUESTIONS_BY_TOPIC} from "../graphQL/query";

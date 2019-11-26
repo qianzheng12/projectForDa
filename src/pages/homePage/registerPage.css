@@ -131,3 +131,12 @@
     height: 100%;
     font-size: 0.7em;
 }
+.pinHints{
+    height: 50px;
+    font-size: 0.8em;
+}
+.pinInputArea{
+    height: 50px;
+    width: 100%;
+
+}

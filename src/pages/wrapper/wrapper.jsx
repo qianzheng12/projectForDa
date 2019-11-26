@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Navigator from './navigator'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import Home from "../homePage/home";
+import FeedAnswerPage from "../feedAnswers/feedAnswerPage";
 import Explore from "../explorePage/explore";
 import Questions from "../questionsPage/questions";
 import "./wrapper.css";
@@ -11,19 +11,19 @@ import {Helmet} from "react-helmet";
 import {ApolloProvider} from '@apollo/react-hooks';
 import QuestionAnswers from "../questionAnswersPage/questionAnswers";
 import PostPage from "../askQuestion/postPage";
-import RegisterPage from "../userAuth/register";
+import RegisterPage from "../homePage/register";
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from '../../aws-exports';
-import SignInPage from "../userAuth/signIn";
+import SignInPage from "../homePage/signIn";
 import SearchPage from "../search/searchPage";
 import TopicPage from '../topic/topicPage.jsx'
 import {AddArticle} from "../article/addArticle";
 import ArticlePage from "../article/articlePage";
-Amplify.configure(awsconfig);
+import HomePage from "../homePage/homePage";
 
 const Wrapper = () => {
     const [askQuestionMode, toggleAskQuestionMode] = useState(false);
-    const [selectedPage, setSelectedPage] = useState("Home");
+    const [selectedPage, setSelectedPage] = useState("FeedAnswerPage");
     const [authStatus, setAuthStatus] = useState(false);
     const [user, setUser] = useState();
     useEffect(() => {
@@ -69,7 +69,7 @@ const Wrapper = () => {
                     <Switch>
                         {!authStatus &&
                         <Route path="/">
-                            <SignInPage/>
+                            <HomePage/>
                         </Route>
                         }
                         {authStatus &&
@@ -78,7 +78,7 @@ const Wrapper = () => {
                                        toggleAskQuestionMode={toggleAskQuestionMode}
                                        selectedPage={selectedPage}/>
                             <Route path="/home">
-                                <Home setSelectedPage={setSelectedPage}/>
+                                <FeedAnswerPage setSelectedPage={setSelectedPage}/>
                             </Route>
                             <Route path="/explore">
                                 <Explore setSelectedPage={setSelectedPage}/>

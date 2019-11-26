@@ -3,7 +3,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {gql} from "apollo-boost";
 import QuestionCard from "../cards/questionCard";
 import './questions.css';
-import TopicWrapper from "../homePage/topicWrapper";
+import TopicWrapper from "../feedAnswers/topicWrapper";
 import {FEED_QUESTIONS} from "../graphQL/query";
 
 const Questions = props => {

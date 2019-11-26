@@ -1,7 +1,4 @@
-import React, {useState} from 'react'
-import ReCAPTCHA from "react-google-recaptcha";
-import RegisterPageOne from './registerPageOne'
-import RegisterPageTwo from './registerPageTwo'
+import React from 'react'
 import './registerPage.css'
 import { Auth } from 'aws-amplify';
 import {Formik} from "formik";
@@ -23,7 +20,6 @@ const SignInPage = () => {
             });
     }
     return (
-        <div style={{background:`url(${imgUrl})`}} className="signInPageWrapper">
             <div className="loginFormWrapper">
                 <Formik
                     initialValues={{userEmail: '', password: ''}}
@@ -52,7 +48,6 @@ const SignInPage = () => {
                 )}
                 </Formik>
             </div>
-        </div>
     );
 };
 

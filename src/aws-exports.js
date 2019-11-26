@@ -2,16 +2,14 @@
 
 const awsmobile = {
     "aws_project_region": "eu-west-2",
-    "aws_cognito_identity_pool_id": "eu-west-2:1ecde476-4652-49a2-9b45-ab2c04946758",
+    "aws_cognito_identity_pool_id": "eu-west-2:e5a2961a-d052-42e2-b118-19366d95513e",
     "aws_cognito_region": "eu-west-2",
     "aws_user_pools_id": "eu-west-2_cd4fZiceG",
     "aws_user_pools_web_client_id": "43bqonj4u0bojdvmk40e3dcaeg",
-    oauth: {
-        domain: 'your_cognito_domain',
-        redirectSignIn: '/home',
-        redirectSignOut: '/signIn',
-        responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
-    }
+    "oauth": {},
+    "aws_content_delivery_bucket": "singularity-product",
+    "aws_content_delivery_bucket_region": "eu-west-2",
+    "aws_content_delivery_url": "http://singularity-product.s3-website.eu-west-2.amazonaws.com"
 };
 
 

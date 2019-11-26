@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import './homePage.css'
+import './feedAnswerPage.css'
 import FeedAnswerCard from "../cards/feedAnswerCard";
 import TopicWrapper from "./topicWrapper";
 import {useQuery} from '@apollo/react-hooks';
 import {GET_FEED_ANSWERS} from '../graphQL/query'
 
-const Home = props => {
+const FeedAnswerPage = props => {
     const {loading, error, data} = useQuery(GET_FEED_ANSWERS);
     const [leftMargin, setLeftMargin] = useState("20vw");
     const [showTopic, toggleShowTopic] = useState(true);
-    props.setSelectedPage("Home");
+    props.setSelectedPage("FeedAnswerPage");
     useEffect(() => {
         /*window.addEventListener("resize", () => {
             console.log(window.innerWidth);
@@ -57,4 +57,4 @@ const Home = props => {
     )
 };
 
-export default Home;
+export default FeedAnswerPage;

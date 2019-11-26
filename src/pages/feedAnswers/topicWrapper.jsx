@@ -1,5 +1,5 @@
 import React from 'react'
-import './homePage.css'
+import './feedAnswerPage.css'
 import {useQuery} from "@apollo/react-hooks";
 import {GET_FEED_ANSWERS, GET_TOPICS} from "../graphQL/query";
 import {Link} from 'react-router-dom'
