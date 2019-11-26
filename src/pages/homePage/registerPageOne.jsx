@@ -6,7 +6,7 @@ import 'react-dropdown/style.css'
 import yearRange, {calculateDays, monthRange, standardDays} from "../utility/dateFixture";
 import {Formik} from "formik";
 
-const RegisterPageOne = ({goToNextPage}) => {
+const RegisterPageOne = ({goToNextPage,submit}) => {
     const [dayRange, setDayRange] = useState(standardDays);
     const [selectedMonth, setSelectedMonth] = useState();
     const [selectedDay, setSelectedDay] = useState();
@@ -30,7 +30,7 @@ const RegisterPageOne = ({goToNextPage}) => {
     };
     return (
         <Formik
-            initialValues={{firstName: '', lastName: '', email: '', password: '', confirmPassword: '', university:''}}
+            initialValues={{firstName: '', lastName: '', email: '', password: '', confirmPassword: '', university:'',major:''}}
             validate={values => {
                 const errors = {};
                 if (!values.email) {
@@ -46,7 +46,8 @@ const RegisterPageOne = ({goToNextPage}) => {
                 return errors;
             }}
             onSubmit={(values, {setSubmitting}) => {
-                goToNextPage(values)
+                submit(values.email,values.password);
+                //goToNextPage(values)
             }}
         >
             {({
@@ -117,7 +118,7 @@ const RegisterPageOne = ({goToNextPage}) => {
                         </div>
                         <div className="majorInput">
                             <input required type=""
-                                   name="university"
+                                   name="major"
                                    onChange={handleChange}
                                    onBlur={handleBlur}
                                    value={values.university}

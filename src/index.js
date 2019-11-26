@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from 'react-snapshot';
+import ReactDOM from 'react-dom'
 import './index.css';
 import Wrapper from "./pages/wrapper/wrapper";
 import * as serviceWorker from './serviceWorker';
 
-render(
+ReactDOM.render(
     <Wrapper/>,
     document.getElementById('root')
 );
