@@ -1,38 +1,74 @@
 import React, {useState} from 'react'
 import './postPage.css';
 import CloseIcon from '@material-ui/icons/Close';
-import { useMutation } from '@apollo/react-hooks';
-import {ADD_TOPIC_TO_QUESTION, ASK_QUESTION, CREATE_TOPIC} from '../graphQL/mutations';
+import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
+import {ADD_TOPIC_TO_QUESTION, POST_QUESTION_ARTICLE, CREATE_TOPIC} from '../graphQL/mutations';
 import {Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
+import TextInputArea from "./textInputArea";
+import SearchTopicDropDown from "../search/searchTopicDropDown";
+import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
 const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
-    const [topics,addTopic] = useState([]);
+    const [topics,setTopics] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
-    const [askQuestion] = useMutation(ASK_QUESTION);
+    const [checkTopicName, { loading, data }] = useLazyQuery(SEARCH_TOPIC_BY_NAME,
+        {onCompleted: () => {
+            const topic = data.getTopicByName;
+            console.log(topic)
+            if(topic){
+                chooseTopic(topic.name,topic.id);
+            }
+            else{
+                console.log(topic)
+                createTopic({variables: {topicName:currentTopicValue}}).then(
+                    (result)=>{
+                        const {createTopic} = result.data;
+                        chooseTopic(createTopic.name,createTopic.id);
+                    }
+                )
+            }
+        },
+            fetchPolicy:"network-only"
+        });
+
+    const [askQuestion] = useMutation(POST_QUESTION_ARTICLE);
     const [createTopic] = useMutation(CREATE_TOPIC);
     const [addTopicToQuestion] = useMutation(ADD_TOPIC_TO_QUESTION);
     const [topicEmptyError, showEmptyTopicError] = useState(false);
+    const [postContent, setPostContent] = useState("");
     function onKeyDown(keyEvent) {
         if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
             keyEvent.preventDefault();
         }
     }
 
-    const enterTopic = (keyEvent) => {
-        if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
-            if(currentTopicValue !== ""){
-                const newTopicList = topics.concat(currentTopicValue);
-                addTopic(newTopicList);
-                createTopic({variables: {topicName:currentTopicValue}}).then(
-                    (result)=>{
-                        console.log(result)
-                    }
-                );
-                setCurrentTopicValue("");
-            }
+    const chooseTopic = (topicName,topicId) => {
+        const topic = {topicName,topicId};
+        if(!topics.some(i => (i.topicName === topicName))){
+            const newTopicList = topics.concat(topic);
+            console.log(newTopicList);
+            setTopics(newTopicList);
         }
+
+        setCurrentTopicValue("");
     };
+
+    const addNewTopic = (topic) => {
+        checkTopicName(
+            {
+                variables:{topicName:topic}
+            })
+
+
+        /*createTopic({variables: {topicName:currentTopicValue}}).then(
+            (result)=>{
+                console.log(result)
+            }
+        );*/
+
+    };
+
     return (
         <Formik
             initialValues={{title: '', anonymouslyCheck: false,description:'', mySchool:false}}
@@ -42,17 +78,17 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                     showEmptyTopicError(true);
                 }
                 else{
-                    askQuestion({ variables: { title:values.title,description:values.description}}).then(
+                    askQuestion({ variables: { title:values.title,description:postContent, isArticle:type==="article"}}).then(
                         (result)=>{
                             const{data} = result;
-                            console.log(data);
-                            console.log(data.createQuestion.id);
                             topics.map((topic) => {
-                                addTopicToQuestion({ variables: { questionID:data.createQuestion.id,topicName:topic}}).then();
+                                addTopicToQuestion({ variables: { questionID:data.createQuestion.id,topicID:topic.topicId}}).then();
                                 return topic
                             });
                             showEmptyTopicError(false);
-                            toggleAskQuestionMode();
+                            if(type === "question"){
+                                toggleAskQuestionMode();
+                            }
                         }
                     ).catch(
 
@@ -64,7 +100,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                handleChange,
                handleSubmit,
            }) => (
-            <form onSubmit={handleSubmit} onKeyDown={onKeyDown}>
+            <form onSubmit={handleSubmit} autocomplete="off" onKeyDown={onKeyDown}>
                 <div>
                     <div className="askQuestionForm">
                         <div className="askQuestionFormHeader">
@@ -94,12 +130,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                 <p>post anonymously</p>
                             </div>
                             <div className="questionDescriptionInputArea">
-                                <input
-                                    required
-                                    onChange={handleChange}
-                                    value={values.description}
-                                    name="description"
-                                    placeholder="Describe your question in more detail for better quality answers!" />
+                                <TextInputArea postContent={postContent} setPostContent={setPostContent}/>
                             </div>
                             <div className="questionDescriptionAdvice">
                                 <ul>
@@ -115,12 +146,22 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                 </ul>
                             </div>
                             <div className="topicInputArea">
-                                <input value={currentTopicValue} onChange={(e)=>{setCurrentTopicValue(e.target.value)}} onKeyDown={enterTopic} placeholder="Topics"  id="topicInputArea"/>
-                                {topicEmptyError && <p>Please enter a topic</p>}
+                                <div className="topicInputWrapper">
+                                    <input type="search"
+                                           value={currentTopicValue}
+                                           onChange={(e)=>{setCurrentTopicValue(e.target.value)}}
+                                           placeholder="Topics"
+                                           id="topicInputArea"/>
+                                    {currentTopicValue.length>0 &&
+                                    <div className="topicSearchDropdown">
+                                        <SearchTopicDropDown chooseTopic={chooseTopic} enteredTopic={currentTopicValue} addNewTopic={addNewTopic} allowCreate={true}/>
+                                    </div>}
+                                    {topicEmptyError && <p>Please enter a topic</p>}
+                                </div>
                                 <div className="topicsPresentArea">
                                     {topics.map(topic => (
                                         <div className="enteredTopic">
-                                            #{topic}
+                                            #{topic.topicName}
                                         </div>
                                     ))}
                                 </div>

@@ -1,0 +1,9 @@
+.profileQuestion{
+    width: 500px;
+    min-height: 203px;
+    background: white;
+    padding:16px 51px 23px 51px;
+    box-shadow: 0 0 3px #BCBCBC;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    margin-top:10px;
+}

@@ -14,7 +14,7 @@ import Button from "@material-ui/core/Button";
 import {SEND_COMMENT} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";
 import Truncate from "react-truncate";
-const AnswerWithCommentsCard = ({answer,client}) => {
+const AnswerWithCommentsCard = ({answer,refetch}) => {
     const {user} = answer;
     const {comments} = answer;
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
@@ -28,10 +28,7 @@ const AnswerWithCommentsCard = ({answer,client}) => {
         else{
             sendCommentMutation({ variables: { answerId:answer.id,commentContent}}).then(
                 (result)=>{
-                    console.log(result)
-                    client.writeData({
-                        answer:[]
-                    })
+                    refetch()
                 }
             );
             setEmptyCommentError(false);
@@ -49,10 +46,8 @@ const AnswerWithCommentsCard = ({answer,client}) => {
                 </div>
             </div>
             <div className="answerContents">
-                <Typography variant="body2" color="textSecondary" component="p">
-                    <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
-                        <div dangerouslySetInnerHTML={{ __html: answer.content} } />
-                    </Truncate>
+                <Typography variant="body2" color="textSecondary" >
+                        <div dangerouslySetInnerHTML={{ __html: answer.content }} />
                 </Typography>
             </div>
             <div className="answerActions">
@@ -86,7 +81,7 @@ const AnswerWithCommentsCard = ({answer,client}) => {
                     {comments.map(comment => (
 
                         <div className="comment">
-                            <CommentCard comment={comment} client={client}/>
+                            <CommentCard comment={comment} refetch={refetch}/>
                         </div>)
                     )}
                 </div>

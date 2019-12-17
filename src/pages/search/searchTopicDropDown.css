@@ -1,0 +1,43 @@
+.searchDropDown{
+    height: 100%;
+    width: 100%;
+}
+.searchDropDown ul{
+    padding-left: 0;
+    margin:0;
+}
+.searchDropDown li  {
+    text-decoration: none;
+    padding:5px 0 5px 10px;
+    height: 20px;
+    list-style: none;
+    font-size: 15px;
+    font-family: Calibri;
+    margin: 0;
+    border-bottom: 1px solid #6B6B6B;
+}
+
+.searchDropDown li:hover{
+    cursor: pointer;
+    background: #BCBCBC;
+}
+.searchDropDown  #addNewTopic{
+    border-bottom:0;
+    color: #3042ff;
+}
+
+.searchDropDown  #addNewTopic span{
+    position: relative;
+    bottom: 55%;
+    left: 5%;
+    width: 20%;
+}
+
+.searchDropDown #addNewTopic svg{
+    border-bottom:0;
+    position: relative;
+    left: 0;
+    bottom: 15%;
+    width: 20%;
+    color: #3042ff;
+}

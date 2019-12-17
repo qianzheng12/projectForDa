@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import './addArticle.css'
 import {useMutation} from "@apollo/react-hooks";
-import {ADD_TOPIC_TO_QUESTION, ASK_QUESTION, CREATE_TOPIC} from "../graphQL/mutations";
+import {ADD_TOPIC_TO_QUESTION, POST_QUESTION_ARTICLE, CREATE_TOPIC} from "../graphQL/mutations";
 import PostPage from "../askQuestion/postPage";
 
 export const AddArticle = () => {
     const [topics, addTopic] = useState([]);
     const [currentTopicValue, setCurrentTopicValue] = useState("");
-    const [askQuestion] = useMutation(ASK_QUESTION);
+    const [askQuestion] = useMutation(POST_QUESTION_ARTICLE);
     const [createTopic] = useMutation(CREATE_TOPIC);
     const [addTopicToQuestion] = useMutation(ADD_TOPIC_TO_QUESTION);
     const [topicEmptyError, showEmptyTopicError] = useState(false);

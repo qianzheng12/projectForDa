@@ -1,12 +1,13 @@
-import React, {useState} from 'react'
+import React  from 'react'
 import './registerPage.css'
 import PinInput from "react-pin-input";
-import {Formik} from "formik";
+const RegisterPageOne = ({submit,resendConfirmationCode}) => {
+    let enteredPin = "";
 
-const RegisterPageOne = ({submit}) => {
-    const enterPin = (value, index)=> {
+    const submitPin = ()=> {
+        submit(enteredPin)
+    };
 
-    }
     return (
         <div className="registerForm">
             <div className="signUpHeader">
@@ -19,15 +20,23 @@ const RegisterPageOne = ({submit}) => {
                 <PinInput
                     length={6}
                     initialValue=""
-                    onChange={(value, index) => {enterPin(value, index)}}
                     type="numeric"
                     style={{padding: '20px', paddingLeft:'40px'}}
-                    inputStyle={{borderColor: 'black', width:'25px', height:'25px', marginLeft:"5px"}}
+                    inputStyle={
+                        {borderColor: '#808080', width:'25px', height:'25px', marginLeft:"5px", borderRadius:"5px"}}
                     inputFocusStyle={{borderColor: 'black'}}
-                    onComplete={(value, index) => {}}
+                    onComplete={(value) => {enteredPin = value}}
                 />
             </div>
+            <div className="resendWrapper">
+                <p>Didn't receive email? <span onClick={resendConfirmationCode}>Send again</span>.</p>
+            </div>
+
+            <div className="nextSignUpPageButton">
+                <button onClick={submitPin} type="submit">Submit</button>
+            </div>
         </div>
+
     );
 };
 

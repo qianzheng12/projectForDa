@@ -6,7 +6,7 @@ const SearchInput = () => {
     return (
         <div className="inputArea">
             <input value={searchContent} style={{paddingLeft:"10px"}} onChange={(e)=>{setSearchContent(e.target.value)}} placeholder="what is your singularity?"/>
-            <Link to={`/searchPage/${searchContent}`}><SearchOutlinedIcon /></Link>
+            <Link onClick={()=>setSearchContent("")} to={`/searchPage/${searchContent}`}><SearchOutlinedIcon /></Link>
         </div>
     )
 }

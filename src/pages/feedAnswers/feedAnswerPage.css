@@ -11,64 +11,19 @@
     width: 850px;
     height: 100%;
 }
-.feedAnswers{
+.feedAnswers {
     position: relative;
     left: 0;
     width: 604px;
     height: 80%;
     float: left;
 }
-.topics{
-    background: white;
-    margin-top:10px;
-    box-shadow: 0 6px 8px 1px rgba(0, 0, 0, 0.36);
-    min-height: 80%;
-    border: 1px solid rgba(0, 0, 0, 0.24);
-    width:25%;
-    position: relative;
-    left:20px;
-    float: left;
-}
-.topicHeader{
-    height: 25px;
-    padding-top:20px;
-    padding-left: 40px;
-}
-.topicHeader p{
-    padding: 0;
-    margin: 0;
-    font-size: 1.3em;
-    font-weight: bold;
-    font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
-}
-.topics li{
-    padding: 10px 10px 10px 10px;
-    list-style-type:none;
-    text-decoration:none;
-}
-.topics img{
-    position: relative;
-    left: 15%;
-}
-.topics span{
-    font-size: 0.8em;
-    position: relative;
-    left: 15%;
-    bottom:5px;
-}
-.topics a{
-    text-decoration: none;
-    color:black;
-}
-.topics span:hover{
-    cursor: pointer;
-}
 .feedAnswer{
     width: 500px;
-    min-height: 250px;
+    min-height: 290px;
     padding:16px 51px 23px 51px;
     background: white;
-    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
+    box-shadow: 0 0 3px #BCBCBC;
     border: 1px solid rgba(0, 0, 0, 0.24);
     margin-top:10px;
 

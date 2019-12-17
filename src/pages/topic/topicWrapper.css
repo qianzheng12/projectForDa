@@ -1,0 +1,76 @@
+.topicsWrapper{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.topics{
+    background: white;
+    margin-top:10px;
+    box-shadow: 0 0 3px #BCBCBC;
+    min-height: 200px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    width:25%;
+    position: relative;
+    left:20px;
+    padding-bottom: 30px;
+    float: left;
+}
+.topicHeader{
+    height: 25px;
+    padding-top:20px;
+    padding-left: 40px;
+}
+.topicHeader p{
+    padding: 0;
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family:Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+}
+.topicsWrapper li{
+    padding: 10px 10px 0 10px;
+    list-style-type:none;
+    text-decoration:none;
+}
+.topicsWrapper input{
+    padding-left: 10px;
+    width: 131px;
+    height: 25px;
+    position: relative;
+    left:30px;
+}
+.topicsWrapper img{
+    position: relative;
+    left: 15%;
+    width: 28px;
+    height: 28px;
+
+    border: 1px #797979 dashed;
+}
+.topicsWrapper span{
+    position: relative;
+    left: 18%;
+    bottom:10px;
+    font-family: Calibri;
+    font-size: 16px;
+}
+.topicsWrapper a{
+    text-decoration: none;
+    color:black;
+}
+.topicsWrapper span:hover{
+    cursor: pointer;
+}
+.topicWrapperSearchDropdown{
+    min-height: 30px;
+    width: 143px;
+    background: white;
+    position: relative;
+    left:40px;
+    border: 1px solid #797979;
+    z-index: 9999;
+    border-radius: 3px;
+}
+.topicWrapperEnterTopic{
+    height: 50px;
+}

@@ -21,4 +21,7 @@ export const calculateDays = (year, month) => {
 
 
 }
+
+export const degreeYearRange = ["Undergraduate 1st year","Undergraduate 2nd year","Undergraduate 3rd year",
+    "Undergraduate 4th year","Undergraduate 5th year","Professional degree","Master's degree","Doctorates"];
 export default yearRange;

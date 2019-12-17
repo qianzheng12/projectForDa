@@ -1,11 +1,12 @@
-import { gql } from 'apollo-boost';
+import {gql} from 'apollo-boost';
 
 export const GET_FEED_ANSWERS = gql`
     {
-        questions {
-            id
+        questions  {
+            id 
             title
             answers(orderBy: RECENT, limit:1){
+                id
                 content
                 comments{
                     id
@@ -19,29 +20,10 @@ export const GET_FEED_ANSWERS = gql`
                 school
 
             }
-        }
-    }
-`;
-
-export const QUESTIONS_BY_TOPIC = gql`query($topicName:[String!])
-    {
-        questions(topics:$topicName) {
-            id
-            title
-            answers(orderBy: RECENT, limit:1){
-                content
-                comments{
-                    id
-                }
+            topics{
+                name
             }
-            lastUpdated
-            user {
-                id
-                firstName
-                lastName
-                school
-
-            }
+            
         }
     }
 `;
@@ -70,8 +52,8 @@ export const SEARCH_ANSWER = gql` query($searchString:String!)
 `;
 export const GET_QUESTION = gql` query($id:GUID!)
     {
-        getQuestion(questionID:$id) {
-            title
+        getQuestion (questionID:$id) {
+            title 
             id
             answers {
                 id
@@ -113,8 +95,8 @@ export const GET_QUESTION = gql` query($id:GUID!)
                 school
 
             }
-        }
-    }
+        } 
+    } 
 `;
 
 export const FEED_QUESTIONS = gql`
@@ -141,7 +123,8 @@ export const FEED_QUESTIONS = gql`
 export const GET_TOPICS = gql`
     {
         topics{
-            name,
+            id
+            name
         }
     }
 `;

@@ -1,9 +1,9 @@
 import { gql } from 'apollo-boost';
 
 
-export const ASK_QUESTION = gql`mutation($title:String,$description:String){
+export const POST_QUESTION_ARTICLE = gql`mutation($title:String,$description:String,$isArticle:Boolean){
     createQuestion(userID:"1805b324-61a5-40a3-a150-4b6e67e4895f",
-        input:{title:$title,description:$description}){
+        input:{title:$title,description:$description,isArticle:$isArticle}){
         id,
     }
 }`;
@@ -12,8 +12,33 @@ export const ANSWER_QUESTION = gql`mutation($questionId:GUID,$answerContent:Stri
     createAnswer(input:{userID:"1805b324-61a5-40a3-a150-4b6e67e4895f",
         content:$answerContent,
         questionID:$questionId}){
-        id
-    }
+            id
+            content
+            user {
+                id
+                firstName
+                lastName
+                school
+        
+            }
+            lastUpdated
+            comments{
+                id
+                user {
+                    id
+                    firstName
+                    lastName
+                }
+                content
+                replies{
+                    user{
+                        firstName
+                        lastName
+                    }
+                    content
+                }
+            }
+        }
 }`;
 
 export const SEND_COMMENT = gql`mutation($answerId:GUID,$commentContent:String){
@@ -29,11 +54,12 @@ export const SEND_COMMENT = gql`mutation($answerId:GUID,$commentContent:String){
 
 export const CREATE_TOPIC = gql`mutation($topicName:String){
     createTopic(input:{name:$topicName}){
+        id
         name
     }
 }`;
-export const ADD_TOPIC_TO_QUESTION = gql`mutation($questionID:GUID!,$topicName:String!){
-    addTopicToQuestion(questionID:$questionID, topicName:$topicName)
+export const ADD_TOPIC_TO_QUESTION = gql`mutation($questionID:GUID!,$topicID:GUID!){
+    addTopicToQuestion(questionID:$questionID, topicID:$topicID)
 }`;
 
 export const CREATE_REPLY = gql`mutation($commentID:GUID!,$content:String!){
@@ -45,3 +71,11 @@ export const CREATE_REPLY = gql`mutation($commentID:GUID!,$content:String!){
         id
     }
 }`;
+
+export const UPLOAD_IMAGE = gql`mutation($fileName:String!,$type:ImageType!,$base64:String!){
+    uploadImage(
+            fileName:$fileName,
+            type:$type
+            base64:$base64)
+}`;
+

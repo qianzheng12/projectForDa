@@ -1,0 +1,15 @@
+.TextInputAreaWrapper{
+    width: 100%;
+    height: 100%;
+}
+.quill {
+    height: 80%;
+}
+
+.ql-editor{
+    min-height: 230px;
+}
+
+.ql-size ql-picker ql-expanded{
+    width: 40px;
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import './searchPage.css'
 import SortMethodButton from "../sortButton/sortMethodButton";
-import TopicWrapper from "../feedAnswers/topicWrapper";
+import TopicWrapper from "../topic/topicWrapper";
 import {useQuery} from "@apollo/react-hooks";
 import {SEARCH_ANSWER} from "../graphQL/query";
 import FeedAnswerCard from "../cards/feedAnswerCard";

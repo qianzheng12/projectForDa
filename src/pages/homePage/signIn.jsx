@@ -11,11 +11,9 @@ const SignInPage = () => {
             username:values.userEmail,
             password:values.password,
         }).then(user => {
-            console.log(user);
             window.location.reload();
         })
             .catch(err => {
-                console.log(err)
                 alert(err.message)
             });
     }

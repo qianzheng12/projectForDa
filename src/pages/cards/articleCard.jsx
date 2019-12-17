@@ -33,7 +33,7 @@ const ArticleCard = ({question}) => {
 
             </div>
             <div className="answerUserInformation">
-                <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
+                <img height="40px" width="50px" src={require('../../resource/profile.svg')}/>
                 { user &&
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>

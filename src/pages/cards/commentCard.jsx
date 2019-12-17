@@ -11,7 +11,7 @@ import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
 import './commentCard.css'
 import {useMutation} from "@apollo/react-hooks";
 import {CREATE_REPLY} from "../graphQL/mutations";
-const CommentCard = ({comment, updateData}) => {
+const CommentCard = ({comment, refetch}) => {
     const replies = comment.replies;
     const {user} = comment;
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
@@ -21,8 +21,9 @@ const CommentCard = ({comment, updateData}) => {
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
     const sendReply = ()=>{
         createReply({ variables: { commentID:comment.id,content:commentContent}}).then(
-            result => {
-                console.log(result)
+            () => {
+                setRepliesExpanded(false);
+                refetch()
             }
         )
     }

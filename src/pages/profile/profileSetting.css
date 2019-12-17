@@ -1,0 +1,52 @@
+.ProfileSettingListItem{
+    margin:0;
+    width: 90%;
+    height: 85px;
+    position: relative;
+    left: 30px;
+    border-bottom: 1px rgba(0, 0, 0, 0.29) solid;
+
+}
+.ProfileSettingListName{
+    float: left;
+    position: relative;
+    left: 20px;
+    width: 25%;
+    height:84px;
+
+}
+.ProfileSettingListName p{
+    margin:0;
+    position: relative;
+    font-size: 15px;
+    font-family: Calibri;
+    top:40%;
+}
+.ProfileSettingListContent{
+    width: 50%;
+    float: left;
+    height:84px;
+
+}
+.ProfileSettingListContent p{
+    margin:0;
+    position: relative;
+    font-size: 15px;
+    font-family: Calibri;
+    top:40%;
+}
+.ProfileSettingChange{
+    width: 20%;
+    float: left;
+    height:84px;
+    text-align: center;
+}
+.ProfileSettingChange p {
+    margin:0;
+    left: 20px;
+    position: relative;
+    font-size: 15px;
+    font-family: Calibri;
+    top:40%;
+    color:#169BD5 ;
+}
