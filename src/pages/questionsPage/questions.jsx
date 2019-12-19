@@ -21,7 +21,7 @@ const Questions = props => {
             <div style={{marginLeft: "20vw"}} className="homePageContent">
                 <div className="feedQuestions">
                     {questions.map((question)=>(
-                        <div className="feedQuestion"><QuestionCard refetch={refetch} question={question}/></div>
+                        <div className="feedQuestion"><QuestionCard refetch={refetch} question={question} feedCard={true}/></div>
                         ))}
                 </div>
                 <div className="topics">

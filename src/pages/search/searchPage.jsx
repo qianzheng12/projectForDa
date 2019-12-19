@@ -40,11 +40,14 @@ const SearchPage = props => {
                     </div>
                     <div className="searchResultWrapper">
                         {filteredOutQuestions.map(question => {
+                            const {answers} = question;
+                            if (answers.length>0){
                                 return (
                                     <div className="feedAnswer">
-                                        <FeedAnswerCard key={question.id} question={question}/>
+                                        <FeedAnswerCard key={question.id} question={question} answer={answers[0]}/>
                                     </div>
                                 )
+                            }
                             })}
                     </div>
 
@@ -53,7 +56,7 @@ const SearchPage = props => {
                     <div className="topicHeader">
                         <p>Topics</p>
                     </div>
-                    <TopicWrapper/>
+                    <TopicWrapper topics={data.topics}/>
                 </div>
             </div>
         </div>

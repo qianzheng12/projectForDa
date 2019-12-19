@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import './addArticle.css'
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_TOPIC_TO_QUESTION, POST_QUESTION_ARTICLE, CREATE_TOPIC} from "../graphQL/mutations";
-import PostPage from "../askQuestion/postPage";
+import PostPage from "../posts/postPage";
 
 export const AddArticle = () => {
     const [topics, addTopic] = useState([]);

@@ -9,8 +9,10 @@ import Button from '@material-ui/core/Button';
 import ReactQuill from "react-quill";
 import {questionCardModoules} from "../utils/quillModules";
 import {FOLLOW_QUESTION} from "../graphQL/userMutation";
+import TimeAgo from "react-timeago";
+import {Link} from "react-router-dom";
 
-const QuestionCard = ({question, refetch}) => {
+const QuestionCard = ({question, refetch, feedCard}) => {
     const {user} = question;
     const [answerMode, toggleAnswerButton] = useState(false);
     const [editorState, setEditorState] = useState("");
@@ -50,8 +52,10 @@ const QuestionCard = ({question, refetch}) => {
                 </div>
                 <h3>{question.title}</h3>
                 {user && <div><p>post by</p> <p
-                    style={{color: '#906604', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></div>}
-                <p style={{marginLeft: '0.5%'}}>{question.lastUpdated}</p>
+                    style={{color: '#906604', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p>
+                    <p style={{marginLeft: '0.5%'}}><TimeAgo date={question.lastUpdated} live={false} /></p>
+                </div>}
+
             </div>
             <div className="questionDescription">
                 <Typography variant="body2" color="textSecondary">
@@ -76,9 +80,14 @@ const QuestionCard = ({question, refetch}) => {
                 <EmojiPeopleIcon/>
                 <FlagOutlinedIcon/>
                 <div className="postButton">
-                    <Button onClick={onPost}>
+                    {feedCard &&
+                    <Link to={`/question/${question.id}`}><Button onClick={onPost}>
+                        <span style={{textDecoration: "none"}}>{answerMode ? "Post" : "Answer"}</span>
+                    </Button> </Link>}
+                    {!feedCard &&                    <Button onClick={onPost}>
                         <span>{answerMode ? "Post" : "Answer"}</span>
-                    </Button>
+                    </Button>}
+
                 </div>
                 {answerMode && <p onClick={() => toggleAnswerButton(!answerMode)}>cancel</p>}
             </div>

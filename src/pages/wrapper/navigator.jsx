@@ -5,7 +5,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Button from "@material-ui/core/Button";
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import { Auth } from 'aws-amplify';
-import PostPage from "../askQuestion/postPage";
+import PostPage from "../posts/postPage";
 const Navigator = props => {
     const {selectedPage} = props;
     const [askQuestionMode,toggleAskQuestionMode] = useState(false);
@@ -32,9 +32,11 @@ const Navigator = props => {
                         <Button id="askQuestionButton" onClick={()=>toggleAskQuestionMode(!askQuestionMode)}>
                             <AddBoxOutlinedIcon/><span>Question</span>
                         </Button>
-                        <Button id="postArticleButton">
-                            <AddBoxOutlinedIcon/><Link to='/addArticle'><span>Article</span></Link>
-                        </Button>
+                        <Link to='/addArticle'>
+                            <Button id="postArticleButton">
+                                <AddBoxOutlinedIcon/><span>Article</span>
+                            </Button>
+                        </Link>
                     </div>
                     <div className="accountIcon">
                         <a href="/Profile/1"><AccountCircleIcon/></a>

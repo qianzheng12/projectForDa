@@ -130,7 +130,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                 <p>post anonymously</p>
                             </div>
                             <div className="questionDescriptionInputArea">
-                                <TextInputArea postContent={postContent} setPostContent={setPostContent}/>
+                                <TextInputArea postContent={postContent} setPostContent={(e)=>{console.log(e);setPostContent(e)}}/>
                             </div>
                             <div className="questionDescriptionAdvice">
                                 <ul>

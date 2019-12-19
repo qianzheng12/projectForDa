@@ -14,6 +14,7 @@ import Button from "@material-ui/core/Button";
 import {SEND_COMMENT} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";
 import Truncate from "react-truncate";
+import TimeAgo from "react-timeago";
 const AnswerWithCommentsCard = ({answer,refetch}) => {
     const {user} = answer;
     const {comments} = answer;
@@ -41,7 +42,8 @@ const AnswerWithCommentsCard = ({answer,refetch}) => {
                 <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2>{answer.lastUpdated}</h2>
+                    <h2><TimeAgo date={answer.lastUpdated} live={false} /></h2>
+
                     <h3>{user.school}</h3>
                 </div>
             </div>

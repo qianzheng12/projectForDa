@@ -13,6 +13,7 @@ import {useVotesState} from "../hooks/answerStates";
 import {useMutation} from "@apollo/react-hooks";
 import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
 import CloseIcon from '@material-ui/icons/Close';
+import TimeAgo from 'react-timeago'
 /*
                    <Typography variant="body2" color="textSecondary" >
                        <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
@@ -56,7 +57,7 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer,refe
                 { user &&
                     <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2>{question.lastUpdated}</h2>
+                    <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
                     <h3>{user.school}</h3>
                     </div>
 

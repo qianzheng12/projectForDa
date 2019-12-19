@@ -9,27 +9,26 @@ import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {USER_INFORMATION} from "../graphQL/userQuery";
 import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
-const ProfileCard = props => {
+const ProfileCard = ({userInformation}) => {
+    console.log(userInformation)
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
     const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL);
-    const {loading,data,refetch} = useQuery(USER_INFORMATION);
-    if (loading) {
-        return <div/>
-    }
-    const {me} = data;
+    const [userThumbnail,setUserThumbnail] = useState(userInformation.thumbnail);
+
     const updateThumbnail = (pictureUrl) =>{
 
         updateThumbnailMutation({variables: {thumbnail:pictureUrl}}).then((result) =>{
-            refetch();
+            setUserThumbnail(pictureUrl);
             toggleUploadImageWindow(false)
         })
     }
+    console.log(userThumbnail)
     return (
         <div className="card">
             {uploadImageWindow &&
                 <UploadImageWindow
-                    fileName={me.id}
+                    fileName={userInformation.id}
                     closeWindow={()=>toggleUploadImageWindow(false)}
                     callback={pictureUrl=>updateThumbnail(pictureUrl)}
                     type={"profileThumbnail"}/>
@@ -40,10 +39,10 @@ const ProfileCard = props => {
                     <div className="profileThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
                         {cursorOn&&<AddAPhotoIcon/>}
                     </div>
-                    <img onClick={() => toggleUploadImageWindow(true)} height="130px" width="130px" src={me.thumbnail}/>
+                    <img onClick={() => toggleUploadImageWindow(true)} height="130px" width="130px" src={userThumbnail}/>
                 </div>
                 <div className="profileName">
-                    <h1>Allan Yang</h1>
+                    <h1>{userInformation.firstName+' '+ userInformation.lastName}</h1>
                 </div>
                 <div className="profileHeaderAction">
                     <Button id="followNumber"> <PersonAddIcon/><span>32k</span></Button>
@@ -53,9 +52,9 @@ const ProfileCard = props => {
             <div className="profileCardBottom">
                 <div className="profileUniversityIntro">
                     <ul>
-                        <li>University of Illinois at Urbana-Champaign</li>
-                        <li>Mathematics</li>
-                        <li>Undergraduate Junior</li>
+                        <li>{userInformation.school}</li>
+                        <li>{userInformation.major}</li>
+                        <li>{userInformation.year}</li>
                     </ul>
                 </div>
                 <div className="profileUniversityLogo">

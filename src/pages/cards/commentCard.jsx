@@ -11,6 +11,7 @@ import ReplyRoundedIcon from '@material-ui/icons/ReplyRounded';
 import './commentCard.css'
 import {useMutation} from "@apollo/react-hooks";
 import {CREATE_REPLY} from "../graphQL/mutations";
+import TimeAgo from "react-timeago";
 const CommentCard = ({comment, refetch}) => {
     const replies = comment.replies;
     const {user} = comment;
@@ -34,7 +35,8 @@ const CommentCard = ({comment, refetch}) => {
                 <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2>{comment.lastUpdated}</h2>
+                    <h2><TimeAgo date={comment.lastUpdated} live={false} /></h2>
+
                 </div>
             </div>
             <div className="commentContent">

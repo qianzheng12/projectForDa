@@ -48,6 +48,12 @@ export const SEARCH_ANSWER = gql` query($searchString:String!)
 
             }
         }
+
+        topics{
+            id
+            name
+            thumbnail
+        }
     }
 `;
 export const GET_QUESTION = gql` query($id:GUID!)
@@ -125,6 +131,7 @@ export const GET_TOPICS = gql`
         topics{
             id
             name
+            thumbnail
         }
     }
 `;

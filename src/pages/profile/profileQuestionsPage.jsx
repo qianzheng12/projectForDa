@@ -3,23 +3,34 @@ import './profileHomePage.css'
 import './profileQuestion.css'
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ProfileQuestionCard from "../cards/profileQuestionCard";
-import {useQuery} from "@apollo/react-hooks";
-import {FEED_QUESTIONS, GET_FEED_ANSWERS} from "../graphQL/query";
-const ProfileQuestionsPage = props => {
-    const {loading, error, data} = useQuery(FEED_QUESTIONS);
-    if (loading) return <div/>;
-    if (error) return <div/>;
-    const {questions} = data;
+const ProfileQuestionsPage = ({type,data}) => {
+    console.log(data)
     return (
         <div className="profileRightPartWrapper">
             <div className="profileContentSearch">
                 <SearchOutlinedIcon />
                 <input placeholder="search"/>
             </div>
-            {
-                questions.map(question => (
+            {type === "question" &&
+                data.map(post => (
+                    !post.isArticle &&
                     <div className="profileQuestion">
-                        <ProfileQuestionCard question={question}/>
+                        <ProfileQuestionCard post={post} content={post.description}/>
+                    </div>
+                ))
+            }
+            {type === "answer" &&
+                data.map(answer => (
+                    <div className="profileQuestion">
+                        <ProfileQuestionCard post={answer.question} content={answer.content} />
+                    </div>
+                ))
+            }
+            {type === "article" &&
+                data.map(post => (
+                    post.isArticle &&
+                    <div className="profileQuestion">
+                        <ProfileQuestionCard post={post} content={post.description}/>
                     </div>
                 ))
             }

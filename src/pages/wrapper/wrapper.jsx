@@ -11,7 +11,7 @@ import {Helmet} from "react-helmet";
 import {ApolloProvider} from '@apollo/react-hooks';
 import { onError } from 'apollo-link-error';
 import QuestionAnswers from "../questionAnswersPage/questionAnswers";
-import PostPage from "../askQuestion/postPage";
+import PostPage from "../posts/postPage";
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from '../../aws-exports';
 import SearchPage from "../search/searchPage";
@@ -34,7 +34,6 @@ const Wrapper = () => {
             try {
                 const result = await Auth.currentSession();
                 setToken(result.getIdToken().getJwtToken());
-                console.log("setToken")
                 setAuthStatus(true);
                 const user = await Auth.currentAuthenticatedUser();
                 setUser(user);
