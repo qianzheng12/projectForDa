@@ -6,15 +6,19 @@ import Button from "@material-ui/core/Button";
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import { Auth } from 'aws-amplify';
 import PostPage from "../posts/postPage";
-const Navigator = props => {
-    const {selectedPage} = props;
-    const [askQuestionMode,toggleAskQuestionMode] = useState(false);
+
+/* 
+    Navigation bar for user to navgiate between three components: Home, question, School.
+    Also provide the account icon for user to access the account management page and search ability.
+*/
+
+const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
     const signOut = () => {
         Auth.signOut()
             .then(data => window.location.reload())
             .catch(err => console.log(err));
     };
-    console.log(selectedPage);
+
     return (
         <div>
             <div className="navBar">
@@ -29,7 +33,7 @@ const Navigator = props => {
                     </div>
                     <SearchInput/>
                     <div className="askQuestionWrapper">
-                        <Button id="askQuestionButton" onClick={()=>toggleAskQuestionMode(!askQuestionMode)}>
+                        <Button id="askQuestionButton" onClick={()=>setGreyOutCover(!greyOutCover)}>
                             <AddBoxOutlinedIcon/><span>Question</span>
                         </Button>
                         <Link to='/addArticle'>
@@ -39,23 +43,13 @@ const Navigator = props => {
                         </Link>
                     </div>
                     <div className="accountIcon">
-                        <a href="/Profile/1"><AccountCircleIcon/></a>
+                        <a href={"/Profile/"+me.id}>{me.thumbnail?<img src={me.thumbnail}/>:<AccountCircleIcon/>}</a>
                     </div>
                     <div className="logOut">
                         <Button onClick={signOut}>Log out </Button>
                     </div>
                 </nav>
             </div>
-            {askQuestionMode &&
-            <div>
-                <div className="askQuestionPageBackGround">
-                </div>
-                <div className="askQuestionPage">
-                    <PostPage askQuestionMode={askQuestionMode}
-                              toggleAskQuestionMode={toggleAskQuestionMode}
-                              type="question"/>
-                </div>
-            </div>}
         </div>)
 };
 export default Navigator;

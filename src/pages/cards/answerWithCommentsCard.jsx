@@ -15,20 +15,27 @@ import {SEND_COMMENT} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";
 import Truncate from "react-truncate";
 import TimeAgo from "react-timeago";
-const AnswerWithCommentsCard = ({answer,refetch}) => {
+import SharePopup from "../utils/sharePopup";
+import BookmarkRoundedIcon from "@material-ui/icons/BookmarkRounded";
+import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
+
+const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
     const {user} = answer;
     const {comments} = answer;
-    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
-    const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
+    const [share, setShare] = useState(false);
+    const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState();
+    const {commentContent, commentMode, setCommentContent, setCommentMode, emptyCommentError, setEmptyCommentError} = useCommentState();
     const [sendCommentMutation] = useMutation(SEND_COMMENT);
+    const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked)
     const [lineOfContent, setLineOfContent] = useState(5);
+    const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
+    const [bookmarkAnswerMutation] = useMutation(BOOKMARK_ANSWER);
     const sendComment = () => {
-        if (commentContent === ''){
+        if (commentContent === '') {
             setEmptyCommentError(true)
-        }
-        else{
-            sendCommentMutation({ variables: { answerId:answer.id,commentContent}}).then(
-                (result)=>{
+        } else {
+            sendCommentMutation({variables: {answerId: answer.id, commentContent}}).then(
+                (result) => {
                     refetch()
                 }
             );
@@ -36,20 +43,30 @@ const AnswerWithCommentsCard = ({answer,refetch}) => {
             setCommentMode(false);
         }
     };
+    const unBookmarkAnswer = () => {
+        unBookmarkMutation({variables: {answerID: answer.id}}).then((result) => {
+            setBookmarkedIcon(false)
+        })
+    };
+    const bookmarkAnswer = () => {
+        bookmarkAnswerMutation({variables: {answerID: answer.id}}).then((result) => {
+            setBookmarkedIcon(true)
+        })
+    };
     return (
         <div className="card">
             <div className="answerUserInformation">
                 <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2><TimeAgo date={answer.lastUpdated} live={false} /></h2>
+                    <h2><TimeAgo date={answer.lastUpdated} live={false}/></h2>
 
                     <h3>{user.school}</h3>
                 </div>
             </div>
             <div className="answerContents">
-                <Typography variant="body2" color="textSecondary" >
-                        <div dangerouslySetInnerHTML={{ __html: answer.content }} />
+                <Typography variant="body2" color="textSecondary">
+                    <div dangerouslySetInnerHTML={{__html: answer.content}}/>
                 </Typography>
             </div>
             <div className="answerActions">
@@ -62,23 +79,27 @@ const AnswerWithCommentsCard = ({answer,refetch}) => {
                 {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
                 <div className="rightAnswerActions">
                     <div className="commentsIconWrapper">
-                        <AddCommentOutlinedIcon onClick={()=>setCommentMode(!commentMode)}/>
+                        <AddCommentOutlinedIcon onClick={() => setCommentMode(!commentMode)}/>
                         <span>{answer.comments.length}</span>
                     </div>
-                    <ShareRoundedIcon/>
-                    <BookmarkBorderOutlinedIcon/>
+                    <ShareRoundedIcon onClick={() => {
+                        setShare(!share)
+                    }}/>
+                    {share && <SharePopup url={window.location.href}/>}
+                    {bookmarkedIcon && <BookmarkRoundedIcon onClick={unBookmarkAnswer} style={{color: "#FF9240"}}/>}
+                    {!bookmarkedIcon && <BookmarkBorderOutlinedIcon onClick={bookmarkAnswer}/>}
                 </div>
             </div>
             {commentMode &&
             <div className="commentInputArea">
-                <input onChange={e=>setCommentContent(e.target.value)} placeholder="Write your comment"/>
+                <input onChange={e => setCommentContent(e.target.value)} placeholder="Write your comment"/>
                 <Button onClick={sendComment}>
                     <span>{"Send"}</span>
                 </Button>
                 {emptyCommentError && <h2>Please enter comment before send.</h2>}
             </div>}
             <div className="dividerBetweenAnswerAndComments"/>
-            {comments&&comments.length>=1 && (
+            {comments && comments.length >= 1 && (
                 <div className="commentsForAnswer">
                     {comments.map(comment => (
 

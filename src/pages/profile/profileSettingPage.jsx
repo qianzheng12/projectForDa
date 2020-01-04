@@ -1,32 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
 import './profileSetting.css'
+import SettingField from "./settingField";
+import {useMutation} from "@apollo/react-hooks";
+import {UPDATE_SELF} from "../graphQL/userMutation";
+import NameSettingField from "./nameSettingField";
 
-const ProfileSettingPage = props => {
-
+const ProfileSettingPage = ({user,refetch}) => {
+    const [firstName,setFirstName] = useState(user.firstName);
+    const [lastName,setLastName] = useState(user.lastName);
+    const [major,updateMajor] = useState(user.major);
+    const [year,updateYear] = useState(user.year);
+    const [phoneNumber,updatePhoneNumber] = useState(user.phone);
+    const [updateSelfMutation] = useMutation(UPDATE_SELF);
+    const updateSelf = ()=>updateSelfMutation({variables:{
+            phoneNumber,
+            firstName,
+            lastName,
+            major,
+            year
+        }}).then(result=>{
+            if(result){
+                refetch()
+            }
+    });
     const settingFields = [
-        {name:"Name",mappedField:"Allan Yang",changeField:"Edit"},
-        {name:"School Email",mappedField:"byang9@illinois.edu",changeField:"Edit"},
-        {name:"School",mappedField:"University of Illinois at Urbana-Champaign",changeField:"not your school?"},
-        {name:"Major",mappedField:"Mathematics",changeField:"Edit"},
-        {name:"Year",mappedField:"Undergraduate Junior",changeField:"Change"},
-        {name:"Contact Email",mappedField:"-",changeField:"Edit"},
-        {name:"Phone number",mappedField:"630-638-8818",changeField:"Edit"},
+        {name:"School Email",mappedField:user.email,changeField:""},
+        {name:"School",mappedField:user.school,changeField:"show/hide"},
+        {name:"Major",mappedField:major,updateField:updateMajor,changeField:"Edit"},
+        {name:"Year",mappedField:year,updateField:updateYear,changeField:"Change"},
+        {name:"Secondary Email",mappedField:"-",changeField:"Edit"},
+        {name:"Phone number",mappedField:phoneNumber,updateField:updatePhoneNumber,changeField:"Edit"},
         {name:"Password",mappedField:"******",changeField:"Change"}];
     return (
         <div className="profileHomePageWrapper">
             <div className="ProfileContentList">
+                <NameSettingField firstName={firstName} lastName={lastName} setFirstName={setFirstName} setLastName={setLastName} updateSelf={updateSelf}/>
                 {settingFields.map(field => (
-                    <div className="ProfileSettingListItem">
-                        <div className="ProfileSettingListName">
-                            <p>{field.name}:</p>
-                        </div>
-                        <div className="ProfileSettingListContent">
-                            <p>{field.mappedField}</p>
-                        </div>
-                        <div className="ProfileSettingChange">
-                            <p>{field.changeField}</p>
-                        </div>
-                    </div>
+                    <SettingField field={field} updateSelf={updateSelf}/>
                 ))}
             </div>
         </div>

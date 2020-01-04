@@ -189,8 +189,7 @@
 }
 .registerUploadThumbnailWrapper{
     position: fixed;
-    background: #6B6B6B;
-    width: 300px;
+    width: 600px;
     height: 300px;
     left: 30%;
     z-index: 100;

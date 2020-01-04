@@ -11,10 +11,19 @@ export const GET_FEED_ANSWERS = gql`
                 comments{
                     id
                 }
+                user {
+                    id
+                    firstName
+                    lastName
+                    thumbnail
+                    school
+
+                }
             }
             lastUpdated
             user {
                 id
+                thumbnail
                 firstName
                 lastName
                 school
@@ -68,6 +77,7 @@ export const GET_QUESTION = gql` query($id:GUID!)
                     id
                     firstName
                     lastName
+                    thumbnail
                     school
 
                 }
@@ -78,12 +88,16 @@ export const GET_QUESTION = gql` query($id:GUID!)
                         id
                         firstName
                         lastName
+                        thumbnail
+                        school
                     }
                     content
                     replies{
                         user{
                             firstName
                             lastName
+                            thumbnail
+                            school
                         }
                         content
                     }
@@ -99,7 +113,29 @@ export const GET_QUESTION = gql` query($id:GUID!)
                 firstName
                 lastName
                 school
+                thumbnail
 
+            }
+            comments{
+                id
+                user {
+                    id
+                    firstName
+                    thumbnail
+                    school
+                    lastName
+                }
+                content
+                replies{
+                    user{
+                        firstName
+                        lastName
+                        thumbnail
+                        school
+                    }
+                    dateReplied
+                    content
+                }
             }
         } 
     } 

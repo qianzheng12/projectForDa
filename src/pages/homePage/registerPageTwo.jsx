@@ -1,6 +1,11 @@
 import React  from 'react'
 import './registerPage.css'
 import PinInput from "react-pin-input";
+import Button from "@material-ui/core/Button";
+
+/*
+    Page for client to enter verification code. Code was sent by Amplify Auth to the email user filled in.
+*/
 const RegisterPageOne = ({submit,resendConfirmationCode}) => {
     let enteredPin = "";
 
@@ -10,8 +15,9 @@ const RegisterPageOne = ({submit,resendConfirmationCode}) => {
 
     return (
         <div className="registerForm">
-            <div className="signUpHeader">
-                <h1>SIGN UP</h1>
+            <div className="authWrapperHeader">
+                <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
+                <span>Singularity</span>
             </div>
             <div className="pinHints">
                 <p>Please check your email for the verification code and enter it below:</p>
@@ -33,7 +39,7 @@ const RegisterPageOne = ({submit,resendConfirmationCode}) => {
             </div>
 
             <div className="nextSignUpPageButton">
-                <button onClick={submitPin} type="submit">Submit</button>
+                <Button onClick={submitPin} type="submit">Submit</Button>
             </div>
         </div>
 

@@ -1,6 +1,7 @@
 import {gql} from "apollo-boost";
 
-export const USER_INFORMATION = gql`
+
+export const ME = gql`
     {
         me {
             id
@@ -10,12 +11,21 @@ export const USER_INFORMATION = gql`
             major
             year
             lastName
+            phone
+            bookmarkedAnswers{
+                id
+            }
+            followedQuestions{
+                id
+            }
             answers{
                 id
                 content
                 lastUpdated
                 question{
+                    id
                     topics{
+                        id
                         name
                     }
                     title
@@ -28,6 +38,84 @@ export const USER_INFORMATION = gql`
                 isArticle
                 lastUpdated
                 topics{
+                    id
+                    name
+                }
+                user {
+                    id
+                    firstName
+                    lastName
+                    school
+
+                }
+            }
+            bookmarkedAnswers {
+                id
+                content
+                comments {
+                    id
+                }
+                user {
+                    id
+                    thumbnail
+                    firstName
+                    lastName
+                    school
+                }
+                question {
+                    id
+                    title
+                    lastUpdated
+                    user {
+                        id
+                        thumbnail
+                        firstName
+                        lastName
+                        school
+                    }
+                    topics {
+                        id
+                        name
+                    }
+                }
+            }
+        }
+    }
+`;
+
+
+export const USER_INFORMATION = gql` query($userID:GUID!)
+    {
+        getUser(userID:$userID) {
+            id
+            thumbnail
+            firstName
+            school
+            major
+            year
+            lastName
+            phone
+            answers{
+                id
+                content
+                lastUpdated
+                question{
+                    id
+                    topics{
+                        id
+                        name
+                    }
+                    title
+                }
+            }
+            questions {
+                id
+                title
+                description
+                isArticle
+                lastUpdated
+                topics{
+                    id
                     name
                 }
                 user {
@@ -55,6 +143,7 @@ export const USER_INFORMATION = gql`
                         school
                     }
                     topics {
+                        id
                         name
                     }
                 }
@@ -70,6 +159,13 @@ export const USER_BOOKMARKED_ANSWERS = gql`
                 content
                 comments {
                     id
+                }
+                user {
+                    id
+                    firstName
+                    lastName
+                    school
+                    thumbnail
                 }
                 question {
                     id

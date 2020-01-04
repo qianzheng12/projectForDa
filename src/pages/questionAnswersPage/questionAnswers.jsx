@@ -8,6 +8,7 @@ import {GET_QUESTION} from "../graphQL/query";
 const QuestionAnswers = props => {
 
     let id = props.match.params.id;
+    const {followedQuestions,bookMarkedAnswers} =props;
     let { loading, error, data,refetch} = useQuery(GET_QUESTION,{ variables: { id },});
 
     if (loading) return <div/>;
@@ -18,7 +19,7 @@ const QuestionAnswers = props => {
         <div className="questionAnswerWrapper">
             <div className="questionAnswerContent">
                 <div className="question">
-                    <QuestionCard question={getQuestion} refetch={refetch} />
+                    <QuestionCard question={getQuestion} refetch={refetch}  followed={followedQuestions.some((q)=>{return q.id === getQuestion.id})}/>
                 </div>
                 <div className="questionAnswerGap">
                     <p>
@@ -29,7 +30,7 @@ const QuestionAnswers = props => {
                 <div className="answers">
                     {getQuestion.answers.map((answer) => (
                         <div className="answer">
-                            <AnswerWithCommentsCard refetch={refetch} answer={answer}/>
+                            <AnswerWithCommentsCard refetch={refetch} answer={answer} bookmarked={bookMarkedAnswers.some((b)=>{return b.id === answer.id})}/>
                         </div>)
                     )}
                 </div>

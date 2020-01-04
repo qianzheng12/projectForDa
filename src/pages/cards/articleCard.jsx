@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Typography from "@material-ui/core/Typography";
-import {ANSWER_QUESTION, SEND_COMMENT} from "../graphQL/mutations";
+import {ANSWER_QUESTION, COMMENT_ARTICLE, SEND_COMMENT} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
@@ -13,40 +13,49 @@ import './articleCard.css'
 import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
 import Button from "@material-ui/core/Button";
 import {useCommentState} from "../hooks/commentStates";
-const ArticleCard = ({question}) => {
+import TimeAgo from "react-timeago";
+import ReactHtmlParser from "react-html-parser";
+const ArticleCard = ({question,refetch}) => {
     const {user} = question;
-    console.log(question)
-    const [answerMode,toggleAnswerButton] = useState(false);
-    const [editorState, setEditorState] = useState("");
-    const [answerQuestion] = useMutation(ANSWER_QUESTION);
-    const [showWarning, setShowWarning] = useState(false);
     const [lineOfContent, setLineOfContent] = useState(5);
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
 
-    const [sendCommentMutation] = useMutation(SEND_COMMENT);
+    const [sendCommentMutation] = useMutation(COMMENT_ARTICLE);
 
+    const sendComment = () => {
+        if (commentContent === ''){
+            setEmptyCommentError(true)
+        }
+        else{
+            sendCommentMutation({ variables: { questionID:question.id,commentContent}}).then(
+                (result)=>{
+                    refetch()
+                }
+            );
+            setEmptyCommentError(false);
+            setCommentMode(false);
+        }
+    };
     return (
         <div className="card">
             <div className="questionHeader">
-                <Link to={`/question/${question.id}`}><h3>{question.title}</h3></Link>
-
+                <h3>{question.title}</h3>
             </div>
             <div className="answerUserInformation">
-                <img height="40px" width="50px" src={require('../../resource/profile.svg')}/>
+                <img height="40px" width="50px" src={user.thumbnail||require('../../resource/profile.svg')}/>
                 { user &&
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2>{question.lastUpdated}</h2>
+                    <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
                     <h3>{user.school}</h3>
                 </div>
-
                 }
             </div>
             <div className="articleContent">
                 <Typography variant="body2" color="textSecondary" component="p">
                     <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
-                        <div dangerouslySetInnerHTML={{ __html: question.description} } />
+                        <div>{ReactHtmlParser(question.description)}</div>
                     </Truncate>
                 </Typography>
             </div>
@@ -75,7 +84,7 @@ const ArticleCard = ({question}) => {
             {commentMode &&
             <div className="commentInputArea">
                 <input onChange={e=>setCommentContent(e.target.value)} placeholder="Write your comment"/>
-                <Button>
+                <Button onClick={sendComment}>
                     <span>{"Send"}</span>
                 </Button>
                 {emptyCommentError && <h2>Please enter comment before send.</h2>}

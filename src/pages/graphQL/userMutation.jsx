@@ -17,3 +17,9 @@ export const UPDATE_THUMBNAIL = gql`mutation($thumbnail:String){
         id
     }
 }`;
+
+export const UPDATE_SELF = gql`mutation($major:String,$year:String,$phoneNumber:PhoneNumber,$firstName:String,$lastName:String){
+    updateSelf(input:{major:$major,year:$year,phone:$phoneNumber,firstName:$firstName,lastName:$lastName}){
+        id
+    }
+}`;

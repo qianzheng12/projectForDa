@@ -9,8 +9,9 @@
 }
 .profileWrapper{
     width: 850px;
-    height: 100%;
+    height: 92%;
     margin-left: 20vw;
+    position: absolute;
 }
 .profileCardTop{
     height: 37px;
@@ -72,6 +73,13 @@
     transform: rotate(-30deg);
     bottom: 2px;
 }
+.profileHeaderAction #preview svg{
+    position:relative;
+    width: 20px;
+    height: 20px;
+    right:2px;
+    bottom: 2px;
+}
 .profileCardBottom{
     height: 133px;
     width: 100%;
@@ -107,11 +115,11 @@
 }
 .profileContent{
     width: 100%;
-    height: 1048px;
+    position: relative;
+    height: 100%;
     background: rgba(242, 242, 242, 0.5);
     margin-top:10px;
     box-shadow: 0 0 3px #BCBCBC;
-
 }
 
 .profileNavigator{
@@ -143,7 +151,7 @@
 .profileSection{
     float: left;
     width: 625px;
-    height: 100%;
+    min-height: 900px;
 }
 .photoUploadCover{
     position: relative;

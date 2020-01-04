@@ -98,7 +98,7 @@
 }
 .commentInputArea{
     height: 40px;
-    padding:15px 0 10px 50px;
+    padding:15px 0 10px 40px;
     width: 93%;
 
 }
@@ -111,7 +111,7 @@
     float: right;
     width: 60px;
     position: relative;
-    right:10px;
+    right:5px;
     height:35px;
     background: rgba(255, 146, 64, 0.24);
     text-align: center;

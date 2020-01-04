@@ -80,13 +80,30 @@
     padding: 0 5% 0 0;
     word-wrap: break-word;
     overflow: hidden;
+    margin-bottom: 30px;
 }
 .questionDescription p{
     height: 80%;
     color: black;
-    font-size: 0.8em;
+    font-size: 15px;
+    font-family: Calibri;
     left: 0;
     margin:0;
+}
+.questionDescription img{
+    max-width: 500px;
+}
+.questionDescription iframe{
+    width: 500px;
+    height: 300px;
+}
+.questionDescription a{
+    color: #169BD5;
+    font-size: 15px;
+    font-family: Calibri;
+}
+.questionDescription a:hover{
+    cursor: pointer;
 }
 .questionActions{
     height: 40px;
@@ -119,6 +136,9 @@
     color: rgb(255, 146, 64);
     font-weight: bold;
     font-size: 0.9em;
+    text-decoration: none;
+}
+.postButton a{
     text-decoration: none;
 }
 .postButton button{

@@ -11,7 +11,7 @@ const ProfileBookmarkPage = props => {
     if (loading) return <div/>;
     if (error) return <div/>;
     console.log(data);
-    const {me:{bookmarkedAnswers}} = data
+    const {me:{bookmarkedAnswers}} = data;
     return (
         <div className="profileRightPartWrapper">
             <div className="profileContentSearch">
@@ -24,6 +24,7 @@ const ProfileBookmarkPage = props => {
                     return (
                         <div className="feedAnswer">
                             <FeedAnswerCard
+                                bookmarked={true}
                                 key={question.id}
                                 question={question}
                                 answer={bookmarkAnswer}

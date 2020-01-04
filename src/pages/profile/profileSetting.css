@@ -23,7 +23,7 @@
     top:40%;
 }
 .ProfileSettingListContent{
-    width: 50%;
+    width:50%;
     float: left;
     height:84px;
 
@@ -42,11 +42,23 @@
     text-align: center;
 }
 .ProfileSettingChange p {
-    margin:0;
+    margin:0 0 0 20px;
     left: 20px;
     position: relative;
     font-size: 15px;
+    float: left;
     font-family: Calibri;
     top:40%;
     color:#169BD5 ;
+}
+.ProfileSettingListContent input{
+    margin-top:33px;
+    position: relative;
+}
+.ProfileSettingListContent #nameInput{
+    width: 80px;
+    margin-left: 10px;
+}
+.ProfileSettingChange p:hover{
+    cursor: pointer;
 }

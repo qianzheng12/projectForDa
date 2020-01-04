@@ -5,12 +5,19 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 
+/* 
+    The page for user to upload thumbnail and finish registration.
+*/
 const RegisterConfirmationPage = ({submit,user}) => {
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
 
     return (
         <div className="registerForm">
+            <div className="authWrapperHeader">
+                <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
+                <span>Singularity</span>
+            </div>
             {uploadImageWindow &&
             <div className="registerUploadThumbnailWrapper">
             <UploadImageWindow
@@ -18,9 +25,6 @@ const RegisterConfirmationPage = ({submit,user}) => {
                 type={"topicThumbnail"}/>
             </div>
             }
-            <div className="signUpHeader">
-                <h1>SIGN UP</h1>
-            </div>
 
             <div className="addProfileRegister">
                 <h1>Add profile picture</h1>

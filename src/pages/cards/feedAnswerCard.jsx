@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import TextsmsOutlinedIcon from '@material-ui/icons/TextsmsOutlined';
 import ShareRoundedIcon from '@material-ui/icons/ShareRounded';
+import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import './answerCard.css'
 
@@ -14,6 +15,11 @@ import {useMutation} from "@apollo/react-hooks";
 import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
 import CloseIcon from '@material-ui/icons/Close';
 import TimeAgo from 'react-timeago'
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import SharePopup from "../utils/sharePopup";
+import Truncate from 'react-truncate'
+import HTMLEllipsis from "react-lines-ellipsis/lib/html";
+
 /*
                    <Typography variant="body2" color="textSecondary" >
                        <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
@@ -22,21 +28,28 @@ import TimeAgo from 'react-timeago'
                     </Typography>
                 }
  */
-const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer,refetch}) => {
+const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, bookmarked}) => {
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const [share, setShare] = useState(false);
+    const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked)
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
     const [lineOfContent, setLineOfContent] = useState(5);
     const {user} = answer;
+    const [postExpanded,setExpanded] = useState(false);
     const [bookmarkAnswerMutation] = useMutation(BOOKMARK_ANSWER);
-    console.log(answer);
+
     const unBookmarkAnswer = () => {
         unBookmarkMutation({variables: {answerID: answer.id}}).then ((result) => {
-            refetch()
+            setBookmarkedIcon(false)
         })
-    }
+    };
     const bookmarkAnswer = () => {
         bookmarkAnswerMutation({variables: {answerID: answer.id}}).then ((result) => {
+            setBookmarkedIcon(true)
         })
+    };
+    const expand = ()=>{
+        setExpanded(true);
     };
     return (
         <div className="card">
@@ -53,19 +66,22 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer,refe
 
             </div>
             <div className="answerUserInformation">
-                <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
+
                 { user &&
+                    <div>
+                <a href={"/Profile/"+ user.id}><img height="40px" width="50px" src={(user&&user.thumbnail)||require('../../resource/ted.jpg')}/></a>
                     <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
                     <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
                     <h3>{user.school}</h3>
-                    </div>
+                    </div></div>
 
                 }
             </div>
             <div className="answerContents">
                <Typography variant="body2" color="textSecondary" >
-                   <div dangerouslySetInnerHTML={{ __html: answer.content }} />
+                   {postExpanded && <div>{ReactHtmlParser(answer.content)}</div>}
+                   {!postExpanded &&<HTMLEllipsis onClick={expand} unsafeHTML={answer.content} maxLine ='5' basedOn='letters' expand={expand} ellipsisHTML='...<a id="expandPostButton"> (expand)</a>'/>}
                 </Typography>
             </div>
             {showAction &&
@@ -82,8 +98,10 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer,refe
                             <Link to={`/question/${question.id}`}><TextsmsOutlinedIcon/></Link>
                             <span>{answer.comments.length}</span>
                         </div>
-                        <ShareRoundedIcon/>
-                        <BookmarkBorderOutlinedIcon onClick={bookmarkAnswer}/>
+                         <ShareRoundedIcon onClick={()=>{setShare(!share)}}/>
+                        {share && <SharePopup url={window.location.href +"question/"+question.id}/>}
+                        {bookmarkedIcon && <BookmarkRoundedIcon onClick={unBookmarkAnswer} style={{color:"#FF9240"}}/>}
+                        {!bookmarkedIcon && <BookmarkBorderOutlinedIcon onClick={bookmarkAnswer} />}
                     </div>
                 </div>
             }

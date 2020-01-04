@@ -6,12 +6,12 @@ import {useQuery} from '@apollo/react-hooks';
 import ImageUploader from 'react-images-upload';
 import {GET_FEED_ANSWERS, GET_TOPICS} from '../graphQL/query'
 
-const FeedAnswerPage = props => {
+const FeedAnswerPage = ({setSelectedPage,bookMarkedAnswers}) => {
     const getTopicsResult = useQuery(GET_TOPICS);
     const {loading, error, data} = useQuery(GET_FEED_ANSWERS);
     const [leftMargin, setLeftMargin] = useState("20vw");
     const [showTopic, toggleShowTopic] = useState(true);
-    props.setSelectedPage("FeedAnswerPage");
+    setSelectedPage("FeedAnswerPage");
     useEffect(() => {
         /*window.addEventListener("resize", () => {
             console.log(window.innerWidth);
@@ -32,7 +32,7 @@ const FeedAnswerPage = props => {
     if (getTopicsResult.loading) return <div/>;
     if (getTopicsResult.error) return <div/>;
     const topics = getTopicsResult.data.topics;
-    console.log(data);
+    console.log(bookMarkedAnswers);
     const {questions} = data;
     return (
         <div className="homePage">
@@ -41,9 +41,11 @@ const FeedAnswerPage = props => {
                     {questions.map(question => {
                         const {answers} = question;
                         if(answers.length >= 1){
+                            console.log(answers[0].id)
                             return (
                                 <div className="feedAnswer">
-                                    <FeedAnswerCard key={question.id} question={question} answer={answers[0]} profileBookmarkAnswer={false} showAction={true}/>
+                                    <FeedAnswerCard bookmarked={bookMarkedAnswers.some((b)=>{return b.id === answers[0].id})}
+                                                    key={question.id} question={question} answer={answers[0]} profileBookmarkAnswer={false} showAction={true}/>
                                 </div>
                             )
                         }

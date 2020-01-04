@@ -5,8 +5,15 @@ import './registerPage.css'
 import {Auth} from 'aws-amplify';
 import RegisterConfirmationPage from "./registerConfirmationPage";
 
+/* 
+    Register page is used for client to register new account. It contains three steps:
+    1. Fill in basic information.
+    2. Enter verify code from Email.
+    3. Upload thumbnail and finish the regiser.
+*/
+
 const RegisterPage = () => {
-    const [page, setPage] = useState(3);
+    const [page, setPage] = useState(1);
     const [user, setCurrentUser] = useState("");
     const [userPassword, setUserPassword] = useState();
     const submit = (email, password,firstName,lastName,university,major,degreeYear) => {
@@ -42,7 +49,7 @@ const RegisterPage = () => {
     };
     const submitPin = enteredPin => {
         Auth.confirmSignUp(user, enteredPin)
-            .then(() => {
+            .theregisterFormn(() => {
                 setPage(3);
             }).catch(err => {
             alert(err);
@@ -61,13 +68,13 @@ const RegisterPage = () => {
 
     };
     return (
-        <div className="registerWrapper">
+        <div className="authWrapper">
             {page === 1 &&
             <RegisterPageOne
                 submit={submit}/>}
             {page === 2 && <RegisterPageTwo
                 submit={submitPin}
-                resendConfirmationCode={resendConfirmationCode}/>}}
+                resendConfirmationCode={resendConfirmationCode}/>}
             {page === 3 &&
             <RegisterConfirmationPage
                 submit={confirmUser}/>}

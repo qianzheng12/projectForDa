@@ -9,7 +9,8 @@ import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {USER_INFORMATION} from "../graphQL/userQuery";
 import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
-const ProfileCard = ({userInformation}) => {
+import VisibilityIcon from '@material-ui/icons/Visibility';
+const ProfileCard = ({userInformation,isMe,toggleVisitorMode}) => {
     console.log(userInformation)
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
@@ -22,8 +23,7 @@ const ProfileCard = ({userInformation}) => {
             setUserThumbnail(pictureUrl);
             toggleUploadImageWindow(false)
         })
-    }
-    console.log(userThumbnail)
+    };
     return (
         <div className="card">
             {uploadImageWindow &&
@@ -46,7 +46,8 @@ const ProfileCard = ({userInformation}) => {
                 </div>
                 <div className="profileHeaderAction">
                     <Button id="followNumber"> <PersonAddIcon/><span>32k</span></Button>
-                    <Button id="message"><SendIcon/> <span>message</span></Button>
+                    {!isMe&&<Button id="message"><SendIcon/> <span>Message</span></Button>}
+                    {isMe &&<Button id="preview" onClick={toggleVisitorMode}><VisibilityIcon/> <span>Preview</span></Button>}
                 </div>
             </div>
             <div className="profileCardBottom">

@@ -8,6 +8,12 @@ import {Formik} from "formik";
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import Button from "@material-ui/core/Button";
 
+/*
+    Page for user to submit their basic information like : Names, email, education details.
+    After user submit the form, information will be sent to Amplify Cognito server along with basic information,
+    basic information will be distributed to database in back end. 
+    Note: Use formik library for validation, might be overkill in this case.
+*/
 const RegisterPageOne = ({submit}) => {
     const [dayRange, setDayRange] = useState(standardDays);
     const [selectedMonth, setSelectedMonth] = useState();
@@ -32,7 +38,7 @@ const RegisterPageOne = ({submit}) => {
     };
     return (
         <Formik
-            initialValues={{firstName: '', lastName: '', email: '', password: '', confirmPassword: '', university:'',major:'',degreeYear:''}}
+            initialValues={{firstName: '', lastName: '', email: '', password: '', university:'',major:'',degreeYear:''}}
             validate={values => {
                 const errors = {};
                 if (!values.email) {
@@ -41,9 +47,6 @@ const RegisterPageOne = ({submit}) => {
                     !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                 ) {
                     errors.email = 'Invalid email address';
-                }
-                if(values.confirmPassword !== values.password){
-                    errors.confirmPassword = 'Confirm password doesn\'t match password';
                 }
                 return errors;
             }}
@@ -61,8 +64,9 @@ const RegisterPageOne = ({submit}) => {
                 <form onSubmit={handleSubmit}>
                     <div className="registerForm">
 
-                        <div className="signUpHeader">
-                            <h1>SIGN UP</h1>
+                        <div className="authWrapperHeader">
+                            <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
+                            <span>Singularity</span>
                         </div>
                         <div className="signUpInput">
                             <input required
@@ -102,16 +106,6 @@ const RegisterPageOne = ({submit}) => {
                             />
                         </div>
                         <div className="signUpInput">
-                        <input required type={!showPassword ? "password":""}
-                               name="confirmPassword"
-                               onChange={handleChange}
-                               onBlur={handleBlur}
-                               value={values.confirmPassword}
-                               placeholder="Confirm Password:"
-                               id="fullLongInput"/>
-                        <h3>{errors.confirmPassword}</h3>
-                        </div>
-                        <div className="signUpInput">
                             <input required type=""
                                    name="university"
                                    onChange={handleChange}
@@ -134,7 +128,7 @@ const RegisterPageOne = ({submit}) => {
                                   className="majorYearPicker" placeholder={degreeYearRange[0]}/>
                         </div>
                         <div className="toS">
-                            <input required type="checkbox"/> toS
+                            <input required type="checkbox"/> ToS
                         </div>
                         <div className="nextSignUpPageButton">
                             <Button type="submit">Next</Button>

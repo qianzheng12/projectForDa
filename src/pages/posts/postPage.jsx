@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 import TextInputArea from "./textInputArea";
 import SearchTopicDropDown from "../search/searchTopicDropDown";
 import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
+import {extractImage} from "../utils/extractImg";
 const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
     const [topics,setTopics] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
@@ -58,14 +59,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
         checkTopicName(
             {
                 variables:{topicName:topic}
-            })
-
-
-        /*createTopic({variables: {topicName:currentTopicValue}}).then(
-            (result)=>{
-                console.log(result)
-            }
-        );*/
+            });
 
     };
 
@@ -78,7 +72,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                     showEmptyTopicError(true);
                 }
                 else{
-                    askQuestion({ variables: { title:values.title,description:postContent, isArticle:type==="article"}}).then(
+                    askQuestion({ variables: { title:values.title,description:postContent,thumbnail:extractImage(postContent), isArticle:type==="article"}}).then(
                         (result)=>{
                             const{data} = result;
                             topics.map((topic) => {

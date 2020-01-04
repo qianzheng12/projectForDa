@@ -12,6 +12,7 @@ import './commentCard.css'
 import {useMutation} from "@apollo/react-hooks";
 import {CREATE_REPLY} from "../graphQL/mutations";
 import TimeAgo from "react-timeago";
+import ReplyContent from "./replyContent";
 const CommentCard = ({comment, refetch}) => {
     const replies = comment.replies;
     const {user} = comment;
@@ -32,11 +33,12 @@ const CommentCard = ({comment, refetch}) => {
     return (
         <div>
             <div className="answerUserInformation">
-                <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
+                <img height="40px" width="50px" src={user.thumbnail||require('../../resource/ted.jpg')}/>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
                     <h2><TimeAgo date={comment.lastUpdated} live={false} /></h2>
 
+                    <h3>{user.school}</h3>
                 </div>
             </div>
             <div className="commentContent">
@@ -74,10 +76,7 @@ const CommentCard = ({comment, refetch}) => {
                 {repliesExpanded &&
                 <div className="repliesContent">
                     {replies.map(reply => (
-                        <div className="reply">
-                            <div className="replyHeader"> <h1>{reply.user.firstName + ' '+reply.user.lastName}</h1><h2>{reply.date}</h2></div>
-                            <div className="replyContent"> <pre><span>@{"Qian Zheng"}</span>  {reply.content}</pre></div>
-                        </div>
+                        <ReplyContent reply={reply}/>
                     ))}
                 </div>}
             </div>}

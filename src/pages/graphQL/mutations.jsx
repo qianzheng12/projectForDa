@@ -43,7 +43,6 @@ export const ANSWER_QUESTION = gql`mutation($questionId:GUID,$answerContent:Stri
 export const SEND_COMMENT = gql`mutation($answerId:GUID,$commentContent:String){
     createComment(input:
     {
-        userID:"1805b324-61a5-40a3-a150-4b6e67e4895f",
         content:$commentContent,
         answerID:$answerId})
     {
@@ -64,7 +63,6 @@ export const ADD_TOPIC_TO_QUESTION = gql`mutation($questionID:GUID!,$topicID:GUI
 export const CREATE_REPLY = gql`mutation($commentID:GUID!,$content:String!){
     createReply(
         input:{
-            userID:"1805b324-61a5-40a3-a150-4b6e67e4895f",
             content:$content
             commentID:$commentID}){
         id
@@ -78,3 +76,18 @@ export const UPLOAD_IMAGE = gql`mutation($fileName:String!,$type:ImageType!,$bas
             base64:$base64)
 }`;
 
+
+export const COMMENT_ARTICLE = gql`mutation($questionID:GUID,$commentContent:String){
+    createComment(input:
+    {
+        content:$commentContent,
+        questionID:$questionID
+    })
+    {
+        id
+    }
+}`;
+
+export const FOLLOW_QUESTION = gql`mutation($questionID:GUID){
+    followQuestion(questionID:$questionID)
+}`;

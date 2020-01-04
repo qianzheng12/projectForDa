@@ -22,33 +22,59 @@ import HomePage from "../homePage/homePage";
 import './quill.css'
 import ProfilePage from "../profile/profilePage";
 import MessageBlock from "../messageSystem/messageBlock";
+import ContentWrapper from "./contentWrapper";
+import {ErrorBoundary} from "../utils/errorHandler";
 Amplify.configure(awsconfig);
 
+/* 
+    Application wrapper, provide route ability and user verification ability
+    Show navigation bar with content if user is authorised.
+    Else show homePage which is used by Client to sign in and register.
+    */
 const Wrapper = () => {
-    const [selectedPage, setSelectedPage] = useState("FeedAnswerPage");
-    const [authStatus, setAuthStatus] = useState(false);
+    const [authStatus, setAuthStatus] = useState(undefined);
     const [user, setUser] = useState();
     const [token, setToken] = useState();
-    useEffect(() => {
-        async function getAuthState() {
-            try {
-                const result = await Auth.currentSession();
-                setToken(result.getIdToken().getJwtToken());
-                setAuthStatus(true);
-                const user = await Auth.currentAuthenticatedUser();
-                setUser(user);
-            } catch (error) {
-                if (error !== 'No current user') {
-                    console.log(error);
-                }
+    async function getAuthState() {
+        try {
+            const result = await Auth.currentSession();
+            setToken(result.getIdToken().getJwtToken());
+            console.log(111)
+            setAuthStatus(true);
+            const user = await Auth.currentAuthenticatedUser();
+            setUser(user);
+            console.log(1112)
+        } catch (error) {
+            if (error !== 'No current user') {
+                console.log(error);
+            }
+            else{
+                setAuthStatus(false)
             }
         }
+    }
 
+    useEffect(() => {
         getAuthState().then(data => {
             console.log(data)
         });
+
     }, []);
     const cache = new InMemoryCache();
+    const setSession = (rememberMe) => {
+        if (!rememberMe){
+            window.onbeforeunload = ()=>{
+                localStorage.clear();
+            }
+        }
+        else{
+            window.onbeforeunload = ()=>{
+            }
+        }
+        getAuthState().then(data=>{
+            console.log(data);
+        })
+    };
     const client = new ApolloClient({
         uri:'https://ivuzzjl262.execute-api.eu-west-2.amazonaws.com/develop/',
         cache,
@@ -58,14 +84,11 @@ const Wrapper = () => {
                     authorization: token ? `Bearer ${token}` : ''
                 }
             })
-        },
-        onError:onError(({ response, operation }) => {
-        if (operation.operationName === "IgnoreErrorsQuery") {
-            response.errors = null;
-        }})
+        }
     });
     return (
         <ApolloProvider client={client}>
+            <ErrorBoundary>
             <div className="wrapper">
                 <Helmet>
                     <meta charSet="utf-8"/>
@@ -73,41 +96,24 @@ const Wrapper = () => {
                 </Helmet>
                 <Router>
                     <Switch>
-                        {!authStatus &&
-                        <Route path="/">
-                            <HomePage/>
-                        </Route>
+                        {
+                            authStatus === undefined &&
+                            <div/>
                         }
-                        {authStatus &&
-                        <div>
-                            <Route exact path="/">
-                                <FeedAnswerPage setSelectedPage={setSelectedPage}/>
+                        {
+                            !authStatus &&
+                            <Route path="/">
+                                <HomePage setSession = {setSession}/>
                             </Route>
-                            <Navigator selectedPage={selectedPage} />
-                            <Route path="/explore">
-                                <Explore setSelectedPage={setSelectedPage}/>
-                            </Route>
-                            <Route path="/answer">
-                                <Questions setSelectedPage={setSelectedPage}/>
-                            </Route>
-                            <Route path="/question/:id" component={QuestionAnswers}/>
-                            <Route path="/searchPage/:searchString" component={SearchPage}/>
-                            <Route path="/addArticle" component={AddArticle}/>
-                            <Route path="/article/:id" component={ArticlePage}/>
-                            <Route path="/Topic/:topicName" component={TopicPage}/>
-                            <Route path="/Profile/:userId" component={ProfilePage}/>
-                            <Route exact path="/Home">
-                                <FeedAnswerPage setSelectedPage={setSelectedPage}/>
-                            </Route>
-                            <div className="messageWrapper">
-                                <MessageBlock/>
-                            </div>
-                        </div>
+                        }
+                        {
+                            authStatus &&
+                            <ContentWrapper/>
                         }
                     </Switch>
                 </Router>
-
             </div>
+            </ErrorBoundary>
         </ApolloProvider>)
 };
 

@@ -15,7 +15,7 @@ const TopicPage = props => {
     const {loading,data,refetch} = useQuery(TOPIC_PAGE_QUERY,{
         variables:{topicID},fetchPolicy: "network-only"});
     const [addTopicRelationshipMutation] = useMutation(ADD_TOPIC_RELATIONSHIP);
-    const [editMode,setEditMode] = useState(true);
+    const [editMode,setEditMode] = useState(false);
     if(loading) return <div/>;
     const {getTopic:topic,getTopic:{children,parent,id}} = data;
 
