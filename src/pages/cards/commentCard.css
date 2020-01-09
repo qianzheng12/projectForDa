@@ -1,7 +1,7 @@
 .repliesWrapper{
-    width: 500px;
+    width: 96%;
     position: relative;
-    left: 80px;
+    left: 4%;
     text-align: center;
 
 }
@@ -19,6 +19,8 @@
 .reply{
     width: 100%;
     min-height: 80px;
+    margin-bottom: 30px;
+    position: relative;
 }
 .replyHeader{
     height: 20px;
@@ -27,26 +29,32 @@
 .replyHeader h1{
     float: left;
     margin:0;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: bold;
 }
 .replyHeader h2{
     float: left;
     margin:0 0 0 10px;
-    font-size: 13px;
+    font-size: 15px;
     color: rgba(47, 49, 52, 0.53);
 }
 .replyContent{
     text-align: left;
     min-height: 40px;
     color: black;
-    float:left;
-    width: 70%;
+    width: 100%;
     font-size: 13px;
+    margin-bottom:20px;
+}
+.replyContent p{
+    margin: 0;
+    font-family: Calibri;
+    font-size: 15px;
 }
 .replyContent span{
     float: left;
     color: #55a7ff;
+    margin-right: 20px;
 }
 .replyContent pre{
     float: left;
@@ -54,5 +62,4 @@
 .rightReplyActions{
     float: right;
     position: relative;
-    right: 10px;
 }

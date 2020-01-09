@@ -5,7 +5,6 @@ import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 import Quill from "quill";
 
 function uploadImage(quillEditor, imageUrl) {
-    console.log(quillEditor);
     const editorSelection = quillEditor.getSelection();
     let cursorPosition = 0;
     if (editorSelection) {
@@ -46,7 +45,7 @@ const TextInputArea = ({postContent, setPostContent}) => {
     return (
         <div className="TextInputAreaWrapper">
             <ReactQuill
-                style={{minHeight:"320px"}}
+                style={{height:"290px"}}
                 ref={(el) => {
                     reactQuillRef = el
                 }}

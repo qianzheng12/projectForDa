@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './searchPage.css'
 import SortMethodButton from "../sortButton/sortMethodButton";
 import TopicWrapper from "../topic/topicWrapper";
@@ -9,13 +9,12 @@ import FeedAnswerCard from "../cards/feedAnswerCard";
 
 const SearchPage = props => {
     const searchString = props.match.params.searchString;
-    console.log(searchString)
-    const { loading, error, data } = useQuery(SEARCH_ANSWER,{ variables: { searchString }});
+    const { loading, error, data,refetch } = useQuery(SEARCH_ANSWER,{ variables: { searchString }});
+    const [selectedSortingMethod, setSelectedSortingMethod] = useState('Auto');
     if (loading) return <div/>;
     if (error) return <div/>;
     const searchResult = data.search;
     const filteredOutQuestions = searchResult.filter(question=>question.answers.length>0);
-    console.log(searchResult);
     return (
         <div className="searchPageWrapper">
             <div className="searchPageContent">
@@ -36,7 +35,7 @@ const SearchPage = props => {
                         <p>
                             {filteredOutQuestions.length} relevant results
                         </p>
-                        <SortMethodButton/>
+                        <SortMethodButton selectedSortingMethod={selectedSortingMethod} setSelectedSortingMethod={setSelectedSortingMethod} refetch={(orderType)=>refetch({searchString})}/>
                     </div>
                     <div className="searchResultWrapper">
                         {filteredOutQuestions.map(question => {

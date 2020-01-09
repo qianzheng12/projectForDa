@@ -1,7 +1,7 @@
 import {useState} from "react";
 
-export const useVotesState = ()=>{
-    const [thumbUp, setThumbUp] = useState(false);
+export const useVotesState = (upvote,downvote)=>{
+     const [thumbUp, setThumbUp] = useState(false);
     const [thumbDown, setThumbDown] = useState(false);
     const [upVotes, setUpVotes] = useState(100);
 
@@ -26,10 +26,8 @@ export const useVotesState = ()=>{
             setThumbUp(false);
         } else {
             if (!thumbDown) {
-                console.log("yes");
                 setUpVotes(upVotes - 1);
             } else {
-                console.log("yes");
                 setUpVotes(upVotes + 1);
             }
         }

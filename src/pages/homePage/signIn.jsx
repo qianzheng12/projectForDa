@@ -31,7 +31,6 @@ const SignInPage = ({signUp, setSession}) => {
                     initialValues={{userEmail: '', password: ''}}
 
                     onSubmit={(values, {setSubmitting}) => {
-                        console.log(values)
                         signIn(values);
                     }}
                 >{({

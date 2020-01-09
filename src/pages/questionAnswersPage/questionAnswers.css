@@ -75,24 +75,28 @@
 }
 .questionAnswerGap{
     position: relative;
-    top: 30px;
-    height: 33px;
+
+    height: 66px;
     width: 100%;
 }
 .questionAnswerGap button{
     height: 100%;
+    border-radius: 6px;
 }
+
 .questionAnswerGap p{
     position: relative;
     left: 0;
+    font-size: 15px;
+    font-family: Calibri;
     margin: 0;
+    top:40px;
     float: left;
 }
 
 .sortingSelection{
     position: relative;
-    height: 100%;
-    bottom: 10px;
+    top:30px;
     float: right;
     background: white;
 }

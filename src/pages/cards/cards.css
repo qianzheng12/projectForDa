@@ -82,6 +82,18 @@
     overflow: hidden;
     margin-bottom: 30px;
 }
+.questionDescription pre{
+    background: rgb(188, 188, 188);
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: Calibri;
+    margin:0;
+}
+.questionDescription blockquote{
+    border-left: 4px solid #ccc;
+    margin: 5px 0 5px 0;
+    padding-left: 16px;
+}
 .questionDescription p{
     height: 80%;
     color: black;

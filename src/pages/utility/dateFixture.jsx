@@ -6,9 +6,7 @@ export const monthRange = [{number:1,value:"January"}, {number:2,value:"February
     {number:7,value:"July"}, {number:8,value:"August"}, {number:9,value:"September"},
     {number:10,value:"October"}, {number:11,value:"November"}, {number:12,value:"December"}];
 export const calculateDays = (year, month) => {
-    console.log(year, month);
     if(["January", "March", "May", "July", "August", "October", "December"].indexOf(month)>-1){
-        console.log("yes");
         return Array.range(1,32)
     }
     if(["April","June", "September", "November"].indexOf(month)>-1){

@@ -2,7 +2,7 @@ import React, {useRef, useState} from "react";
 import './reportWindow.css'
 import Button from "@material-ui/core/Button";
 
-const ReportWindow = ({user="Allan Yang",closeWindow}) => {
+const ReportWindow = ({user={firstName:"qian",lastName:"Zheng"},closeWindow}) => {
     const [harassmentCheck, setHarassmentCheck] = useState(false);
     const [hateCheck, setHateCheck] = useState(false);
     const [spamCheck, setSpamCheck] = useState(false);
@@ -12,7 +12,7 @@ const ReportWindow = ({user="Allan Yang",closeWindow}) => {
     return (
         <div className="reportWindow">
             <div className="reportHeader">
-                <h1><b>Report</b> {user}'s Answer</h1>
+                <h1><b>Report</b> {user.firstName + ' ' +user.lastName}'s Answer</h1>
             </div>
             <div className="reportOptions">
                 <div className="reportOption" onClick={()=>setHarassmentCheck(!harassmentCheck)}> <input type="radio"  checked={harassmentCheck} /> <span>Harassment or bullying</span></div>

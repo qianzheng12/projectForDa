@@ -10,11 +10,10 @@ import CommentCard from "../cards/commentCard";
 const ArticlePage = props => {
     let id = props.match.params.id;
 
-    const { loading, error, data,client,refetch } = useQuery(GET_QUESTION,{ variables: { id },});
+    const { loading, error, data,client,refetch } = useQuery(GET_QUESTION,{ variables: { id,orderBy:"RECENT" },});
 
     if (loading) return <div/>;
     if (error) return <div/>;
-    console.log(client);
 
     const {comments} = data.getQuestion;
     return (
@@ -23,18 +22,19 @@ const ArticlePage = props => {
                 <div className="articleWrapper">
                     <ArticleCard question={(data.getQuestion)} refetch={refetch}/>
                 </div>
+                {comments.length > 0 &&
                 <div className="commentsWrapper">
                     {comments.map((comment) => (
-                        <div>
-                        <div className="articleComment">
-                            <CommentCard comment={comment} clinet={client} refetch={refetch}/>
-                        </div>
-                            <div style={{width:"100%",borderBottom:"1px solid #BCBCBC"}}/>
-                        </div>
+                            <div>
+                                <div className="articleComment">
+                                    <CommentCard comment={comment} clinet={client} refetch={refetch}/>
+                                </div>
+                                <div style={{width: "100%", borderBottom: "1px solid #BCBCBC"}}/>
+                            </div>
                         )
-
                     )}
                 </div>
+                }
             </div>
         </div>
     );

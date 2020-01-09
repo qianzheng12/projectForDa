@@ -29,7 +29,7 @@ import HTMLEllipsis from "react-lines-ellipsis/lib/html";
                 }
  */
 const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, bookmarked}) => {
-    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState(answer.upvote,answer.downvote);
     const [share, setShare] = useState(false);
     const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked)
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
@@ -58,10 +58,9 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, boo
                 {question.topics &&
                 <div className="questionTopics">
                     {question.topics.map( topic => {
-                        return (<span>#{topic.name}</span>)
+                        return (<Link to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
                     })}
                 </div>}
-                <span>{question.description}</span>
                 <Link to={`/question/${question.id}`}><h3>{question.title}</h3></Link>
 
             </div>
@@ -75,7 +74,6 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, boo
                     <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
                     <h3>{user.school}</h3>
                     </div></div>
-
                 }
             </div>
             <div className="answerContents">

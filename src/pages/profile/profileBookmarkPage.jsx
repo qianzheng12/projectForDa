@@ -10,7 +10,6 @@ const ProfileBookmarkPage = props => {
     const {loading, error, data,refetch} = useQuery(USER_BOOKMARKED_ANSWERS);
     if (loading) return <div/>;
     if (error) return <div/>;
-    console.log(data);
     const {me:{bookmarkedAnswers}} = data;
     return (
         <div className="profileRightPartWrapper">

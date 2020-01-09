@@ -20,7 +20,6 @@ const TopicPage = props => {
     const {getTopic:topic,getTopic:{children,parent,id}} = data;
 
     const addParent = (parentID) => {
-        console.log(children)
         if(children.some(child =>{ return child.id === parentID})){
             alert("You can not add child as parent.");
             return

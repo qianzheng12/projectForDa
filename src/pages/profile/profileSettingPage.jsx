@@ -30,7 +30,7 @@ const ProfileSettingPage = ({user,refetch}) => {
         {name:"Year",mappedField:year,updateField:updateYear,changeField:"Change"},
         {name:"Secondary Email",mappedField:"-",changeField:"Edit"},
         {name:"Phone number",mappedField:phoneNumber,updateField:updatePhoneNumber,changeField:"Edit"},
-        {name:"Password",mappedField:"******",changeField:"Change"}];
+        {name:"Password",mappedField:"******"}];
     return (
         <div className="profileHomePageWrapper">
             <div className="ProfileContentList">

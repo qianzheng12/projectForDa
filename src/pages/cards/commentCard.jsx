@@ -13,6 +13,8 @@ import {useMutation} from "@apollo/react-hooks";
 import {CREATE_REPLY} from "../graphQL/mutations";
 import TimeAgo from "react-timeago";
 import ReplyContent from "./replyContent";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ReportWindow from "../utils/reportWindow";
 const CommentCard = ({comment, refetch}) => {
     const replies = comment.replies;
     const {user} = comment;
@@ -20,33 +22,44 @@ const CommentCard = ({comment, refetch}) => {
     const [lineOfContent, setLineOfContent] = useState(5);
     const [repliesExpanded, setRepliesExpanded] = useState(false);
     const [createReply] = useMutation(CREATE_REPLY);
+    const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
+    const [report, setReport] = useState(false);
     const sendReply = ()=>{
-        createReply({ variables: { commentID:comment.id,content:commentContent}}).then(
+        createReply({ variables: { commentID:comment.id,content:commentContent,replyTo:null}}).then(
             () => {
                 setRepliesExpanded(false);
+                setCommentContent('');
+                setCommentMode(false);
                 refetch()
             }
         )
-    }
-    console.log(comment);
+    };
     return (
         <div>
             <div className="answerUserInformation">
                 <img height="40px" width="50px" src={user.thumbnail||require('../../resource/ted.jpg')}/>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2><TimeAgo date={comment.lastUpdated} live={false} /></h2>
+                    <h2><TimeAgo date={comment.dateCommented} live={false} /></h2>
 
                     <h3>{user.school}</h3>
                 </div>
+                <div className="cardToolWrapper">
+                    <MoreVertIcon onClick={()=>{setToolWindowOpen(!toolWindowOpen)}} className="cardToolIcon"/>
+                    {toolWindowOpen &&
+                    <div className="cardToolWindow">
+                        <div onClick={()=>{setReport(true)}} className="topicToolWindowSubSection">
+                            <p>Report</p>
+                        </div>
+                        {report && <ReportWindow user={user} closeWindow={() => {
+                            setReport(false)
+                        }}/>}
+                    </div>}
+                </div>
             </div>
             <div className="commentContent">
-                <Typography variant="body2" color="textSecondary" component="p">
-                    <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
-                        {comment.content}
-                    </Truncate>
-                </Typography>
+                <p>{comment.content}</p>
             </div>
             <div className="answerActions">
                 <div className="thumbWrapper">
@@ -76,7 +89,7 @@ const CommentCard = ({comment, refetch}) => {
                 {repliesExpanded &&
                 <div className="repliesContent">
                     {replies.map(reply => (
-                        <ReplyContent reply={reply}/>
+                        <ReplyContent commentId={comment.id} refetch={refetch} reply={reply}/>
                     ))}
                 </div>}
             </div>}

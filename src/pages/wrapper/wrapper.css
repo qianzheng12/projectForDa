@@ -23,6 +23,7 @@
     height: 58px;
     width: 100%;
     display: block;
+    z-index: 999;
     box-shadow: 0 2px 3px 0px rgba(52, 52, 52, 0.27);
     border-bottom: 0px solid rgba(0, 0, 0, 0.39);
     margin:0;
@@ -160,7 +161,7 @@ nav{
 
     float: left;
     width: 5%;
-    height: 30px;
+    height: 50px;
     position: relative;
     top:14px;
     left: 10px;
@@ -179,11 +180,43 @@ nav{
     border: 1px solid #BCBCBC;
     border-radius: 50px;
 }
+.wrapperToolWindow{
+    position: absolute;
+    border:1px #BCBCBC solid;
+    top:50px;
+    right: 10px;
+    width: 139px;
+    z-index: 999;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 2px 2px 5px #BCBCBC;
+    text-align: left;
+}
+.wrapperToolWindowSubSection{
+    height: 50px;
+    width: 100%;
+}
+.wrapperToolWindowSubSection a{
+    text-decoration: none;
+    color: black;
+}
+.wrapperToolWindowSubSection span{
+    font-family: Calibri;
+    font-size: 15px;
+    position: relative;
+    top: 13px;
+    left: 15px;
+    margin:0;
+}
+.wrapperToolWindowSubSection:hover{
+    background: rgba(188, 188, 188, 0.21);
+    cursor: pointer;
+}
 .askQuestionPage{
     position: absolute;
-    top: 58px;
+    top: 5px;
     width: 650px;
-    min-height: 900px;
+    min-height: 700px;
     z-index: 2;
     left: 25%;
     border: 1px solid rgba(40, 40, 40, 0.51);
@@ -200,17 +233,6 @@ nav{
 }
 .is-active{
     color: #09d3ac;
-}
-.logOut{
-    float: left;
-    position: relative;
-    bottom: 10px;
-    margin-left: 100px;
-}
-.logOut button{
-    color: #FF9240;
-    height: 30px;
-    border:1px #FF9240 solid;
 }
 .messageWrapper{
     width: 100%;

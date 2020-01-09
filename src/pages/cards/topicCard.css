@@ -101,7 +101,7 @@
     margin:0;
 }
 .topicToolWindowSubSection:hover{
-    background: #BCBCBC;
+    background: rgba(188, 188, 188, 0.21);
     cursor: pointer;
 }
 .lastUpdateInformation{

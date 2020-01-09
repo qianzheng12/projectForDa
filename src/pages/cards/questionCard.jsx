@@ -9,7 +9,7 @@ import {useMutation} from "@apollo/react-hooks";
 import Button from '@material-ui/core/Button';
 import ReactQuill from "react-quill";
 import {questionCardModoules} from "../utils/quillModules";
-import {FOLLOW_QUESTION} from "../graphQL/userMutation";
+import {FOLLOW_QUESTION, UNFOLLOW_QUESTION} from "../graphQL/userMutation";
 import TimeAgo from "react-timeago";
 import {Link} from "react-router-dom";
 import ReportWindow from "../utils/reportWindow";
@@ -17,6 +17,7 @@ import Truncate from "react-truncate";
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ReactHtmlParser from "react-html-parser";
+import TextInputArea from "../posts/textInputArea";
 
 const QuestionCard = ({question, refetch, feedCard, followed}) => {
     const {user} = question;
@@ -25,6 +26,7 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
     const [editorState, setEditorState] = useState("");
     const [answerQuestion] = useMutation(ANSWER_QUESTION);
     const [followQuestionMutation] = useMutation(FOLLOW_QUESTION);
+    const [unFollowQuestionMutation] = useMutation(UNFOLLOW_QUESTION);
     const [postExpanded,setExpanded] = useState(false);
     const [showWarning, setShowWarning] = useState(false);
     const [lineOfContent, setLineOfContent] = useState(5);
@@ -37,7 +39,8 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
         })
     };
     const unFollowQuestion = () => {
-
+        unFollowQuestionMutation({variables: {questionID: question.id}}).then((result) => {
+            setHighLightFollowIcon(false);})
     };
     const expand = ()=>{
         setExpanded(true);
@@ -48,6 +51,7 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
                 setShowWarning(true);
             } else {
                 answerQuestion({variables: {questionId: question.id, answerContent: editorState}}).then((result) => {
+                    setEditorState('');
                     refetch();
                 });
                 toggleAnswerButton(!answerMode);
@@ -64,7 +68,7 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
             <div className="questionHeader">
                 <div className="questionTopics">
                     {question.topics.map(topic => {
-                        return (<span>#{topic.name}</span>)
+                        return (<Link to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
                     })}
                 </div>
                 <h3>{question.title}</h3>
@@ -80,26 +84,17 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
             </div>
             {answerMode &&
             <div className="answerInputArea">
-                <ReactQuill
-                    theme="snow"
-                    value={editorState}
-                    onChange={(e) => {
-                        setEditorState(e);
-                        console.log(e)
-                    }}
-                    modules={questionCardModoules}
-                    imageHandler={e => console.log(e)}/>
+                <TextInputArea postContent={editorState} setPostContent={(e)=>{setEditorState(e)}}/>
                 {showWarning && <h2>Please enter your answer</h2>}
             </div>}
             <div className='questionActions'>
                 {!highLightFollowIcon && <StarBorderIcon onClick={followQuestion}/>}
-
                 {highLightFollowIcon && <StarRoundedIcon onClick={unFollowQuestion} style={{color: "#FF9240"}}/>}
                 <EmojiPeopleIcon/>
                 <FlagOutlinedIcon onClick={() => {
                     setReport(true)
                 }}/>
-                {report && <ReportWindow closeWindow={() => {
+                {report && <ReportWindow user={user} closeWindow={() => {
                     setReport(false)
                 }}/>}
                 <div className="postButton">

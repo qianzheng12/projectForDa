@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import AddBoxOutlinedIcon from '@material-ui/icons/AddBoxOutlined';
 import { Auth } from 'aws-amplify';
 import PostPage from "../posts/postPage";
+import ReportWindow from "../utils/reportWindow";
 
 /* 
     Navigation bar for user to navgiate between three components: Home, question, School.
@@ -13,6 +14,7 @@ import PostPage from "../posts/postPage";
 */
 
 const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
+    const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const signOut = () => {
         Auth.signOut()
             .then(data => window.location.reload())
@@ -26,7 +28,7 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
                     <h1 className="logo">Singularity</h1>
                     <div className="tags">
                         <ol>
-                            <li className={selectedPage==="Home"?"activeLink":"unActiveLink"}><Link to='/Home'>Home </Link></li>
+                            <li className={selectedPage==="Home"?"activeLink":"unActiveLink"}><Link to='/Home'>Home</Link></li>
                             <li className={selectedPage==="Questions"?"activeLink":"unActiveLink"}><Link to='/Answer'>Answer</Link></li>
                             <li className={selectedPage==="Explore"?"activeLink":"unActiveLink"}><Link to='/Explore'>#My school</Link></li>
                         </ol>
@@ -42,11 +44,20 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
                             </Button>
                         </Link>
                     </div>
-                    <div className="accountIcon">
-                        <a href={"/Profile/"+me.id}>{me.thumbnail?<img src={me.thumbnail}/>:<AccountCircleIcon/>}</a>
-                    </div>
-                    <div className="logOut">
-                        <Button onClick={signOut}>Log out </Button>
+                    <div className="accountIcon" onClick={()=>{setToolWindowOpen(!toolWindowOpen)}}>
+                        {me.thumbnail?<img src={me.thumbnail}/>:<AccountCircleIcon/>}
+                        {toolWindowOpen &&
+                        <div className="wrapperToolWindow">
+                            <div className="wrapperToolWindowSubSection">
+                                <Link to={'/Profile/'+me.id}><span>{me.firstName + me.lastName}</span></Link>
+                            </div>
+                            <div className="wrapperToolWindowSubSection">
+                                <span>Notification</span>
+                            </div>
+                            <div onClick={signOut} className="wrapperToolWindowSubSection">
+                                <span style={{color: "#FF9240"}}>Logout</span>
+                            </div>
+                        </div>}
                     </div>
                 </nav>
             </div>

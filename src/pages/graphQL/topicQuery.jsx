@@ -27,6 +27,17 @@ export const GET_QUESTION_BY_TOPIC =  gql`query($topicName:String!){
             comments{
                 id
             }
+            user {
+                id
+                firstName
+                lastName
+                school
+
+            }
+        }
+        topics{
+            id
+            name
         }
         lastUpdated
         user {

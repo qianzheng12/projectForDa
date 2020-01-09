@@ -14,33 +14,39 @@ import Questions from "../questionsPage/questions";
 import PostPage from "../posts/postPage";
 import {useQuery} from "@apollo/react-hooks";
 import {ME} from "../graphQL/userQuery";
+import ChangePasswordPage from "../Auth/changePasswordPage";
 
 const ContentWrapper = ({url = "www.singularity.com"}) => {
-    const [selectedPage, setSelectedPage] = useState("FeedAnswerPage");
+    const [selectedPage, setSelectedPage] = useState("Home");
     const {loading, error, data, refetch} = useQuery(ME);
 
-    const [greyOutCover, setGreyOutCover] = useState(false);
+    const [postPageMode, setPostPageMode] = useState(false);
+    const [greyCover, setGreyCover] = useState(false);
     if (loading) return <div/>;
 
     if (error) {
 
         return <div/>};
     const {me} = data;
-    console.log(me)
     return (
         <div>
 
 
-            <Navigator me={me} setGreyOutCover={setGreyOutCover} selectedPage={selectedPage} greyOutCover={greyOutCover}/>
+            <Navigator me={me} setGreyOutCover={setPostPageMode} selectedPage={selectedPage} greyOutCover={postPageMode}/>
             <div className="contentWrapper">
-                {greyOutCover &&
+                {postPageMode &&
                 <div>
                     <div className="greyOutCoverBackground">
                     </div>
                     <div className="askQuestionPage">
-                        <PostPage askQuestionMode={greyOutCover}
-                                  toggleAskQuestionMode={setGreyOutCover}
+                        <PostPage askQuestionMode={postPageMode}
+                                  toggleAskQuestionMode={setPostPageMode}
                                   type="question"/>
+                    </div>
+                </div>}
+                {greyCover &&
+                <div>
+                    <div className="greyOutCoverBackground">
                     </div>
                 </div>}
                 <Route exact path="/">
@@ -50,7 +56,7 @@ const ContentWrapper = ({url = "www.singularity.com"}) => {
                     <Explore setSelectedPage={setSelectedPage}/>
                 </Route>
                 <Route path="/answer">
-                    <Questions followedQuestions={me.followedQuestions} setSelectedPage={setSelectedPage}/>
+                    <Questions setGreyCover={setGreyCover} followedQuestions={me.followedQuestions} setSelectedPage={setSelectedPage}/>
                 </Route>
                 <Route
                     path="/question/:id"
@@ -64,6 +70,9 @@ const ContentWrapper = ({url = "www.singularity.com"}) => {
                   render={(props) => <ProfilePage {...props} myId={me.id} />} />
                 <Route exact path="/Home">
                     <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
+                </Route>
+                <Route exact path="/ChangePassword">
+                    <ChangePasswordPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
                 </Route>
                 <div className="messageWrapper">
                     <MessageBlock/>

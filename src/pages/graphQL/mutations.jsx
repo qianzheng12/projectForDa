@@ -60,10 +60,11 @@ export const ADD_TOPIC_TO_QUESTION = gql`mutation($questionID:GUID!,$topicID:GUI
     addTopicToQuestion(questionID:$questionID, topicID:$topicID)
 }`;
 
-export const CREATE_REPLY = gql`mutation($commentID:GUID!,$content:String!){
+export const CREATE_REPLY = gql`mutation($commentID:GUID!,$content:String!,$replyTo:GUID){
     createReply(
         input:{
             content:$content
+            replyTo:$replyTo
             commentID:$commentID}){
         id
     }

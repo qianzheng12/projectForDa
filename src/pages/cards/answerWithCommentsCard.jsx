@@ -18,6 +18,8 @@ import TimeAgo from "react-timeago";
 import SharePopup from "../utils/sharePopup";
 import BookmarkRoundedIcon from "@material-ui/icons/BookmarkRounded";
 import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ReportWindow from "../utils/reportWindow";
 
 const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
     const {user} = answer;
@@ -30,6 +32,9 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
     const [lineOfContent, setLineOfContent] = useState(5);
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
     const [bookmarkAnswerMutation] = useMutation(BOOKMARK_ANSWER);
+    const [toolWindowOpen, setToolWindowOpen] = useState(false);
+    const [report, setReport] = useState(false);
+
     const sendComment = () => {
         if (commentContent === '') {
             setEmptyCommentError(true)
@@ -63,6 +68,19 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
 
                     <h3>{user.school}</h3>
                 </div>
+                <div className="cardToolWrapper">
+                    <MoreVertIcon onClick={()=>{setToolWindowOpen(!toolWindowOpen)}} className="cardToolIcon"/>
+                    {toolWindowOpen &&
+                    <div className="cardToolWindow">
+                        <div onClick={()=>{setReport(true)}} className="topicToolWindowSubSection">
+                            <p>Report</p>
+                        </div>
+                        {report && <ReportWindow user={user} closeWindow={() => {
+                            setReport(false)
+                        }}/>}
+                    </div>}
+                </div>
+
             </div>
             <div className="answerContents">
                 <Typography variant="body2" color="textSecondary">

@@ -16,12 +16,10 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
     const [checkTopicName, { loading, data }] = useLazyQuery(SEARCH_TOPIC_BY_NAME,
         {onCompleted: () => {
             const topic = data.getTopicByName;
-            console.log(topic)
             if(topic){
                 chooseTopic(topic.name,topic.id);
             }
             else{
-                console.log(topic)
                 createTopic({variables: {topicName:currentTopicValue}}).then(
                     (result)=>{
                         const {createTopic} = result.data;
@@ -48,7 +46,6 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
         const topic = {topicName,topicId};
         if(!topics.some(i => (i.topicName === topicName))){
             const newTopicList = topics.concat(topic);
-            console.log(newTopicList);
             setTopics(newTopicList);
         }
 
@@ -124,7 +121,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                 <p>post anonymously</p>
                             </div>
                             <div className="questionDescriptionInputArea">
-                                <TextInputArea postContent={postContent} setPostContent={(e)=>{console.log(e);setPostContent(e)}}/>
+                                <TextInputArea postContent={postContent} setPostContent={(e)=>{setPostContent(e)}}/>
                             </div>
                             <div className="questionDescriptionAdvice">
                                 <ul>

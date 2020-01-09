@@ -24,7 +24,6 @@ const ProfilePage = props => {
     if(error) return <div/>;
     const {getUser:user} = data;
     const isMe = myId === user.id;
-    console.log(visitorMode);
     const selectTopic = (topic) => {
         setSelectedTopic(topic);
     };

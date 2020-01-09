@@ -1,27 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import Navigator from './navigator'
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import FeedAnswerPage from "../feedAnswers/feedAnswerPage";
-import Explore from "../explorePage/explore";
-import Questions from "../questionsPage/questions";
 import "./wrapper.css";
 import '../cards/cards.css'
 import ApolloClient, {InMemoryCache} from 'apollo-boost';
 import {Helmet} from "react-helmet";
 import {ApolloProvider} from '@apollo/react-hooks';
-import { onError } from 'apollo-link-error';
-import QuestionAnswers from "../questionAnswersPage/questionAnswers";
-import PostPage from "../posts/postPage";
 import Amplify, {Auth} from 'aws-amplify';
 import awsconfig from '../../aws-exports';
-import SearchPage from "../search/searchPage";
-import TopicPage from '../topic/topicPage.jsx'
-import {AddArticle} from "../article/addArticle";
-import ArticlePage from "../article/articlePage";
 import HomePage from "../homePage/homePage";
 import './quill.css'
-import ProfilePage from "../profile/profilePage";
-import MessageBlock from "../messageSystem/messageBlock";
 import ContentWrapper from "./contentWrapper";
 import {ErrorBoundary} from "../utils/errorHandler";
 Amplify.configure(awsconfig);
@@ -39,14 +26,11 @@ const Wrapper = () => {
         try {
             const result = await Auth.currentSession();
             setToken(result.getIdToken().getJwtToken());
-            console.log(111)
             setAuthStatus(true);
             const user = await Auth.currentAuthenticatedUser();
             setUser(user);
-            console.log(1112)
-        } catch (error) {
+            } catch (error) {
             if (error !== 'No current user') {
-                console.log(error);
             }
             else{
                 setAuthStatus(false)
@@ -56,7 +40,7 @@ const Wrapper = () => {
 
     useEffect(() => {
         getAuthState().then(data => {
-            console.log(data)
+
         });
 
     }, []);
@@ -72,7 +56,7 @@ const Wrapper = () => {
             }
         }
         getAuthState().then(data=>{
-            console.log(data);
+
         })
     };
     const client = new ApolloClient({
@@ -92,7 +76,7 @@ const Wrapper = () => {
             <div className="wrapper">
                 <Helmet>
                     <meta charSet="utf-8"/>
-                    <title>My Title</title>
+                    <title>Singularity</title>
                 </Helmet>
                 <Router>
                     <Switch>

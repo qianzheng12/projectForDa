@@ -4,7 +4,6 @@ import './profileQuestion.css'
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ProfileQuestionCard from "../cards/profileQuestionCard";
 const ProfileQuestionsPage = ({type,data}) => {
-    console.log(data)
     return (
         <div className="profileRightPartWrapper">
             <div className="profileContentSearch">
@@ -15,14 +14,14 @@ const ProfileQuestionsPage = ({type,data}) => {
                 data.map(post => (
                     !post.isArticle &&
                     <div className="profileQuestion">
-                        <ProfileQuestionCard post={post} content={post.description}/>
+                        <ProfileQuestionCard post={post} content={post.description} type={"questions"}/>
                     </div>
                 ))
             }
             {type === "answer" &&
                 data.map(answer => (
                     <div className="profileQuestion">
-                        <ProfileQuestionCard post={answer.question} content={answer.content} />
+                        <ProfileQuestionCard post={answer.question} content={answer.content} type={"answer"}/>
                     </div>
                 ))
             }
@@ -30,7 +29,7 @@ const ProfileQuestionsPage = ({type,data}) => {
                 data.map(post => (
                     post.isArticle &&
                     <div className="profileQuestion">
-                        <ProfileQuestionCard post={post} content={post.description}/>
+                        <ProfileQuestionCard post={post} content={post.description} type={"article"}/>
                     </div>
                 ))
             }

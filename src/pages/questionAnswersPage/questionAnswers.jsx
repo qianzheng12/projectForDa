@@ -9,8 +9,8 @@ const QuestionAnswers = props => {
 
     let id = props.match.params.id;
     const {followedQuestions,bookMarkedAnswers} =props;
-    let { loading, error, data,refetch} = useQuery(GET_QUESTION,{ variables: { id },});
-
+    let { loading, error, data,refetch} = useQuery(GET_QUESTION,{ variables: { id,orderBy:"RECENT" },});
+    const [selectedSortingMethod, setSelectedSortingMethod] = useState('Auto');
     if (loading) return <div/>;
     if (error) return <div/>;
 
@@ -25,7 +25,7 @@ const QuestionAnswers = props => {
                     <p>
                         The question has {getQuestion.answers.length} answers
                     </p>
-                    <SortMethodButton/>
+                    <SortMethodButton  selectedSortingMethod={selectedSortingMethod} setSelectedSortingMethod={setSelectedSortingMethod} refetch={(orderType)=>refetch({id,orderBy:orderType})}/>
                 </div>
                 <div className="answers">
                     {getQuestion.answers.map((answer) => (

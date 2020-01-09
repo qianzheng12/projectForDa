@@ -11,7 +11,6 @@ import {USER_INFORMATION} from "../graphQL/userQuery";
 import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 const ProfileCard = ({userInformation,isMe,toggleVisitorMode}) => {
-    console.log(userInformation)
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
     const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL);

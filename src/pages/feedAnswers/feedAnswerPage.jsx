@@ -11,28 +11,12 @@ const FeedAnswerPage = ({setSelectedPage,bookMarkedAnswers}) => {
     const {loading, error, data} = useQuery(GET_FEED_ANSWERS);
     const [leftMargin, setLeftMargin] = useState("20vw");
     const [showTopic, toggleShowTopic] = useState(true);
-    setSelectedPage("FeedAnswerPage");
-    useEffect(() => {
-        /*window.addEventListener("resize", () => {
-            console.log(window.innerWidth);
-
-            if (window.innerWidth < 900) {
-                setLeftMargin("50px");
-                toggleShowTopic(false)
-            } else {
-                setLeftMargin("25vw");
-                toggleShowTopic(true)
-            }
-        });
-        return window.removeEventListener("resize", () => {
-        });*/
-    });
+    setSelectedPage("Home");
     if (loading) return <div/>;
     if (error) return <div/>;
     if (getTopicsResult.loading) return <div/>;
     if (getTopicsResult.error) return <div/>;
     const topics = getTopicsResult.data.topics;
-    console.log(bookMarkedAnswers);
     const {questions} = data;
     return (
         <div className="homePage">
@@ -41,7 +25,6 @@ const FeedAnswerPage = ({setSelectedPage,bookMarkedAnswers}) => {
                     {questions.map(question => {
                         const {answers} = question;
                         if(answers.length >= 1){
-                            console.log(answers[0].id)
                             return (
                                 <div className="feedAnswer">
                                     <FeedAnswerCard bookmarked={bookMarkedAnswers.some((b)=>{return b.id === answers[0].id})}

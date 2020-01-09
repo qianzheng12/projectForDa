@@ -61,7 +61,7 @@ const ArticleCard = ({question,refetch}) => {
             </div>
             <div className="articleTopicWrapper">
                 Topics: {question.topics.map( topic => {
-                    return (<span>#{topic.name}</span>)
+                    return (<Link to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
                 })}
             </div>
             <div className="answerActions">
@@ -75,7 +75,7 @@ const ArticleCard = ({question,refetch}) => {
                 <div className="rightAnswerActions">
                     <div className="commentsIconWrapper">
                         <AddCommentOutlinedIcon onClick={()=>setCommentMode(!commentMode)}/>
-                        <span>{10}</span>
+                        <span>{question.comments.length}</span>
                     </div>
                     <ShareRoundedIcon/>
                     <BookmarkBorderOutlinedIcon/>

@@ -5,7 +5,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_TOPIC} from "../graphQL/topicMutation";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 const TopicCard = ({topic, editMode, setEditMode}) => {
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
@@ -44,7 +43,6 @@ const TopicCard = ({topic, editMode, setEditMode}) => {
     const updateTopicName = () => {
         if(editTopicName){
             updateTopicMutation({variables:{topicID:topic.id,topicName,topicDescription,topicThumbnail}}).then(result=>{
-                console.log(result)
                 if(result){
                     setEditTopicName(false)
                 }

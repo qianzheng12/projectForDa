@@ -30,6 +30,7 @@ export const GET_FEED_ANSWERS = gql`
 
             }
             topics{
+                id
                 name
             }
             
@@ -47,6 +48,16 @@ export const SEARCH_ANSWER = gql` query($searchString:String!)
                 comments{
                     id
                 }
+                user {
+                    id
+                    firstName
+                    lastName
+                    school
+                }
+            }
+            topics{
+                id
+                name
             }
             lastUpdated
             user {
@@ -54,7 +65,6 @@ export const SEARCH_ANSWER = gql` query($searchString:String!)
                 firstName
                 lastName
                 school
-
             }
         }
 
@@ -65,12 +75,12 @@ export const SEARCH_ANSWER = gql` query($searchString:String!)
         }
     }
 `;
-export const GET_QUESTION = gql` query($id:GUID!)
+export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
     {
         getQuestion (questionID:$id) {
             title 
             id
-            answers {
+            answers(orderBy: $orderBy) {
                 id
                 content
                 user {
@@ -93,17 +103,35 @@ export const GET_QUESTION = gql` query($id:GUID!)
                     }
                     content
                     replies{
+                        id
                         user{
                             firstName
                             lastName
                             thumbnail
                             school
                         }
+                        replyTo{
+                            id
+                            user{
+                                firstName
+                                lastName
+                            }
+                        }
+                        comment{
+                            user{
+                                firstName
+                                lastName   
+                            }
+                        }
+                        
+                        dateReplied
                         content
                     }
+                    dateCommented
                 }
             }
             topics{
+                id
                 name
             }
             description
@@ -118,6 +146,7 @@ export const GET_QUESTION = gql` query($id:GUID!)
             }
             comments{
                 id
+                dateCommented
                 user {
                     id
                     firstName
@@ -132,6 +161,19 @@ export const GET_QUESTION = gql` query($id:GUID!)
                         lastName
                         thumbnail
                         school
+                    }
+                    replyTo{
+                        id
+                        user{
+                            firstName
+                            lastName
+                        }
+                    }
+                    comment{
+                        user{
+                            firstName
+                            lastName
+                        }
                     }
                     dateReplied
                     content
@@ -149,6 +191,7 @@ export const FEED_QUESTIONS = gql`
             description
             lastUpdated
             topics{
+                id
                 name
             }
             user {
