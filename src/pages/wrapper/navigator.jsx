@@ -48,9 +48,10 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
                         {me.thumbnail?<img src={me.thumbnail}/>:<AccountCircleIcon/>}
                         {toolWindowOpen &&
                         <div className="wrapperToolWindow">
+                            <Link to={'/Profile/'+me.id}>
                             <div className="wrapperToolWindowSubSection">
-                                <Link to={'/Profile/'+me.id}><span>{me.firstName + me.lastName}</span></Link>
-                            </div>
+                               <span>{me.firstName + me.lastName}</span>
+                            </div></Link>
                             <div className="wrapperToolWindowSubSection">
                                 <span>Notification</span>
                             </div>

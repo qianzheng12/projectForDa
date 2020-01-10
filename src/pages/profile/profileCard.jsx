@@ -17,7 +17,6 @@ const ProfileCard = ({userInformation,isMe,toggleVisitorMode}) => {
     const [userThumbnail,setUserThumbnail] = useState(userInformation.thumbnail);
 
     const updateThumbnail = (pictureUrl) =>{
-
         updateThumbnailMutation({variables: {thumbnail:pictureUrl}}).then((result) =>{
             setUserThumbnail(pictureUrl);
             toggleUploadImageWindow(false)

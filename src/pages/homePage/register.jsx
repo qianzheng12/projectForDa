@@ -12,10 +12,10 @@ import RegisterConfirmationPage from "./registerConfirmationPage";
     3. Upload thumbnail and finish the regiser.
 */
 
-const RegisterPage = () => {
-    const [page, setPage] = useState(1);
-    const [user, setCurrentUser] = useState("");
-    const [userPassword, setUserPassword] = useState();
+const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword, setUserPassword,setSignIn}) => {
+    const [page, setPage] = useState(signUpStage);
+    const [currentUserId, setCurrentUserId] = useState("");
+
     const submit = (email, password,firstName,lastName,university,major,degreeYear) => {
         Auth.signUp({
             username: email,
@@ -34,38 +34,32 @@ const RegisterPage = () => {
             },
         })
             .then(data => {
-                    setCurrentUser(email);
+                    setCurrentUserEmail(email);
                     setUserPassword(password);
+                    setCurrentUserId(data.userSub);
                     setPage(2)
                 }
             )
-            .catch(err => alert(err));
+            .catch(err => alert(err.message));
     };
     const resendConfirmationCode = () => {
-        Auth.resendSignUp(user).then(() => {
+        Auth.resendSignUp(userEmail).then(() => {
             alert('code resent successfully');
         }).catch(e => {
         });
     };
     const submitPin = enteredPin => {
-        Auth.confirmSignUp(user, enteredPin)
-            .theregisterFormn(() => {
+        console.log(userEmail);
+        console.log(userPassword)
+        Auth.confirmSignUp(userEmail, enteredPin).then
+            (() => {
                 setPage(3);
             }).catch(err => {
-            alert(err);
+            alert(err.message);
         });
     };
     const confirmUser = () => {
-        Auth.signIn({
-            username: user,
-            password: userPassword,
-        }).then(user => {
-            window.location.reload();
-        })
-            .catch(err => {
-                alert(err.message)
-            });
-
+        setSignIn();
     };
     return (
         <div className="authWrapper">
@@ -77,7 +71,7 @@ const RegisterPage = () => {
                 resendConfirmationCode={resendConfirmationCode}/>}
             {page === 3 &&
             <RegisterConfirmationPage
-                submit={confirmUser}/>}
+                submit={confirmUser} currentUserId={currentUserId}/>}
         </div>
     );
 };

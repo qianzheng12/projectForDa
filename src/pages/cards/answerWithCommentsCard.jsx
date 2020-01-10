@@ -20,21 +20,23 @@ import BookmarkRoundedIcon from "@material-ui/icons/BookmarkRounded";
 import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ReportWindow from "../utils/reportWindow";
+import {Link} from "react-router-dom";
 
 const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
-    const {user} = answer;
-    const {comments} = answer;
     const [share, setShare] = useState(false);
     const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState();
     const {commentContent, commentMode, setCommentContent, setCommentMode, emptyCommentError, setEmptyCommentError} = useCommentState();
     const [sendCommentMutation] = useMutation(SEND_COMMENT);
-    const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked)
-    const [lineOfContent, setLineOfContent] = useState(5);
+    const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked);
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
     const [bookmarkAnswerMutation] = useMutation(BOOKMARK_ANSWER);
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const [report, setReport] = useState(false);
 
+
+    const {user} = answer;
+    const {comments} = answer;
+    const thumbnailUrl = user.thumbnail|| require('../../resource/ted.jpg');
     const sendComment = () => {
         if (commentContent === '') {
             setEmptyCommentError(true)
@@ -58,10 +60,11 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             setBookmarkedIcon(true)
         })
     };
+
     return (
         <div className="card">
             <div className="answerUserInformation">
-                <img height="40px" width="50px" src={require('../../resource/ted.jpg')}/>
+                <Link to={'/Profile/'+user.id}><img height="40px" width="50px" src={thumbnailUrl}/></Link>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
                     <h2><TimeAgo date={answer.lastUpdated} live={false}/></h2>

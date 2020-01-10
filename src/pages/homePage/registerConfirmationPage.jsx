@@ -4,14 +4,24 @@ import Button from "@material-ui/core/Button";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
+import {useMutation} from "@apollo/react-hooks";
+import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 
 /* 
     The page for user to upload thumbnail and finish registration.
 */
-const RegisterConfirmationPage = ({submit,user}) => {
+const RegisterConfirmationPage = ({submit,currentUserId}) => {
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
+    const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL);
+    const [userThumbnail,setUserThumbnail] = useState();
+    const updateThumbnail = (pictureUrl) =>{
 
+        updateThumbnailMutation({variables: {thumbnail:pictureUrl}}).then((result) =>{
+            setUserThumbnail(pictureUrl);
+            toggleUploadImageWindow(false)
+        })
+    };
     return (
         <div className="registerForm">
             <div className="authWrapperHeader">
@@ -22,6 +32,9 @@ const RegisterConfirmationPage = ({submit,user}) => {
             <div className="registerUploadThumbnailWrapper">
             <UploadImageWindow
                 closeWindow={()=>toggleUploadImageWindow(false)}
+                fileName={currentUserId.id}
+                callback={pictureUrl=>updateThumbnail(pictureUrl)}
+                type={"profileThumbnail"}
                 type={"topicThumbnail"}/>
             </div>
             }
