@@ -25,7 +25,7 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
         <div>
             <div className="navBar">
                 <nav>
-                    <h1 className="logo">Singularity</h1>
+                    <Link to={"/home"}><h1 className="logo">Singularity</h1></Link>
                     <div className="tags">
                         <ol>
                             <li className={selectedPage==="Home"?"activeLink":"unActiveLink"}><Link to='/Home'>Home</Link></li>

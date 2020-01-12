@@ -10,6 +10,9 @@ import TextInputArea from "./textInputArea";
 import SearchTopicDropDown from "../search/searchTopicDropDown";
 import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
 import {extractImage} from "../utils/extractImg";
+import InfoIcon from '@material-ui/icons/Info';
+import ThumbUpAltOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import Tooltip from "@material-ui/core/Tooltip";
 const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
     const [topics,setTopics] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
@@ -110,7 +113,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                     onChange={handleChange}
                                     value={values.title}
                                     name="title"
-                                    placeholder="What is your question?"
+                                    placeholder={type === "article"?"What is your headline":"What is your question?"}
                                     id="titleInput" />
                                 <input
                                     onChange={handleChange}
@@ -144,7 +147,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                            placeholder="Topics"
                                            id="topicInputArea"/>
                                     {currentTopicValue.length>0 &&
-                                    <div className="topicSearchDropdown">
+                                    <div className="topicSearchDropdown" style={{width:"198px"}}>
                                         <SearchTopicDropDown chooseTopic={chooseTopic} enteredTopic={currentTopicValue} addNewTopic={addNewTopic} allowCreate={true}/>
                                     </div>}
                                     {topicEmptyError && <p>Please enter a topic</p>}
@@ -176,8 +179,9 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                                     value={values.mySchool}
                                     name="mySchool"
                                     type="checkbox"/><p>my school</p>
+                                <Tooltip title="Only your schoolmate can see it."><InfoIcon/></Tooltip>
                                 <div className="askButton">
-                                    <Button type="submit"><span>Ask</span></Button>
+                                    <Button type="submit"><span>{type === "article"?"Post":"Ask"}</span></Button>
                                 </div>
                             </div>
                         </div>

@@ -28,10 +28,11 @@ const CommentCard = ({comment, refetch}) => {
     const sendReply = ()=>{
         createReply({ variables: { commentID:comment.id,content:commentContent,replyTo:null}}).then(
             () => {
-                setRepliesExpanded(false);
+                refetch();
+                setRepliesExpanded(true);
                 setCommentContent('');
                 setCommentMode(false);
-                refetch()
+
             }
         )
     };

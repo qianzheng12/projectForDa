@@ -3,21 +3,43 @@ import './topicCard.css'
 import Button from "@material-ui/core/Button";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {useMutation} from "@apollo/react-hooks";
-import {UPDATE_TOPIC} from "../graphQL/topicMutation";
+import {FOLLOW_TOPIC, UN_FOLLOW_TOPIC, UPDATE_TOPIC} from "../graphQL/topicMutation";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
-const TopicCard = ({topic, editMode, setEditMode}) => {
+const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const [editTopicName, setEditTopicName] = useState(false);
+    const [followed,setFollowed] = useState(topicFollowed);
     const [editTopicDescription, setEditTopicDescription] = useState(false);
     const [topicName, setTopicName] = useState(topic.name);
     const [topicDescription, setTopicDescription] = useState(topic.description);
     const [topicThumbnail, setTopicThumbnail] = useState(topic.thumbnail||require('../../resource/topic.svg'));
     const [updateTopicMutation] = useMutation(UPDATE_TOPIC);
+    const [followTopicMutation] = useMutation(FOLLOW_TOPIC);
+    const [unFollowTopicMutation] = useMutation(UN_FOLLOW_TOPIC);
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
-
-
+    console.log(followed)
+    const followTopic = () => {
+        followTopicMutation({variables:{topicID:topic.id}}).then(result=>{
+            if(!result.data.followTopic){
+                alert("something went wrong");
+            }
+            else{
+                setFollowed(true);
+            }
+        })
+    };
+    const unFollowTopic = () => {
+        unFollowTopicMutation({variables:{topicID:topic.id}}).then(result=>{
+            if(!result.data.unFollowTopic){
+                alert("something went wrong");
+            }
+            else{
+                setFollowed(false);
+            }
+        })
+    };
     const updateThumbnail = (pictureUrl) => {
         updateTopicMutation({variables:{topicID:topic.id,topicName,topicDescription,topicThumbnail:pictureUrl}}).then(result=>{
             if(result.data){
@@ -64,12 +86,13 @@ const TopicCard = ({topic, editMode, setEditMode}) => {
             <div className="topicLeftDiv">
                 <div className="topicThumbnail" onMouseEnter={()=>{setCursorOn(true)}}
                      onMouseLeave={() => {setCursorOn(false)}}>
-                    <div className="topicThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
+                    {editMode&&<div className="topicThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
                         {cursorOn&&<AddAPhotoIcon/>}
-                    </div>
+                    </div>}
                     <img src={topicThumbnail}/>
                 </div>
-                {!editMode &&<Button> <p>+ follow</p></Button>}
+                {(!editMode && !followed) &&<Button onClick={followTopic}> <p>+ follow</p></Button>}
+                {(!editMode && followed) &&<Button onClick={unFollowTopic}> <p>Followed</p></Button>}
                 {editMode &&
                 <div className="lastUpdateInformation">
                     <p>Last updated by </p>

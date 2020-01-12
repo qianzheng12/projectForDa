@@ -4,20 +4,18 @@ import FeedAnswerCard from "../cards/feedAnswerCard";
 import TopicWrapper from "../topic/topicWrapper";
 import {useQuery} from '@apollo/react-hooks';
 import ImageUploader from 'react-images-upload';
-import {GET_FEED_ANSWERS, GET_TOPICS} from '../graphQL/query'
+import {GET_FEED_ANSWERS} from '../graphQL/query'
 
 const FeedAnswerPage = ({setSelectedPage,bookMarkedAnswers}) => {
-    const getTopicsResult = useQuery(GET_TOPICS);
     const {loading, error, data} = useQuery(GET_FEED_ANSWERS);
     const [leftMargin, setLeftMargin] = useState("20vw");
     const [showTopic, toggleShowTopic] = useState(true);
     setSelectedPage("Home");
     if (loading) return <div/>;
     if (error) return <div/>;
-    if (getTopicsResult.loading) return <div/>;
-    if (getTopicsResult.error) return <div/>;
-    const topics = getTopicsResult.data.topics;
-    const {questions} = data;
+    console.log(data);
+    const {questions,me:{followedTopics}} = data;
+
     return (
         <div className="homePage">
             <div className="homePageContent" style={{marginLeft: leftMargin}}>
@@ -40,7 +38,7 @@ const FeedAnswerPage = ({setSelectedPage,bookMarkedAnswers}) => {
                     <div className="topicHeader">
                         <p>Topics</p>
                     </div>
-                    <TopicWrapper topics={topics}/>
+                    <TopicWrapper topics={followedTopics}/>
                 </div>}
             </div>
         </div>

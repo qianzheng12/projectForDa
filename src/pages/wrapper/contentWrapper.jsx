@@ -16,12 +16,13 @@ import {useQuery} from "@apollo/react-hooks";
 import {ME} from "../graphQL/userQuery";
 import ChangePasswordPage from "../Auth/changePasswordPage";
 
-const ContentWrapper = ({url = "www.singularity.com"}) => {
+const ContentWrapper = () => {
     const [selectedPage, setSelectedPage] = useState("Home");
-    const {loading, error, data, refetch} = useQuery(ME);
+    const {loading, error, data, refetch} = useQuery(ME,{fetchPolicy: "network-only"});
 
     const [postPageMode, setPostPageMode] = useState(false);
     const [greyCover, setGreyCover] = useState(false);
+    console.log(error);
     if (loading) return <div/>;
 
     if (error) {
@@ -64,15 +65,17 @@ const ContentWrapper = ({url = "www.singularity.com"}) => {
                 <Route path="/searchPage/:searchString" component={SearchPage}/>
                 <Route path="/addArticle" component={AddArticle}/>
                 <Route path="/article/:id" component={ArticlePage}/>
-                <Route path="/Topic/:topicName" component={TopicPage}/>
+                <Route
+                    path="/Topic/:topicName"
+                    render={(props) => <TopicPage {...props} />} />
                 <Route
                   path="/Profile/:userId"
-                  render={(props) => <ProfilePage {...props} myId={me.id} />} />
+                  render={(props) => <ProfilePage {...props} me={me} refetchMe={refetch}/>} />
                 <Route exact path="/Home">
                     <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
                 </Route>
                 <Route exact path="/ChangePassword">
-                    <ChangePasswordPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
+                    <ChangePasswordPage  setSelectedPage={setSelectedPage}/>
                 </Route>
                 <div className="messageWrapper">
                     <MessageBlock/>

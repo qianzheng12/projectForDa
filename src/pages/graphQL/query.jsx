@@ -5,6 +5,7 @@ export const GET_FEED_ANSWERS = gql`
         questions  {
             id 
             title
+            
             answers(orderBy: RECENT, limit:1){
                 id
                 content
@@ -35,12 +36,20 @@ export const GET_FEED_ANSWERS = gql`
             }
             
         }
+        me{
+            id
+            followedTopics{
+                id
+                name
+                thumbnail
+            }
+        }
     }
 `;
 
-export const SEARCH_ANSWER = gql` query($searchString:String!)
+export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID])
     {
-        search(searchString:$searchString) {
+        search(searchString:$searchString,topicIDs:$topicIDs) {
             id
             title
             answers(orderBy: RECENT, limit:1){
@@ -67,11 +76,14 @@ export const SEARCH_ANSWER = gql` query($searchString:String!)
                 school
             }
         }
-
-        topics{
+        
+        me{
             id
-            name
-            thumbnail
+            followedTopics{
+                id
+                name
+                thumbnail
+            }
         }
     }
 `;
@@ -200,6 +212,14 @@ export const FEED_QUESTIONS = gql`
                 lastName
                 school
 
+            }
+        }
+        me{
+            id
+            followedTopics{
+                id
+                name
+                thumbnail
             }
         }
     }

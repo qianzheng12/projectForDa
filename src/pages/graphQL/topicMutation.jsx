@@ -9,3 +9,11 @@ export const UPDATE_TOPIC = gql`mutation($topicID:GUID!,$topicName :String, $top
         id
     }
 }`;
+
+export const FOLLOW_TOPIC = gql`mutation($topicID:GUID!){
+    followTopic(topicID:$topicID)
+}`;
+
+export const UN_FOLLOW_TOPIC = gql`mutation($topicID:GUID!){
+    unFollowTopic(topicID:$topicID)
+}`;

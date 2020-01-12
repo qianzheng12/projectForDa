@@ -21,6 +21,7 @@ import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ReportWindow from "../utils/reportWindow";
 import {Link} from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
     const [share, setShare] = useState(false);
@@ -92,23 +93,23 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             </div>
             <div className="answerActions">
                 <div className="thumbWrapper">
-                    {!thumbUp && <ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/>}
-                    {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
+                    {!thumbUp && <Tooltip title="like"><ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/></Tooltip>}
+                    {thumbUp && <Tooltip title="like"><ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/></Tooltip>}
                     <span>{upVotes}</span>
                 </div>
-                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}
-                {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
+                {!thumbDown &&<Tooltip title="unlike"><ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/></Tooltip>}
+                {thumbDown && <Tooltip title="unlike"><ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/></Tooltip>}
                 <div className="rightAnswerActions">
                     <div className="commentsIconWrapper">
-                        <AddCommentOutlinedIcon onClick={() => setCommentMode(!commentMode)}/>
+                        <Tooltip title="comment"><AddCommentOutlinedIcon onClick={() => setCommentMode(!commentMode)}/></Tooltip>
                         <span>{answer.comments.length}</span>
                     </div>
-                    <ShareRoundedIcon onClick={() => {
-                        setShare(!share)
-                    }}/>
+                    <Tooltip title="share">
+                        <ShareRoundedIcon onClick={()=>{setShare(!share)}}/>
+                    </Tooltip>
                     {share && <SharePopup url={window.location.href}/>}
-                    {bookmarkedIcon && <BookmarkRoundedIcon onClick={unBookmarkAnswer} style={{color: "#FF9240"}}/>}
-                    {!bookmarkedIcon && <BookmarkBorderOutlinedIcon onClick={bookmarkAnswer}/>}
+                    {bookmarkedIcon && <Tooltip title="unbookmark answer"><BookmarkRoundedIcon onClick={unBookmarkAnswer} style={{color:"#FF9240"}}/></Tooltip>}
+                    {!bookmarkedIcon && <Tooltip title="bookmark answer"><BookmarkBorderOutlinedIcon onClick={bookmarkAnswer} /></Tooltip>}
                 </div>
             </div>
             {commentMode &&

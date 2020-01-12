@@ -12,18 +12,14 @@ import {useQuery} from "@apollo/react-hooks";
 import {USER_INFORMATION} from "../graphQL/userQuery";
 const ProfilePage = props => {
     let userID = props.match.params.userId;
-    const {myId} = props;
-    const navigatorTopics = ['Profile', 'Education', 'My bookmarks', 'My following', 'My topics', 'My questions','My answers','My articles',"Settings"];
-    const [visitorMode,setVisitorMode] = useState(false);
-    const {loading, error, data,refetch} = useQuery(USER_INFORMATION,{variables:{userID},onCompleted:(data)=>{
-            setVisitorMode(data.getUser.id !== myId)
-        }});
-
+    const {me,refetchMe} = props;
+    const [visitorMode,setVisitorMode] = useState(userID !== me.id);
     const [selectedTopic, setSelectedTopic] = useState("Profile");
+    const {loading, error, data,refetch} = useQuery(USER_INFORMATION,{variables:{userID}});
+
     if(loading) return <div/>;
     if(error) return <div/>;
     const {getUser:user} = data;
-    const isMe = myId === user.id;
     const selectTopic = (topic) => {
         setSelectedTopic(topic);
     };
@@ -31,7 +27,7 @@ const ProfilePage = props => {
         <div className="profilePageWrapper">
             <div className="profileWrapper">
                 <div className="profileHeader">
-                    <ProfileCard userInformation={user} isMe={isMe} toggleVisitorMode={()=>{setVisitorMode(!visitorMode)}}/>
+                    <ProfileCard userInformation={user} isMe={!visitorMode} toggleVisitorMode={()=>{setVisitorMode(!visitorMode)}} refetchMe={refetchMe}/>
                 </div>
                 <div className="profileContent">
                     <div className="profileNavigator">
@@ -45,7 +41,6 @@ const ProfilePage = props => {
                             <li style={{background:selectedTopic==="My answers"?"rgba(255, 146, 64, 0.2)":"white"}} onClick={()=>{selectTopic("My answers")}}>My answers</li>
                             <li style={{background:selectedTopic==="My articles"?"rgba(255, 146, 64, 0.2)":"white"}} onClick={()=>{selectTopic("My articles")}}>My articles</li>
                             { !visitorMode &&<li style={{background:selectedTopic==="Settings"?"rgba(255, 146, 64, 0.2)":"white"}} onClick={()=>{selectTopic("Settings")}}>Settings</li>}
-
                         </ul>
                     </div>
                     <div className="profileSection">
@@ -53,7 +48,7 @@ const ProfilePage = props => {
                         {(selectedTopic === 'Education') && <ProfileEducationPage visitorMode={visitorMode}/>}
                         {(selectedTopic === 'My bookmarks'  && !visitorMode) && <ProfileBookmarkPage/>}
                         {(selectedTopic === 'My following' && !visitorMode) && <ProfileFollowingPage/>}
-                        {(selectedTopic === 'My topics'  && !visitorMode) && <ProfileFollowingTopic/>}
+                        {(selectedTopic === 'My topics'  && !visitorMode) && <ProfileFollowingTopic />}
                         {(selectedTopic === 'My questions') && <ProfileQuestionsPage type={"question"} data={user.questions}/>}
                         {(selectedTopic === 'My answers') && <ProfileQuestionsPage type={"answer"} data={user.answers}/>}
                         {(selectedTopic === 'My articles') && <ProfileQuestionsPage type={"article"} data={user.questions}/>}

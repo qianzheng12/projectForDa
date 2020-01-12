@@ -151,9 +151,22 @@ export const USER_INFORMATION = gql` query($userID:GUID!)
         }
     }
 `;
+export const USER_FOLLOWED_TOPICS = gql`
+    {
+        me{
+            id
+            followedTopics{
+                id
+                name
+                thumbnail
+            }
+        }
+    }
+`;
 export const USER_BOOKMARKED_ANSWERS = gql`
     {
         me {
+            id
             bookmarkedAnswers {
                 id
                 content

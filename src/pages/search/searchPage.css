@@ -20,8 +20,9 @@
     height: 100%;
 }
 .filterWrapper{
-    border: 1px black solid;
-    height: 100px;
+    box-shadow: 0 0 3px #BCBCBC;
+    padding:40px 50px 10px 50px;
+    min-height: 100px;
     background: white;
     position: relative;
 }
@@ -32,20 +33,51 @@
     position: relative;
 }
 .topicFilters{
-    height: 50px;
-    margin-left: 30px;
+    min-height: 50px;
+    position: relative;
+    overflow: hidden;
 }
 .topicFilter{
-    height: 30px;
+    height: 20px;
+    position: relative;
     float: left;
-    min-width: 100px;
-    font-size: 0.7em;
+    min-width: 90px;
+    border-radius: 6px;
+
+    text-align: center;
+    padding:5px 5px 5px 5px;
+    font-size: 13px;
+    margin:0 10px 10px 0;
+}
+#selectedTopic {
+    background: rgba(255, 146, 64, 0.27);
+}
+.topicFilter:hover{
+    background: rgba(107, 107, 107, 0.2);
+    cursor: pointer;
+}
+.topicFilter span{
+    position: relative;
 }
 .topicFilterHeader{
-    height: 30px;
-
+    height: 50px;
 }
+
 .topicFilterHeader h1{
-    margin:5px 0 0 30px;
-    font-size: 0.8em;
+    margin:5px 0 0 0;
+    font-size: 15px;
+    font-family: Calibri;
+    font-weight: normal;
+    float: left;
+}
+.addNewTopicArea{
+    float:right;
+    width: 100px;
+    height: 30px;
+}
+.addNewTopicArea input{
+    width: 114px;
+}
+.topicFilterSearchDropdown{
+    width: 114px;
 }

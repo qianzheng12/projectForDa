@@ -10,7 +10,7 @@
 }
 .questionHeader{
     position:relative;
-    width: 80%;
+    width: 50%;
     height:50px;
 }
 .questionTopics span{
@@ -20,12 +20,15 @@
 }
 .questionHeader h3{
     margin:0;
-    width: 80%;
+    min-width: 30%;
     height: 25px;
     color: black;
     font-size:20px;
     overflow: hidden;
     font-family: Calibri;
+}
+.questionHeader a{
+    width: 30%;
 }
 .questionHeader p{
     margin:0;

@@ -38,6 +38,7 @@ export const GET_QUESTION_BY_TOPIC =  gql`query($topicName:String!){
         topics{
             id
             name
+            thumbnail
         }
         lastUpdated
         user {
@@ -48,7 +49,7 @@ export const GET_QUESTION_BY_TOPIC =  gql`query($topicName:String!){
 
         }
     }
-}`
+}`;
 export const TOPIC_PAGE_QUERY = gql`query($topicID:GUID!)
 {
     
@@ -58,13 +59,36 @@ export const TOPIC_PAGE_QUERY = gql`query($topicID:GUID!)
         parent{
             name
             id
+            thumbnail
         }
         children{
             name
             id
+            thumbnail
         }
         thumbnail
         description
     }
+    
+    me{
+        id
+        followedTopics{
+            id
+        }
+    }
+}
+`;
+
+export const MY_FOLLOW_TOPICS = gql`
+{
+    me{
+        id
+        followedTopics{
+            id
+            name
+            thumbnail
+        }
+    }
+    
 }
 `;

@@ -43,6 +43,9 @@
     top:30px;
     color: #333333;
 }
+.followingContent svg:hover{
+    cursor: pointer;
+}
 .followingTopicName{
     width: 140px;
     top: 12px;

@@ -9,14 +9,11 @@ import FeedAnswerCard from "../cards/feedAnswerCard";
 
 const Questions = ({setSelectedPage,followedQuestions}) => {
     const { loading, error, data,refetch } = useQuery(FEED_QUESTIONS);
-    const getTopicsResult = useQuery(GET_TOPICS);
+
     if (loading) return <div></div>;
     if (error) return <div></div>;
-    if (getTopicsResult.loading) return <div/>;
-    if (getTopicsResult.error) return <div/>;
-    const topics = getTopicsResult.data.topics;
     setSelectedPage("Questions");
-    const {questions} = data;
+    const {questions,me:{followedTopics}} = data;
     return (
         <div className="homePage">
             <div style={{marginLeft: "20vw"}} className="homePageContent">
@@ -30,7 +27,7 @@ const Questions = ({setSelectedPage,followedQuestions}) => {
                     <div className="topicHeader">
                         <p>Topics</p>
                     </div>
-                    <TopicWrapper topics={topics}/>
+                    <TopicWrapper topics={followedTopics}/>
                 </div>
 
             </div>

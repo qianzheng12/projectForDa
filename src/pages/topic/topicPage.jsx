@@ -1,23 +1,27 @@
-import React, {useEffect, useState} from 'react'
-import FeedAnswerCard from "../cards/feedAnswerCard";
+import React, { useState} from 'react'
 import TopicWrapper from "./topicWrapper";
 import './topicPage.css'
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useLazyQuery, useMutation, useQuery} from "@apollo/react-hooks";
 import TopicCard from "../cards/topicCard";
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import AddAliasesCard from "../cards/addAliasesCard";
 import Button from "@material-ui/core/Button";
-import {TOPIC_PAGE_QUERY} from "../graphQL/topicQuery";
+import {SEARCH_TOPIC_BY_NAME, TOPIC_PAGE_QUERY} from "../graphQL/topicQuery";
 import {ADD_TOPIC_RELATIONSHIP} from "../graphQL/topicMutation";
 import TopicQuestions from "./topicQuestions";
+import {SEARCH_ANSWER} from "../graphQL/query";
 const TopicPage = props => {
     const topicID = props.match.params.topicName;
-    const {loading,data,refetch} = useQuery(TOPIC_PAGE_QUERY,{
+    const {loading,error,data,refetch}= useQuery(TOPIC_PAGE_QUERY,{
         variables:{topicID},fetchPolicy: "network-only"});
     const [addTopicRelationshipMutation] = useMutation(ADD_TOPIC_RELATIONSHIP);
     const [editMode,setEditMode] = useState(false);
+
+
     if(loading) return <div/>;
-    const {getTopic:topic,getTopic:{children,parent,id}} = data;
+    if(error) return <div/>;
+
+    const {getTopic:topic,getTopic:{children,parent,id},me:{followedTopics}} = data;
 
     const addParent = (parentID) => {
         if(children.some(child =>{ return child.id === parentID})){
@@ -49,16 +53,13 @@ const TopicPage = props => {
             }
         })
     };
+
     return (
         <div className="topicPageWrapper">
             <div className="homePageContent" style={{marginLeft: "20vw"}}>
                 <div className="topicLeftContent">
                     <div className="topicCard">
-                        <TopicCard topic={topic} editMode={editMode} setEditMode={setEditMode}/>
-                    </div>
-                    <div className="topicContentSearch">
-                        <SearchOutlinedIcon />
-                        <input placeholder="search"/>
+                        <TopicCard topic={topic} editMode={editMode} setEditMode={setEditMode} topicFollowed={followedTopics.some((b)=>{return b.id === topic.id})}/>
                     </div>
                     {editMode &&
                     <div className="editPart">

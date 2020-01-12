@@ -10,7 +10,7 @@ const TopicWrapper = ({topics,editMode=false,chooseTopic}) => {
             {
                 topics.map(topic => {
                     const thumbnail = topic.thumbnail||require('../../resource/topic.svg');
-                    return (<li><img alt="topicPicture" height="20px" width="20px" src={thumbnail}/> <Link to={`/Topic/${topic.id}`}><span> #{topic.name}</span></Link> </li>)
+                    return (<li key={topic.id}><img alt="topicPicture" height="20px" width="20px" src={thumbnail}/> <Link to={`/Topic/${topic.id}`}><span> #{topic.name}</span></Link> </li>)
                 })
             }
             {editMode &&<div className="topicWrapperEnterTopic"><li>

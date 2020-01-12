@@ -54,6 +54,9 @@
     font-size:13px;
     width: 50%;
 }
+.answerUserDetail a{
+    color: black;
+}
 
 .answerUserDetail h2{
     position: relative;
@@ -86,7 +89,7 @@
 }
 .answerContents pre{
     background: rgba(69, 67, 62, 0.29);
-    height: 20px;
+    min-height: 20px;
     padding-left:10px;
     border-radius:3px ;
     font-family: Calibri;
@@ -144,7 +147,7 @@
     margin-top:30px;
 }
 .commentContent{
-    height: 50px;
+    min-height: 50px;
     padding: 0 0 0 0;
     word-wrap: break-word;
     overflow: hidden;
@@ -188,7 +191,7 @@
 }
 .commentsIconWrapper{
     height: 50px;
-    width: 70px;
+    width: 60px;
     float: left;
 }
 .commentsIconWrapper span{

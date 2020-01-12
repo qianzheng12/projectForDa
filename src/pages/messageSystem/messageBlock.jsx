@@ -6,9 +6,9 @@ const MessageBlock = props => {
     const [cursorOn, setCursorOn] = useState(false);
     const [isMenuOpen,openMessageMenu] = useState(false);
     const [isMessageBlockOpen,openMessageBlock] = useState(false);
-    const messagesBrief = [{user:{name:"allan"},briefMessageContent:"Hey you"}
-    ,{user:{name:"Chris"},briefMessageContent:"Like your question"}
-    ,{user:{name:"Qian"},briefMessageContent:"haha"}];
+    const messagesBrief = [{id:1,user:{name:"allan"},briefMessageContent:"Hey you"}
+    ,{id:2,user:{name:"Chris"},briefMessageContent:"Like your question"}
+    ,{id:3,user:{name:"Qian"},briefMessageContent:"haha"}];
     return (
         <div className="messageBlock">
             <div style={{bottom: isMenuOpen?"250px":"0px"}} className="messageWindow">
@@ -18,7 +18,7 @@ const MessageBlock = props => {
                 </div>
                 {messagesBrief.map(messageBrief =>
                     (
-                        <div className="briefMessageContent">
+                        <div key={messageBrief.id} className="briefMessageContent">
                             <img height="40px" width="40px" src={require('../../resource/profileImg.png')}></img>
                             <h1>{messageBrief.user.name}</h1>
                             <p>{messageBrief.briefMessageContent}</p>

@@ -4,11 +4,7 @@ import DraggableList from "./DraggableList";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {Formik} from "formik";
 import CloseIcon from '@material-ui/icons/Close';
-import TextInputArea from "../posts/textInputArea";
-import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import {Draggable} from "react-beautiful-dnd";
-import DehazeIcon from "@material-ui/icons/Dehaze";
 
 const ProfileHomePage = ({visitorMode}) => {
     const [addMode, setAddMode] = useState(false);
@@ -35,8 +31,6 @@ const ProfileHomePage = ({visitorMode}) => {
 
                         }}
                     >{({
-                           values,
-                           handleChange,
                            handleSubmit,
                        }) => (
                         <form onSubmit={handleSubmit}>

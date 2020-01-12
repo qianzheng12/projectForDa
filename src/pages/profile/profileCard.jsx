@@ -34,10 +34,10 @@ const ProfileCard = ({userInformation,isMe,toggleVisitorMode}) => {
             <div className="profileCardTop">
                 <div className="profileThumbnail" onMouseEnter={()=>{setCursorOn(true)}}
                      onMouseLeave={() => {setCursorOn(false)}}>
-                    <div className="profileThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
+                    {isMe&&<div className="profileThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
                         {cursorOn&&<AddAPhotoIcon/>}
-                    </div>
-                    <img onClick={() => toggleUploadImageWindow(true)} height="130px" width="130px" src={userThumbnail}/>
+                    </div>}
+                    <img  height="130px" width="130px" src={userThumbnail}/>
                 </div>
                 <div className="profileName">
                     <h1>{userInformation.firstName+' '+ userInformation.lastName}</h1>

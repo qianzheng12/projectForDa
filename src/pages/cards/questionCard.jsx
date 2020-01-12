@@ -18,6 +18,7 @@ import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
 import LinesEllipsis from 'react-lines-ellipsis'
 import ReactHtmlParser from "react-html-parser";
 import TextInputArea from "../posts/textInputArea";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const QuestionCard = ({question, refetch, feedCard, followed}) => {
     const {user} = question;
@@ -72,8 +73,8 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
                     })}
                 </div>
                 <h3>{question.title}</h3>
-                {user && <div><p>post by</p> <p
-                    style={{color: '#906604', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p>
+                {user && <div><p>post by</p>
+                    <Link to={"/Profile/"+ user.id}><p style={{color: '#906604', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>
                     <p style={{marginLeft: '0.5%'}}><TimeAgo date={question.lastUpdated} live={false}/></p>
                 </div>}
 
@@ -88,19 +89,19 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
                 {showWarning && <h2>Please enter your answer</h2>}
             </div>}
             <div className='questionActions'>
-                {!highLightFollowIcon && <StarBorderIcon onClick={followQuestion}/>}
-                {highLightFollowIcon && <StarRoundedIcon onClick={unFollowQuestion} style={{color: "#FF9240"}}/>}
-                <EmojiPeopleIcon/>
-                <FlagOutlinedIcon onClick={() => {
+                {!highLightFollowIcon && <Tooltip title="follow question"><StarBorderIcon onClick={followQuestion}/></Tooltip>}
+                {highLightFollowIcon && <Tooltip title="unfollow question"><StarRoundedIcon onClick={unFollowQuestion} style={{color: "#FF9240"}}/></Tooltip>}
+                <Tooltip title="invite friend"><EmojiPeopleIcon/></Tooltip>
+                <Tooltip title="report"><FlagOutlinedIcon onClick={() => {
                     setReport(true)
-                }}/>
+                }}/></Tooltip>
                 {report && <ReportWindow user={user} closeWindow={() => {
                     setReport(false)
                 }}/>}
                 <div className="postButton">
                     {feedCard &&
                     <Link to={`/question/${question.id}`}><Button onClick={onPost}>
-                        <span style={{textDecoration: "none"}}>Enter</span>
+                        <span style={{textDecoration: "none"}}>Answer</span>
                     </Button> </Link>}
                     {!feedCard && <Button onClick={onPost}>
                         <span>{answerMode ? "Post" : "Answer"}</span>
