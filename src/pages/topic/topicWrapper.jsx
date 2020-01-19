@@ -3,14 +3,17 @@ import '../feedAnswers/feedAnswerPage.css'
 import {Link} from 'react-router-dom'
 import './topicWrapper.css'
 import SearchTopicDropDown from "../search/searchTopicDropDown";
-const TopicWrapper = ({topics,editMode=false,chooseTopic}) => {
+import ClearIcon from '@material-ui/icons/Clear';
+const TopicWrapper = ({topics,editMode=false,chooseTopic,removeTopic}) => {
     const [enteredTopic,setEnteredTopic] = useState('');
     return (
         <div className="topicsWrapper">
             {
                 topics.map(topic => {
                     const thumbnail = topic.thumbnail||require('../../resource/topic.svg');
-                    return (<li key={topic.id}><img alt="topicPicture" height="20px" width="20px" src={thumbnail}/> <Link to={`/Topic/${topic.id}`}><span> #{topic.name}</span></Link> </li>)
+                    return (<li key={topic.id}>
+                        <div className="topicNameAndThumbnail"><img alt="topicPicture" height="20px" width="20px" src={thumbnail}/>
+                            <Link to={`/Topic/${topic.id}`}><span> #{topic.name}</span></Link></div> {editMode&&<ClearIcon onClick={()=>removeTopic(topic.id)}/>} </li>)
                 })
             }
             {editMode &&<div className="topicWrapperEnterTopic"><li>

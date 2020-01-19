@@ -74,7 +74,7 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
                 </div>
                 <h3>{question.title}</h3>
                 {user && <div><p>post by</p>
-                    <Link to={"/Profile/"+ user.id}><p style={{color: '#906604', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>
+                    <Link to={"/Profile/"+ user.id}><p style={{color: '#FF9240', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>
                     <p style={{marginLeft: '0.5%'}}><TimeAgo date={question.lastUpdated} live={false}/></p>
                 </div>}
 

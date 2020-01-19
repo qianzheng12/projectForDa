@@ -7,7 +7,7 @@
 }
 .askQuestionForm h1{
     color: #E36100;
-    font-size: 1.5vw;
+    font-size:25px;
     font-family: VGARound;
     font-style: normal;
     margin: 0;
@@ -26,7 +26,7 @@
 }
 .askQuestionInputArea{
     width: 80%;
-    min-height: 600px;
+    min-height: 300px;
     position: relative;
     left: 10%;
     margin-bottom: 0;

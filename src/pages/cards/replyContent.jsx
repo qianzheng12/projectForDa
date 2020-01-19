@@ -13,8 +13,9 @@ import {useVotesState} from "../hooks/answerStates";
 import ReportWindow from "../utils/reportWindow";
 const ReplyContent = ({reply,refetch,commentId}) => {
     const [createReply] = useMutation(CREATE_REPLY);
+    const {user,upvote,downvote,id,upvoteStatus}= reply;
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
-    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState({user,upvote,downvote,id,upvoteStatus});
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const {replyTo,comment} = reply;
     const [report, setReport] = useState(false);
@@ -55,8 +56,8 @@ const ReplyContent = ({reply,refetch,commentId}) => {
                     {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
                     <span>{upVotes}</span>
                 </div>
-                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}
-                {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
+                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={()=>toggleThumbDown(id)}/>}
+                {thumbDown && <ThumbDownAltOutlinedIcon onClick={()=>toggleThumbDown(id)} style={{color: "#FF9240"}}/>}
                 <div className="rightCommentActions">
                     <ReplyRoundedIcon onClick={()=>setCommentMode(!commentMode)}/>
                 </div>

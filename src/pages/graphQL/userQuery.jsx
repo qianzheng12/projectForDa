@@ -84,7 +84,7 @@ export const ME = gql`
 `;
 
 
-export const USER_INFORMATION = gql` query($userID:GUID!)
+export const USER_INFORMATION = gql` query($userID:String!)
     {
         getUser(userID:$userID) {
             id
@@ -94,6 +94,7 @@ export const USER_INFORMATION = gql` query($userID:GUID!)
             major
             year
             lastName
+            followed
             phone
             answers{
                 id
@@ -163,6 +164,22 @@ export const USER_FOLLOWED_TOPICS = gql`
         }
     }
 `;
+export const USER_FOLLOWED_USERS = gql`
+    {
+        me{
+            id
+            followedUsers{
+                id
+                firstName
+                lastName
+                major
+                school
+                year
+                
+            }
+        }
+    }
+`
 export const USER_BOOKMARKED_ANSWERS = gql`
     {
         me {

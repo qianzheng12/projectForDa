@@ -76,7 +76,7 @@
 .questionAnswerGap{
     position: relative;
 
-    height: 66px;
+    height: 50px;
     width: 100%;
 }
 .questionAnswerGap button{
@@ -90,13 +90,13 @@
     font-size: 15px;
     font-family: Calibri;
     margin: 0;
-    top:40px;
+    top:20px;
     float: left;
 }
 
 .sortingSelection{
     position: relative;
-    top:30px;
+    top:10px;
     float: right;
     background: white;
 }

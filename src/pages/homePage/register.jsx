@@ -65,12 +65,15 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
         <div className="authWrapper">
             {page === 1 &&
             <RegisterPageOne
+                goToSign={setSignIn}
                 submit={submit}/>}
             {page === 2 && <RegisterPageTwo
                 submit={submitPin}
+                goToSign={setSignIn}
                 resendConfirmationCode={resendConfirmationCode}/>}
             {page === 3 &&
             <RegisterConfirmationPage
+                goToSign={setSignIn}
                 submit={confirmUser} currentUserId={currentUserId}/>}
         </div>
     );

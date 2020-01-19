@@ -92,3 +92,19 @@ export const COMMENT_ARTICLE = gql`mutation($questionID:GUID,$commentContent:Str
 export const FOLLOW_QUESTION = gql`mutation($questionID:GUID){
     followQuestion(questionID:$questionID)
 }`;
+
+export const UP_VOTE = gql`mutation($id:GUID!){
+    upvote(id:$id)
+}`;
+
+export const UN_UP_VOTE = gql`mutation($id:GUID!){
+    unUpvote(id:$id)
+}`;
+
+export const DOWN_VOTE = gql`mutation($id:GUID!){
+    downvote(id:$id)
+}`;
+
+export const UN_DOWN_VOTE = gql`mutation($id:GUID!){
+    unDownvote(id:$id)
+}`;

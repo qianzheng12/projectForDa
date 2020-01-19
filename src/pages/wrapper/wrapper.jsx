@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import "./wrapper.css";
 import '../cards/cards.css'
@@ -22,6 +23,8 @@ const Wrapper = () => {
     const [authStatus, setAuthStatus] = useState(undefined);
     const [user, setUser] = useState();
     const [token, setToken] = useState();
+    const REACT_VERSION = React.version;
+    console.log(REACT_VERSION);
     async function getAuthState() {
         try {
             const result = await Auth.currentSession();

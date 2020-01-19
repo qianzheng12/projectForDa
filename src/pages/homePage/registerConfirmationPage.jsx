@@ -10,7 +10,7 @@ import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 /* 
     The page for user to upload thumbnail and finish registration.
 */
-const RegisterConfirmationPage = ({submit,currentUserId}) => {
+const RegisterConfirmationPage = ({submit,currentUserId,goToSign}) => {
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
     const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL);
@@ -26,7 +26,7 @@ const RegisterConfirmationPage = ({submit,currentUserId}) => {
         <div className="registerForm">
             <div className="authWrapperHeader">
                 <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
-                <span>Singularity</span>
+                <span onClick={goToSign}>Singularity</span>
             </div>
             {uploadImageWindow &&
             <div className="registerUploadThumbnailWrapper">
@@ -51,7 +51,8 @@ const RegisterConfirmationPage = ({submit,currentUserId}) => {
 
             </div>
             <div className="finishRegisterButton">
-                <Button onClick={submit}>Finish</Button>
+                <Button onClick={submit}>
+                    <span>Finish</span></Button>
             </div>
         </div>
 

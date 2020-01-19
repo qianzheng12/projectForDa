@@ -6,7 +6,7 @@ import Button from "@material-ui/core/Button";
 /*
     Page for client to enter verification code. Code was sent by Amplify Auth to the email user filled in.
 */
-const RegisterPageOne = ({submit,resendConfirmationCode}) => {
+const RegisterPageOne = ({submit,resendConfirmationCode,goToSign}) => {
     let enteredPin = "";
 
     const submitPin = ()=> {
@@ -17,7 +17,7 @@ const RegisterPageOne = ({submit,resendConfirmationCode}) => {
         <div className="registerForm">
             <div className="authWrapperHeader">
                 <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
-                <span>Singularity</span>
+                <span onClick={goToSign}>Singularity</span>
             </div>
             <div className="pinHints">
                 <p>Please check your email for the verification code and enter it below:</p>
@@ -27,7 +27,7 @@ const RegisterPageOne = ({submit,resendConfirmationCode}) => {
                     length={6}
                     initialValue=""
                     type="numeric"
-                    style={{padding: '20px', paddingLeft:'40px'}}
+                    style={{padding: '20px', paddingLeft:'20px'}}
                     inputStyle={
                         {borderColor: '#808080', width:'25px', height:'25px', marginLeft:"5px", borderRadius:"5px"}}
                     inputFocusStyle={{borderColor: 'black'}}

@@ -21,13 +21,12 @@
 }
 .filterWrapper{
     box-shadow: 0 0 3px #BCBCBC;
-    padding:40px 50px 10px 50px;
+    padding:20px 50px 10px 50px;
     min-height: 100px;
     background: white;
     position: relative;
 }
 .searchResultWrapper{
-    top: 20px;
     width: 600px;
     min-height: 500px;
     position: relative;

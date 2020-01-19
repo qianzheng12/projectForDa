@@ -79,10 +79,9 @@
 
 }
 .answerContents{
-    min-height: 140px;
+    min-height: 80px;
     width: 90%;
     position: relative;
-    top:20px;
     word-wrap: break-word;
     margin-bottom: 30px;
 

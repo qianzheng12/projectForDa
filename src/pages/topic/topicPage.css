@@ -17,7 +17,7 @@
 .topicCard{
     width: 500px;
     min-height: 192px;
-    padding:16px 51px 23px 51px;
+    padding:0 51px 0 51px;
     background: white;
     box-shadow: 0 0 3px  #BCBCBC;
     margin-top:10px;

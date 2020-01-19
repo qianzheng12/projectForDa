@@ -74,6 +74,11 @@ const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
             setEditTopicName(true)
         }
     };
+    const resetEverything = () => {
+        setToolWindowOpen(false);
+        setEditTopicDescription(false);
+        setEditTopicName(false);
+    }
     return (
         <div className="card">
             {uploadImageWindow &&
@@ -108,7 +113,7 @@ const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
                             <div className="topicToolWindowSubSection">
                                 <p>Report</p>
                             </div>
-                            <div onClick={()=>setEditMode(!editMode)}  className="topicToolWindowSubSection">
+                            <div onClick={()=>{setEditMode(!editMode);resetEverything()}}  className="topicToolWindowSubSection">
                                 <p>Manage</p>
                             </div>
                         </div>}

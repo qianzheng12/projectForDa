@@ -25,7 +25,7 @@
 }
 .authWrapperHeader img{
     position: relative;
-    left: 62px;
+    left: 42px;
     top:40px;
 }
 .authWrapperHeader span{
@@ -33,8 +33,11 @@
     color:#E36100;
     font-size: 26px;
     position: relative;
-    left: 72px;
+    left: 52px;
     top:30px;
+}
+.authWrapperHeader span:hover{
+    cursor: pointer;
 }
 .signInWrapper {
     position: relative;
@@ -46,14 +49,13 @@
     width: 230px;
     height: 25px;
     position: relative;
-    left: 25px;
     margin-bottom: 20px;
     padding-left: 20px;
 }
-.checkBox{
+.signInHelpTool .checkBox{
     border-radius: 0;
     position: relative;
-    left:20px;
+    left:0px;
     background: white;
 }
 .signInHelpTool input{
@@ -67,28 +69,38 @@
 .signInHelpTool span{
     font-size: 13px;
     position: relative;
-    left:20px;
+    left:5px;
 }
 
 .signInWrapper #forgetPassword{
     position: relative;
-    left:70px;
+    left:60px;
     text-decoration: underline;
+}
+.signInPageWrapper #forgetPassword:hover{
+    cursor: pointer;
 }
 .signInActions{
     position: relative;
     top:20px;
+    width:250px;
     height: 150px;
-    padding:0 25px 0 25px;
+    padding:0;
 }
 .signInActions button{
     width: 100%;
+    height: 30px;
     border-radius: 6px;
     font-size: 15px;
     font-weight: bold;
     color: white;
     font-family: Calibri;
 
+}
+.signInActions span{
+    position: relative;
+    bottom: 1px;
+    text-transform: capitalize;;
 }
 .socialMediaActions{
     width: 100%;

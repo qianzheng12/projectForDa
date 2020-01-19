@@ -32,7 +32,8 @@ import Button from "@material-ui/core/Button";
                 }
  */
 const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, bookmarked,callback}) => {
-    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState(answer.upvote,answer.downvote);
+    const {upvote,downvote,id,upvoteStatus} = answer;
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState( {upvote,downvote,id,upvoteStatus});
     const [share, setShare] = useState(false);
     const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked);
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);

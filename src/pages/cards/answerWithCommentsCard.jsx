@@ -24,8 +24,10 @@ import {Link} from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 
 const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
+
+    const {upvote,downvote,id,upvoteStatus} = answer
     const [share, setShare] = useState(false);
-    const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState();
+    const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
     const {commentContent, commentMode, setCommentContent, setCommentMode, emptyCommentError, setEmptyCommentError} = useCommentState();
     const [sendCommentMutation] = useMutation(SEND_COMMENT);
     const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked);

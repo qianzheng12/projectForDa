@@ -39,7 +39,7 @@ const TopicsWrapper = ({followedTopics,filterTopic}) => {
     };
     const chooseTopic = (topicName,topicId) => {
         const topic = {name:topicName,id:topicId};
-        if(!topics.some(i => (i.topicName === topicName))){
+        if(!topics.some(i => (i.name === topicName))){
             const newTopicList = [...topics,topic];
             setTopics(newTopicList);
         }

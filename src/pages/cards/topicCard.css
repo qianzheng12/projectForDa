@@ -119,6 +119,10 @@
     height: 20px;
     width: 100%;
 }
+.topicCardHeader h1{
+    margin: 0;
+    height: 20px;
+}
 .topicCardHeader input{
     float: left;
     position: relative;

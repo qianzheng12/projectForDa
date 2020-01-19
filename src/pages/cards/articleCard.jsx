@@ -17,8 +17,9 @@ import TimeAgo from "react-timeago";
 import ReactHtmlParser from "react-html-parser";
 const ArticleCard = ({question,refetch}) => {
     const {user} = question;
+    const {upvote,downvote,id,upvoteStatus} = question
     const [lineOfContent, setLineOfContent] = useState(5);
-    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
 
     const [sendCommentMutation] = useMutation(COMMENT_ARTICLE);
@@ -66,8 +67,8 @@ const ArticleCard = ({question,refetch}) => {
             </div>
             <div className="answerActions">
                 <div className="thumbWrapper">
-                    {!thumbUp && <ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/>}
-                    {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
+                    {!thumbUp && <ThumbUpAltOutlinedIcon onClick={()=>toggleThumbUp(id)}/>}
+                    {thumbUp && <ThumbUpIcon onClick={()=>toggleThumbUp(id)} style={{color: "#FF9240"}}/>}
                     <span>{upVotes}</span>
                 </div>
                 {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}

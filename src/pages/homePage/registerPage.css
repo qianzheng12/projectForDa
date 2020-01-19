@@ -7,8 +7,8 @@
 }
 
 .registerForm{
-    width: 300px;
-    min-height: 430px;
+    width: 250px;
+    min-height: 400px;
     position:relative;
     margin-left:35%;
     top:50px;
@@ -32,11 +32,10 @@
 .passwordInput{
     min-height:20px;
     width: 100%;
-    margin-top:10px;
-    padding-top:10px;
+    padding-bottom:10px;
 }
 .passwordInput input{
-    width: 240px;
+    width: 180px;
     height: 25px;
 }
 .passwordInput svg{
@@ -54,7 +53,7 @@
 .signUpInput{
     min-height:20px;
     width: 100%;
-    margin-top:10px;
+    margin-bottom:10px;
     padding-top:10px;
 }
 .signUpInput h3{
@@ -65,43 +64,59 @@
 }
 .signUpInput .monthPicker{
     float: left;
-    height: 25px;
-    width: 100px;
+    height: 30px;
+    width: 90px;
     position: relative;
     font-size: 0.7em;
     left:0;
 }
 .signUpInput .dayPicker{
     float: left;
-    height: 25px;
-    width: 70px;
+    height: 30px;
+    width: 50px;
     position: relative;
     font-size: 0.7em;
-    left:20px;
+    left:5px;
 }
 .signUpInput .yearPicker{
     float: left;
-    height: 25px;
-    width: 80px;
+    height: 30px;
+    width: 60px;
     position: relative;
     font-size: 0.7em;
-    left:35px;
+    left:25px;
+}
+#dateInfo{
+    position: relative;
+    left:30px;
+    width: 20px;
+    height: 20px;
+    top:5px;
+    color: #6B6B6B;
+}
+#passwordInfo{
+    position: relative;
+    left:20px;
+    width: 20px;
+    height: 20px;
+    top:5px;
+    color: #6B6B6B;
 }
 .signUpInput .Dropdown-control{
     padding-top: 5px;
     height: 100%;
 }
 .signUpInput #firstName{
-    width: 120px;
-    height: 20px;
+    width: 115px;
+    height: 25px;
     float: left;
 }
 
 .signUpInput #lastName{
-    width: 120px;
-    height: 20px;
+    width: 115px;
+    height: 25px;
     position: relative;
-    right: 15px;
+
     float: right;
 }
 .signUpInput #fullLongInput{
@@ -109,7 +124,7 @@
     height: 25px;
 }
 .signUpInput #university{
-    width: 280px;
+    width: 240px;
     height: 25px;
 }
 .signUpInput #major{
@@ -122,7 +137,7 @@
     width: 100%;
 }
 .toS{
-    margin-top:10px;
+    margin-top:20px;
     height: 20px;
     width: 100%;
 }
@@ -158,18 +173,18 @@
 .majorInput{
     min-height:30px;
     width: 100%;
-    margin-top:10px;
     padding-top:10px;
 }
 .majorInput input{
     float: left;
     height: 25px;
-    width: 280px;
+    width: 240px;
 
 }
 .majorYearPicker{
-    width: 284px;
+    width: 244px;
     height: 30px;
+    top:10px;
     position: relative;
     font-size: 0.7em;
 
@@ -207,7 +222,7 @@
 .addProfileRegister{
     height: 280px;
     width: 200px;
-    padding: 20px 50px 50px 50px;
+    padding: 20px 50px 50px 20px;
 }
 .addProfileRegister h1{
     margin: 0;
@@ -249,13 +264,20 @@
 
 }
 .finishRegisterButton button{
+
     background: rgba(255, 146, 64, 0.21);
-    width: 100px;
-    height: 30px;
     color: #E36100;
-    font-size: 0.8em;
+    width: 100px;
     position: relative;
     left:30%;
+    font-family: Calibri;
+    font-size: 15px;
+    font-weight: bold;
+    height: 30px;
+}
+.finishRegisterButton span{
+    position: relative;
+    bottom: 2px;
 }
 .resendWrapper{
     width: 100%;
@@ -263,7 +285,7 @@
 }
 .resendWrapper p{
     position: relative;
-    left:35%;
+    left:50px;
     top:10px;
     font-size: 0.8em;
 }

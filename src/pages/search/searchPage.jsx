@@ -62,7 +62,7 @@ const SearchResultWrapper = ({searchString, topicIDs}) => {
                     if (answers.length > 0) {
                         return (
                             <div className="feedAnswer">
-                                <FeedAnswerCard key={question.id} question={question} answer={answers[0]}/>
+                                <FeedAnswerCard key={question.id} question={question} answer={answers[0]} showAction={true}/>
                             </div>
                         )
                     }

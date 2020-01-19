@@ -7,7 +7,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import AddAliasesCard from "../cards/addAliasesCard";
 import Button from "@material-ui/core/Button";
 import {SEARCH_TOPIC_BY_NAME, TOPIC_PAGE_QUERY} from "../graphQL/topicQuery";
-import {ADD_TOPIC_RELATIONSHIP} from "../graphQL/topicMutation";
+import {ADD_TOPIC_RELATIONSHIP, REMOVE_TOPIC_RELATIONSHIP} from "../graphQL/topicMutation";
 import TopicQuestions from "./topicQuestions";
 import {SEARCH_ANSWER} from "../graphQL/query";
 const TopicPage = props => {
@@ -15,6 +15,7 @@ const TopicPage = props => {
     const {loading,error,data,refetch}= useQuery(TOPIC_PAGE_QUERY,{
         variables:{topicID},fetchPolicy: "network-only"});
     const [addTopicRelationshipMutation] = useMutation(ADD_TOPIC_RELATIONSHIP);
+    const [removeTopicRelationshipMutation] = useMutation(REMOVE_TOPIC_RELATIONSHIP);
     const [editMode,setEditMode] = useState(false);
 
 
@@ -54,6 +55,13 @@ const TopicPage = props => {
         })
     };
 
+    const removeTopicRelationship = (parentID,childID)=>{
+        removeTopicRelationshipMutation({variables: {parentID,childID}}).then((result)=>{
+            if(result){
+                refetch();
+            }
+        })
+    }
     return (
         <div className="topicPageWrapper">
             <div className="homePageContent" style={{marginLeft: "20vw"}}>
@@ -68,7 +76,7 @@ const TopicPage = props => {
                         </div>
                             <Button>Submit Changes</Button>
                     </div>}
-                    <TopicQuestions topic={topic}/>
+                    {!editMode&&<TopicQuestions topic={topic}/>}
                 </div>
 
                 <div className="topics">
@@ -77,7 +85,8 @@ const TopicPage = props => {
                     </div>
                     <TopicWrapper editMode={editMode}
                                   chooseTopic={addParent}
-                                  topics={parent}/>
+                                  topics={parent}
+                                  removeTopic={(parentID)=>removeTopicRelationship(parentID,id)}/>
                 </div>
                 <div className="topics">
                     <div className="topicHeader">
@@ -85,7 +94,8 @@ const TopicPage = props => {
                     </div>
                     <TopicWrapper editMode={editMode}
                                   chooseTopic={addChild}
-                                  topics={children}/>
+                                  topics={children}
+                                  removeTopic={(childID)=>removeTopicRelationship(id,childID)}/>
                 </div>
             </div>
         </div>

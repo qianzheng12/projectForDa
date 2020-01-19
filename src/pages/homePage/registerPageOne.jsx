@@ -7,6 +7,8 @@ import yearRange, {calculateDays, monthRange, standardDays,degreeYearRange} from
 import {Formik} from "formik";
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
+import InfoIcon from '@material-ui/icons/Info';
 
 /*
     Page for user to submit their basic information like : Names, email, education details.
@@ -14,7 +16,7 @@ import Button from "@material-ui/core/Button";
     basic information will be distributed to database in back end. 
     Note: Use formik library for validation, might be overkill in this case.
 */
-const RegisterPageOne = ({submit}) => {
+const RegisterPageOne = ({submit,goToSign}) => {
     const [dayRange, setDayRange] = useState(standardDays);
     const [selectedMonth, setSelectedMonth] = useState();
     const [selectedDay, setSelectedDay] = useState();
@@ -66,7 +68,7 @@ const RegisterPageOne = ({submit}) => {
 
                         <div className="authWrapperHeader">
                             <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
-                            <span>Singularity</span>
+                            <span onClick={goToSign}>Singularity</span>
                         </div>
                         <div className="signUpInput">
                             <input required
@@ -86,6 +88,7 @@ const RegisterPageOne = ({submit}) => {
                                   placeholder="Day"/>
                         <Dropdown required options={yearRange} onChange={selectYear} value={selectedYear}
                                   className="yearPicker" placeholder="Year"/>
+                            <Tooltip title="Only your schoolmate can see it."><InfoIcon id="dateInfo"/></Tooltip>
                     </div>
                         <div className="signUpInput">
                             <input required type="email"
@@ -104,6 +107,7 @@ const RegisterPageOne = ({submit}) => {
                             <VisibilityOffOutlinedIcon onMouseDown={()=>{setShowPassword(true)}}
                                                        onMouseUp={()=>{setShowPassword(false)}}
                             />
+                            <Tooltip title="Only your schoolmate can see it."><InfoIcon id="passwordInfo"/></Tooltip>
                         </div>
                         <div className="signUpInput">
                             <input required type=""

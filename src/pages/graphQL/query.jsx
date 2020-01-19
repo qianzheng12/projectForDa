@@ -20,6 +20,9 @@ export const GET_FEED_ANSWERS = gql`
                     school
 
                 }
+                upvote
+                downvote
+                upvoteStatus
             }
             lastUpdated
             user {
@@ -63,6 +66,9 @@ export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID])
                     lastName
                     school
                 }
+                upvote
+                downvote
+                upvoteStatus
             }
             topics{
                 id
@@ -92,6 +98,9 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
         getQuestion (questionID:$id) {
             title 
             id
+            upvote
+            downvote
+            upvoteStatus
             answers(orderBy: $orderBy) {
                 id
                 content
@@ -103,6 +112,9 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
                     school
 
                 }
+                upvote
+                downvote
+                upvoteStatus
                 lastUpdated
                 comments{
                     id
@@ -113,9 +125,15 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
                         thumbnail
                         school
                     }
+                    upvote
+                    downvote
+                    upvoteStatus
                     content
                     replies{
                         id
+                        upvote
+                        downvote
+                        upvoteStatus
                         user{
                             firstName
                             lastName
@@ -134,6 +152,7 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
                                 firstName
                                 lastName   
                             }
+                            
                         }
                         
                         dateReplied
@@ -159,6 +178,9 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
             comments{
                 id
                 dateCommented
+                upvote
+                downvote
+                upvoteStatus
                 user {
                     id
                     firstName
@@ -189,6 +211,9 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
                     }
                     dateReplied
                     content
+                    upvote
+                    downvote
+                    upvoteStatus
                 }
             }
         } 

@@ -3,8 +3,7 @@ import FeedAnswerCard from "../cards/feedAnswerCard";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_QUESTION_BY_TOPIC} from "../graphQL/topicQuery";
 import {SEARCH_ANSWER} from "../graphQL/query";
-import SearchOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
-
+import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
 const TopicQuestions = ({topic}) => {
     const {loading,data,refetch} = useQuery(SEARCH_ANSWER,{
@@ -29,7 +28,7 @@ const TopicQuestions = ({topic}) => {
                 if(question.answers.length >= 1){
                     return (
                         <div className="feedAnswer">
-                            <FeedAnswerCard key={question.id} answer={(question.answers)[0]} question={question}/>
+                            <FeedAnswerCard key={question.id} answer={(question.answers)[0]} question={question} showAction={true}/>
                         </div>
                     )
                 }

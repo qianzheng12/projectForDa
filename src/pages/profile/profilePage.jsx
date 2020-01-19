@@ -27,7 +27,7 @@ const ProfilePage = props => {
         <div className="profilePageWrapper">
             <div className="profileWrapper">
                 <div className="profileHeader">
-                    <ProfileCard userInformation={user} isMe={!visitorMode} toggleVisitorMode={()=>{setVisitorMode(!visitorMode)}} refetchMe={refetchMe}/>
+                    <ProfileCard userInformation={user} isMe={userID === me.id} toggleVisitorMode={()=>{setVisitorMode(!visitorMode)}} visitorMode={visitorMode} refetchMe={refetchMe}/>
                 </div>
                 <div className="profileContent">
                     <div className="profileNavigator">

@@ -17,8 +17,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ReportWindow from "../utils/reportWindow";
 const CommentCard = ({comment, refetch}) => {
     const replies = comment.replies;
-    const {user} = comment;
-    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState();
+    const {user,upvote,downvote,id,upvoteStatus}= comment;
+    const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
     const [lineOfContent, setLineOfContent] = useState(5);
     const [repliesExpanded, setRepliesExpanded] = useState(false);
     const [createReply] = useMutation(CREATE_REPLY);
@@ -68,8 +68,8 @@ const CommentCard = ({comment, refetch}) => {
                     {thumbUp && <ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/>}
                     <span>{upVotes}</span>
                 </div>
-                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/>}
-                {thumbDown && <ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/>}
+                {!thumbDown && <ThumbDownAltOutlinedIcon onClick={()=>toggleThumbDown(id)}/>}
+                {thumbDown && <ThumbDownAltOutlinedIcon onClick={()=>toggleThumbDown(id)} style={{color: "#FF9240"}}/>}
                 <div className="rightCommentActions">
                     <ReplyRoundedIcon onClick={()=>setCommentMode(!commentMode)}/>
                 </div>
