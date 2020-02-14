@@ -45,7 +45,7 @@ const TextInputArea = ({postContent, setPostContent}) => {
     return (
         <div className="TextInputAreaWrapper">
             <ReactQuill
-                style={{height:"290px"}}
+                style={{height:"230px"}}
                 ref={(el) => {
                     reactQuillRef = el
                 }}

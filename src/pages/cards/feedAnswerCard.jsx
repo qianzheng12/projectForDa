@@ -59,6 +59,8 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, boo
     const expand = ()=>{
         setExpanded(true);
     };
+
+    console.log(user);
     return (
         <div className="card">
             {profileBookmarkAnswer && <CloseIcon  className="askQuestionFormClose"  onClick={unBookmarkAnswer}/>}
@@ -80,7 +82,7 @@ const FeedAnswerCard = ({question, showAction, answer,profileBookmarkAnswer, boo
                     <div className="answerUserDetail">
                         <Link to={"/Profile/"+ user.id}><span>{user.firstName + ' ' + user.lastName}</span></Link>
                         <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
-                        <h3>{user.school}</h3>
+                        <h3>{user.university.name}</h3>
                     </div></div>
                 }
             </div>

@@ -11,6 +11,9 @@ const ReportWindow = ({user={firstName:"qian",lastName:"Zheng"},closeWindow}) =>
     const [additionInformation,setAdditionInformation] = useState('');
     return (
         <div className="reportWindow">
+
+
+
             <div className="reportHeader">
                 <h1><b>Report</b> {user.firstName + ' ' +user.lastName}'s Answer</h1>
             </div>

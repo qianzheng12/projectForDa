@@ -8,7 +8,7 @@ import {GET_QUESTION} from "../graphQL/query";
 const QuestionAnswers = props => {
 
     let id = props.match.params.id;
-    const {followedQuestions,bookMarkedAnswers} =props;
+    const {followedQuestions,bookMarkedAnswers,setGreyCover} =props;
     let { loading, error, data,refetch} = useQuery(GET_QUESTION,{ variables: { id,orderBy:"RECENT" },});
     const [selectedSortingMethod, setSelectedSortingMethod] = useState('Auto');
     if (loading) return <div/>;
@@ -19,7 +19,7 @@ const QuestionAnswers = props => {
         <div className="questionAnswerWrapper">
             <div className="questionAnswerContent">
                 <div className="question">
-                    <QuestionCard question={getQuestion} refetch={refetch}  followed={followedQuestions.some((q)=>{return q.id === getQuestion.id})}/>
+                    <QuestionCard setGreyCover={setGreyCover} question={getQuestion} refetch={refetch}  followed={followedQuestions.some((q)=>{return q.id === getQuestion.id})}/>
                 </div>
                 <div className="questionAnswerGap">
                     <p>

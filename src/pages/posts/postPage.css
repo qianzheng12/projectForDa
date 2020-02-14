@@ -1,9 +1,10 @@
 
 .askQuestionForm{
     width: 100%;
-    min-height: 850px;
+    min-height: 780px;
     background: white;
     opacity: 1;
+
 }
 .askQuestionForm h1{
     color: #E36100;
@@ -20,10 +21,13 @@
 .askQuestionFormClose{
     height:50px;
     float: right;
+    position: relative;
+    top:20px;
 }
 .askQuestionFormHeader{
     height:50px;
 }
+
 .askQuestionInputArea{
     width: 80%;
     min-height: 300px;
@@ -63,7 +67,7 @@
     font-family: Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;
 }
 .questionDescriptionInputArea{
-    height: 350px;
+    height:260px;
     padding: 5px 0 10px 0 ;
 }
 
@@ -164,15 +168,14 @@
     float: right;
     width: 81px;
     position: relative;
-    height: 20px;
-    background: rgba(255, 146, 64, 0.27);
-    padding: 5px 5px 5px 5px;
+    height: 30px;
     border-radius: 6px;
     text-align: center;
 }
 .askButton button{
     width: 100%;
     height: 100%;
+    background: rgba(255, 146, 64, 0.27);
 
 }
 .askButton span{
@@ -181,7 +184,7 @@
     font-family: Calibri;
     color:  #E36100;
     position: relative;
-    bottom: 5px;
+    bottom:2px;
 
 }
 .topicSearchDropdown{

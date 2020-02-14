@@ -4,8 +4,6 @@ import {Auth} from 'aws-amplify';
 import {Formik} from "formik";
 import './signIn.css';
 import Button from "@material-ui/core/Button";
-import Checkbox from '@material-ui/core/Checkbox';
-import FacebookIcon from '@material-ui/icons/Facebook';
 /*  Page for user to Signin
     Information are sent to Amplify Cognito for verification.
 */

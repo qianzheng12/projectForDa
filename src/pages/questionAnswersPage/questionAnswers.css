@@ -19,7 +19,11 @@
     box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
     border: 1px solid rgba(0, 0, 0, 0.24);
     margin-top:10px;
-
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
 }
 .answers{
     height: 1200px;
@@ -31,53 +35,31 @@
     position:relative;
     width: 746px;
     min-height: 250px;
+    position: relative;
     padding:16px 51px 23px 51px;
     background: white;
     box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
     border: 1px solid rgba(0, 0, 0, 0.24);
     margin-top:10px;
 
+    -webkit-animation: fadeinSlideUp 1.5s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeinSlideUp 1.5s; /* Firefox < 16 */
+    -ms-animation: fadeinSlideUp 1.5s; /* Internet Explorer */
+    -o-animation: fadeinSlideUp 1.5s; /* Opera < 12.1 */
+    animation: fadeinSlideUp 1.5s;
 }
-@keyframes fadein {
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-moz-keyframes fadein {
-    /* Firefox */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-webkit-keyframes fadein {
-    /* Safari and Chrome */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity:1;
-    }
-}
-@-o-keyframes fadein {
-    /* Opera */
-    from {
-        opacity:0;
-    }
-    to {
-        opacity: 1;
-    }
-}
+
 .questionAnswerGap{
     position: relative;
 
     height: 50px;
     width: 100%;
+
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
 }
 .questionAnswerGap button{
     height: 100%;
@@ -101,21 +83,25 @@
     background: white;
 }
 .commentInputArea{
-    height: 40px;
+    min-height: 20px;
     padding:15px 0 10px 40px;
     width: 93%;
 
 }
-.commentInputArea input{
-    height: 30px;
+.commentInputArea textarea{
     width: 80%;
-    padding-left: 10px;
+    padding:10px 0 10px 10px;
+    resize: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .commentInputArea button{
     float: right;
     width: 60px;
     position: relative;
     right:5px;
+    top:5px;
     height:35px;
     background: rgba(255, 146, 64, 0.24);
     text-align: center;

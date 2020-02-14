@@ -7,19 +7,19 @@ import TopicWrapper from "../topic/topicWrapper";
 import {FEED_QUESTIONS, GET_TOPICS} from "../graphQL/query";
 import FeedAnswerCard from "../cards/feedAnswerCard";
 
-const Questions = ({setSelectedPage,followedQuestions}) => {
-    const { loading, error, data,refetch } = useQuery(FEED_QUESTIONS);
+const Questions = ({setSelectedPage,followedQuestions,setGreyCover}) => {
+    const { loading, error, data,refetch } = useQuery(FEED_QUESTIONS,{fetchPolicy: "network-only"});
 
     if (loading) return <div></div>;
     if (error) return <div></div>;
-    setSelectedPage("Questions");
+    setSelectedPage("Answer");
     const {questions,me:{followedTopics}} = data;
     return (
         <div className="homePage">
             <div style={{marginLeft: "20vw"}} className="homePageContent">
                 <div className="feedQuestions">
                     {questions.map((question)=>(
-                        <div className="feedQuestion"><QuestionCard refetch={refetch} question={question} feedCard={true}
+                        <div className="feedQuestion"><QuestionCard refetch={refetch} question={question} feedCard={true} setGreyCover={setGreyCover}
                                                                     followed={followedQuestions.some((q)=>{return q.id === question.id})}/></div>
                         ))}
                 </div>

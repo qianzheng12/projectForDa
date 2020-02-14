@@ -1,14 +1,17 @@
 import React, {useState} from "react";
 import './profileSetting.css'
 import {Link} from "react-router-dom";
+import Dropdown from "react-dropdown";
+import {degreeYearRange} from "../utility/dateFixture";
 
 const SettingField = ({field,updateSelf}) => {
     const [editMode, setEditMode] = useState(false);
+    const [isEditingSchoolYear, setIsEditingSchoolYear] = useState(false);
     const edit = () => {
         switch (field.name) {
             case "School": return;
             case "Major": setEditMode(true);break;
-            case "Year": setEditMode(true);break;
+            case "Year": setEditMode(true); setIsEditingSchoolYear(true);break;
             case "Secondary Email": setEditMode(true);break;
             case "Phone number": setEditMode(true);break;
             case "Password": return;
@@ -20,7 +23,7 @@ const SettingField = ({field,updateSelf}) => {
         switch (field.name) {
             case "School": return;
             case "Major": updateSelf();break;
-            case "Year": setEditMode(true);break;
+            case "Year": setEditMode(true);updateSelf();break;
             case "Secondary Email": setEditMode(true);break;
             case "Phone number": updateSelf();break;
             case "Password": return;
@@ -37,7 +40,9 @@ const SettingField = ({field,updateSelf}) => {
             </div>
             <div className="ProfileSettingListContent">
                 {!editMode&&<p>{field.mappedField}</p>}
-                {editMode && <input onChange={(e)=>{field.updateField(e.target.value)}} value={field.mappedField}/>}
+                {(editMode && !isEditingSchoolYear ) && <input onChange={(e)=>{field.updateField(e.target.value)}} value={field.mappedField}/>}
+                {(editMode && isEditingSchoolYear ) && <Dropdown required options={degreeYearRange} onChange={(data)=>{field.updateField(data)}} value={field.mappedField}
+                                                                 className="majorYearPicker" placeholder={degreeYearRange[0]}/>}
             </div>
             <div className="ProfileSettingChange">
                 {editMode &&<p onClick={()=>{update()}}>save</p>}

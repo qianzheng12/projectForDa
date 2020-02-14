@@ -7,9 +7,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
 import Resizer from 'react-image-file-resizer';
 import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
+import ApolloClient from "apollo-boost";
+import {InMemoryCache} from "apollo-cache-inmemory";
 
-const UploadImageWindow = ({closeWindow, fileName, maxWidth, maxHeight,callback,type}) => {
-    const [uploadImageMutation] = useMutation(UPLOAD_IMAGE);
+const UploadImageWindow = ({closeWindow, fileName, maxWidth, maxHeight,callback,type,customizedClient}) => {
+    const [uploadImageMutation] = useMutation(UPLOAD_IMAGE,customizedClient?{client:customizedClient}:{});
     const [pictureUrl, setPictureUrl] = useState();
 
 
@@ -29,9 +31,9 @@ const UploadImageWindow = ({closeWindow, fileName, maxWidth, maxHeight,callback,
                     100,
                     0,
                     uri => {
-                        uploadImageMutation({variables: {fileName:generateThumbnailName(),type,base64:uri}}).then ((result) => {
-                            setPictureUrl(result.data.uploadImage)
-                        })
+                            uploadImageMutation({variables: {fileName:generateThumbnailName(),type,base64:uri}}).then ((result) => {
+                                setPictureUrl(result.data.uploadImage)
+                            })
                     },
                     'base64'
             );

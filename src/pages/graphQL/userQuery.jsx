@@ -7,9 +7,12 @@ export const ME = gql`
             id
             thumbnail
             firstName
-            school
             major
             year
+            university{
+                id
+                name
+            }
             lastName
             phone
             bookmarkedAnswers{
@@ -18,66 +21,9 @@ export const ME = gql`
             followedQuestions{
                 id
             }
-            answers{
-                id
-                content
-                lastUpdated
-                question{
-                    id
-                    topics{
-                        id
-                        name
-                    }
-                    title
-                }
-            }
-            questions {
-                id
-                title
-                description
-                isArticle
-                lastUpdated
-                topics{
-                    id
-                    name
-                }
-                user {
-                    id
-                    firstName
-                    lastName
-                    school
-
-                }
-            }
             bookmarkedAnswers {
                 id
                 content
-                comments {
-                    id
-                }
-                user {
-                    id
-                    thumbnail
-                    firstName
-                    lastName
-                    school
-                }
-                question {
-                    id
-                    title
-                    lastUpdated
-                    user {
-                        id
-                        thumbnail
-                        firstName
-                        lastName
-                        school
-                    }
-                    topics {
-                        id
-                        name
-                    }
-                }
             }
         }
     }
@@ -85,72 +31,58 @@ export const ME = gql`
 
 
 export const USER_INFORMATION = gql` query($userID:String!)
-    {
-        getUser(userID:$userID) {
+{
+    getUser(userID:$userID) {
+        id
+        thumbnail
+        firstName
+        major
+        year
+        university{
             id
-            thumbnail
-            firstName
-            school
-            major
-            year
-            lastName
-            followed
-            phone
-            answers{
+            name
+        }
+        lastName
+        followed
+        phone
+        answers{
+            id
+            content
+            lastUpdated
+            question{
                 id
-                content
-                lastUpdated
-                question{
-                    id
-                    topics{
-                        id
-                        name
-                    }
-                    title
-                }
-            }
-            questions {
-                id
-                title
-                description
-                isArticle
-                lastUpdated
                 topics{
                     id
                     name
                 }
-                user {
-                    id
-                    firstName
-                    lastName
-                    school
-
-                }
+                title
             }
-            bookmarkedAnswers {
+        }
+        questions {
+            id
+            title
+            description
+            isArticle
+            lastUpdated
+            topics{
                 id
-                content
-                comments {
+                name
+            }
+            user {
+                id
+                firstName
+                lastName
+                major
+                university{
                     id
+                    name
                 }
-                question {
-                    id
-                    title
-                    lastUpdated
-                    user {
-                        id
-                        firstName
-                        lastName
-                        school
-                    }
-                    topics {
-                        id
-                        name
-                    }
-                }
+                year
+
             }
         }
     }
+}
 `;
 export const USER_FOLLOWED_TOPICS = gql`
     {
@@ -172,14 +104,17 @@ export const USER_FOLLOWED_USERS = gql`
                 id
                 firstName
                 lastName
+                university{
+                    id
+                    name
+                }
                 major
-                school
                 year
-                
+
             }
         }
     }
-`
+`;
 export const USER_BOOKMARKED_ANSWERS = gql`
     {
         me {
@@ -194,7 +129,12 @@ export const USER_BOOKMARKED_ANSWERS = gql`
                     id
                     firstName
                     lastName
-                    school
+                    university{
+                        id
+                        name
+                    }
+                    major
+                    year
                     thumbnail
                 }
                 question {
@@ -205,12 +145,44 @@ export const USER_BOOKMARKED_ANSWERS = gql`
                         id
                         firstName
                         lastName
-                        school
+                        university{
+                            id
+                            name
+                        }
+                        major
+                        year
                     }
                     topics {
                         name
                     }
                 }
+            }
+        }
+    }
+`;
+
+export const GET_PROFILE_QUESTIONS = gql`
+    {
+        me{
+            id
+            profileQuestions{
+                question
+                answer
+            }
+        }
+    }
+`;
+
+export const GET_PAST_EDUCATION= gql`
+    {
+        me{
+            id
+            pastEducation{
+                school
+                from
+                to
+                major
+                degree
             }
         }
     }

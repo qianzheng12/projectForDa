@@ -18,7 +18,7 @@ export const SEARCH_TOPIC_BY_NAME = gql`query($topicName:String!)
 }
 `;
 
-export const GET_QUESTION_BY_TOPIC =  gql`query($topicName:String!){
+export const GET_QUESTION_BY_TOPIC = gql`query($topicName:String!){
     questions(topics:[$topicName]) {
         id
         title
@@ -31,8 +31,11 @@ export const GET_QUESTION_BY_TOPIC =  gql`query($topicName:String!){
                 id
                 firstName
                 lastName
-                school
-
+                university{
+                    name
+                }
+                major
+                year
             }
         }
         topics{
@@ -45,14 +48,15 @@ export const GET_QUESTION_BY_TOPIC =  gql`query($topicName:String!){
             id
             firstName
             lastName
-            school
+            major
+            year
 
         }
     }
 }`;
 export const TOPIC_PAGE_QUERY = gql`query($topicID:GUID!)
 {
-    
+
     getTopic(topicID:$topicID){
         id
         name
@@ -69,7 +73,7 @@ export const TOPIC_PAGE_QUERY = gql`query($topicID:GUID!)
         thumbnail
         description
     }
-    
+
     me{
         id
         followedTopics{
@@ -80,15 +84,15 @@ export const TOPIC_PAGE_QUERY = gql`query($topicID:GUID!)
 `;
 
 export const MY_FOLLOW_TOPICS = gql`
-{
-    me{
-        id
-        followedTopics{
+    {
+        me{
             id
-            name
-            thumbnail
+            followedTopics{
+                id
+                name
+                thumbnail
+            }
         }
+
     }
-    
-}
 `;

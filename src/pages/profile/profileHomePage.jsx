@@ -5,10 +5,55 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {Formik} from "formik";
 import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
+import {useMutation, useQuery} from "@apollo/react-hooks";
+import {UPDATE_PROFILE_QUESTIONS} from "../graphQL/userMutation";
+import {GET_PROFILE_QUESTIONS} from "../graphQL/userQuery";
 
 const ProfileHomePage = ({visitorMode}) => {
+    const {data,loading,error} = useQuery(GET_PROFILE_QUESTIONS);
+    if(loading) return <div/>;
+    if(error) return <div/>;
+    const {me:{profileQuestions}} = data;
+    let processedData;
+    if(profileQuestions){
+        processedData =profileQuestions.map((question,index)=>(
+             {...question,id:`${index}`})
+        );
+    }
+    else{
+        processedData = []
+    }
+
+    return (<ProfileQuestions visitorMode={visitorMode} processedData={processedData}/>)
+};
+export default ProfileHomePage;
+
+const ProfileQuestions = ({visitorMode,processedData}) => {
     const [addMode, setAddMode] = useState(false);
-    const items = [{}, {}, {}]
+    const [updateProfileQuestions] = useMutation(UPDATE_PROFILE_QUESTIONS)
+    const [items, setItems] = useState( processedData);
+    const [question, setQuestion] = useState('');
+    const [answer, setAnswer] = useState('');
+    const updateItems = (newItems)=>{
+        const updateItem = newItems.map(item=>{
+            return {question:item.question,answer:item.answer};
+        });
+        updateProfileQuestions({variables:{questions:updateItem}}).then(data=>{
+            console.log(data);
+        })
+    };
+
+    const handleAddNewItem = () => {
+        if(question === '' || answer === ''){
+            alert('Please enter question and answer');
+        }
+        else{
+            const newItems = [...items,{...{question,answer},id:`${items.length}`,isSelected:false}];
+            setItems(newItems);
+            setAddMode(false);
+            updateItems(newItems);
+        }
+    };
     return (
         <div className="profileHomePageWrapper">{!visitorMode &&
         <div>
@@ -24,38 +69,33 @@ const ProfileHomePage = ({visitorMode}) => {
                         <span>Add</span>
                     </div>}
                     {addMode &&
-                    <Formik
-                        initialValues={{title: '', anonymouslyCheck: false, description: '', mySchool: false}}
-
-                        onSubmit={(values, {setSubmitting}) => {
-
-                        }}
-                    >{({
-                           handleSubmit,
-                       }) => (
-                        <form onSubmit={handleSubmit}>
-                            <div className="addListArea">
+                        <form onSubmit={handleAddNewItem}>
+                            <div className="addListArea" style={{height:"230px"}}>
                                 <CloseIcon className="closeAddProfilePrompt" onClick={() => {
                                     setAddMode(false)
                                 }}/>
                                 <div className="profileInputArea">
                                     <h1>Prompt:</h1>
-                                    <input placeholder="e.g. dog or cat?"/>
+                                    <input placeholder="e.g. dog or cat?"
+                                           value={question}
+                                           onChange={e=>setQuestion(e.target.value)}
+                                           name="question"/>
                                 </div>
 
                                 <div className="profileInputArea">
                                     <h1>Response:</h1>
-                                    <input placeholder="e.g. dog"/>
+                                    <input placeholder="e.g. dog"
+                                           value={answer}
+                                           onChange={e=>setAnswer((e.target.value))}
+                                           name="answer"/>
                                 </div>
                                 <div className="addProfilePrompt">
                                     <Button type="submit"><span>Save</span></Button>
                                 </div>
                             </div>
-                        </form>
-                    )}
-                    </Formik>}
+                        </form>}
                 </div>
-                <DraggableList/>
+                <DraggableList items={items} setItems={setItems} updateItems={updateItems}/>
             </div>
         </div>
         }
@@ -68,8 +108,8 @@ const ProfileHomePage = ({visitorMode}) => {
                         >
 
                             <div className="unDragContent">
-                                <h1>What is your favorite color?</h1>
-                                <p>Green</p>
+                                <h1>{item.question}</h1>
+                                <p>{item.answer}</p>
                             </div>
                         </div>
                     ))}
@@ -77,5 +117,4 @@ const ProfileHomePage = ({visitorMode}) => {
             }
         </div>
     )
-};
-export default ProfileHomePage;
+}

@@ -11,6 +11,7 @@ import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import ThumbDownAltOutlinedIcon from "@material-ui/icons/ThumbDownAltOutlined";
 import {useVotesState} from "../hooks/answerStates";
 import ReportWindow from "../utils/reportWindow";
+import ReactHtmlParser from "react-html-parser";
 const ReplyContent = ({reply,refetch,commentId}) => {
     const [createReply] = useMutation(CREATE_REPLY);
     const {user,upvote,downvote,id,upvoteStatus}= reply;
@@ -49,7 +50,7 @@ const ReplyContent = ({reply,refetch,commentId}) => {
                 </div>
             </div>
             <div className="replyContent"> <p><span>@{replyTo?(replyTo.user.firstName+' '+replyTo.user.lastName)
-                :(comment.user.firstName+' '+comment.user.lastName)}</span>  {reply.content}</p></div>
+                :(comment.user.firstName+' '+comment.user.lastName)}</span>  {ReactHtmlParser(reply.content.replace(/\n/g, ' <br/>'))} </p></div>
             <div className="answerActions">
                 <div className="thumbWrapper">
                     {!thumbUp && <ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/>}

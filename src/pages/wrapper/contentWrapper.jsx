@@ -9,7 +9,7 @@ import TopicPage from "../topic/topicPage";
 import ProfilePage from "../profile/profilePage";
 import MessageBlock from "../messageSystem/messageBlock";
 import Navigator from "./navigator";
-import Explore from "../explorePage/explore";
+import MySchoolPage from "../myschoolPage/mySchoolPage";
 import Questions from "../questionsPage/questions";
 import PostPage from "../posts/postPage";
 import {useQuery} from "@apollo/react-hooks";
@@ -22,7 +22,7 @@ const ContentWrapper = () => {
 
     const [postPageMode, setPostPageMode] = useState(false);
     const [greyCover, setGreyCover] = useState(false);
-    console.log(error);
+
     if (loading) return <div/>;
 
     if (error) {
@@ -31,39 +31,38 @@ const ContentWrapper = () => {
     const {me} = data;
     return (
         <div>
+            {postPageMode &&
+            <div>
+                <div className="greyOutCoverBackground">
+                </div>
+                <div className="askQuestionPage">
+                    <PostPage askQuestionMode={postPageMode}
+                              toggleAskQuestionMode={setPostPageMode}
+                              universityId={me.university.id}
+                              type="question"/>
+                </div>
+            </div>}
 
 
             <Navigator me={me} setGreyOutCover={setPostPageMode} selectedPage={selectedPage} greyOutCover={postPageMode}/>
             <div className="contentWrapper">
-                {postPageMode &&
-                <div>
-                    <div className="greyOutCoverBackground">
-                    </div>
-                    <div className="askQuestionPage">
-                        <PostPage askQuestionMode={postPageMode}
-                                  toggleAskQuestionMode={setPostPageMode}
-                                  type="question"/>
-                    </div>
-                </div>}
-                {greyCover &&
-                <div>
-                    <div className="greyOutCoverBackground">
-                    </div>
-                </div>}
+
                 <Route exact path="/">
                     <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
                 </Route>
-                <Route path="/explore">
-                    <Explore setSelectedPage={setSelectedPage}/>
+                <Route path="/MySchool">
+                    <MySchoolPage setSelectedPage={setSelectedPage} bookMarkedAnswers={me.bookmarkedAnswers}/>
                 </Route>
                 <Route path="/answer">
                     <Questions setGreyCover={setGreyCover} followedQuestions={me.followedQuestions} setSelectedPage={setSelectedPage}/>
                 </Route>
                 <Route
                     path="/question/:id"
-                    render={(props) => <QuestionAnswers {...props} followedQuestions={me.followedQuestions} bookMarkedAnswers={me.bookmarkedAnswers}/>} />
+                    render={(props) => <QuestionAnswers {...props} setGreyCover={setGreyCover} followedQuestions={me.followedQuestions} bookMarkedAnswers={me.bookmarkedAnswers}/>} />
                 <Route path="/searchPage/:searchString" component={SearchPage}/>
-                <Route path="/addArticle" component={AddArticle}/>
+                <Route
+                    path="/addArticle"
+                    render={(props) => <AddArticle {...props} university={me.university.id}/>} />
                 <Route path="/article/:id" component={ArticlePage}/>
                 <Route
                     path="/Topic/:topicName"

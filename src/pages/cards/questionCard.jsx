@@ -20,7 +20,7 @@ import ReactHtmlParser from "react-html-parser";
 import TextInputArea from "../posts/textInputArea";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const QuestionCard = ({question, refetch, feedCard, followed}) => {
+const QuestionCard = ({question, refetch, feedCard, followed,setGreyCover}) => {
     const {user} = question;
     const [answerMode, toggleAnswerButton] = useState(false);
     const [highLightFollowIcon, setHighLightFollowIcon] = useState(followed);
@@ -93,11 +93,14 @@ const QuestionCard = ({question, refetch, feedCard, followed}) => {
                 {highLightFollowIcon && <Tooltip title="unfollow question"><StarRoundedIcon onClick={unFollowQuestion} style={{color: "#FF9240"}}/></Tooltip>}
                 <Tooltip title="invite friend"><EmojiPeopleIcon/></Tooltip>
                 <Tooltip title="report"><FlagOutlinedIcon onClick={() => {
-                    setReport(true)
+                    setReport(true);
                 }}/></Tooltip>
-                {report && <ReportWindow user={user} closeWindow={() => {
+                {report && <div>
+                    <div className="greyOutCoverBackground">
+                    </div>
+                    <ReportWindow user={user} closeWindow={() => {
                     setReport(false)
-                }}/>}
+                }}/></div>}
                 <div className="postButton">
                     {feedCard &&
                     <Link to={`/question/${question.id}`}><Button onClick={onPost}>

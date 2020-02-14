@@ -13,7 +13,7 @@ import {extractImage} from "../utils/extractImg";
 import InfoIcon from '@material-ui/icons/Info';
 import ThumbUpAltOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Tooltip from "@material-ui/core/Tooltip";
-const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
+const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => {
     const [topics,setTopics] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
     const [checkTopicName, { loading, data }] = useLazyQuery(SEARCH_TOPIC_BY_NAME,
@@ -72,7 +72,8 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                     showEmptyTopicError(true);
                 }
                 else{
-                    askQuestion({ variables: { title:values.title,description:postContent,thumbnail:extractImage(postContent), isArticle:type==="article"}}).then(
+                    const variables = { title:values.title,description:postContent, isArticle:type==="article"};
+                    askQuestion({ variables: values.mySchool?{...variables,school:universityId}:variables}).then(
                         (result)=>{
                             const{data} = result;
                             topics.map((topic) => {
@@ -82,6 +83,9 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type}) => {
                             showEmptyTopicError(false);
                             if(type === "question"){
                                 toggleAskQuestionMode();
+                            }
+                            else{
+                                window.location.reload();
                             }
                         }
                     ).catch(

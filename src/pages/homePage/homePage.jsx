@@ -12,7 +12,7 @@ import ForgotPassword from "./forgotPassword";
   Homepage is the page user going to see when they visit any webpage without valid Auth.
   This page provide the ability to login and register.
 **/
-const HomePage = ({setSession}) => {
+const HomePage = ({setSession,client}) => {
     const [signUpMode, setSignUpMode] = useState(false);
     const [signUpStage, setSignUpStage] = useState(1);
     const [forgotPassword,setForgotPassword] = useState(false);
@@ -68,7 +68,7 @@ const HomePage = ({setSession}) => {
                                             setSignUpMode(true)
                                         }}/>}
             {signUpMode && <RegisterPage signUpStage={signUpStage} userEmail={userEmail} setCurrentUserEmail={setCurrentUserEmail}
-                                         userPassword={userPassword} setUserPassword={setUserPassword} setSignIn={()=>{setSignUpMode(false)}}/>}
+                                         userPassword={userPassword} setUserPassword={setUserPassword} setSignIn={()=>{setSignUpMode(false);setSession(true)}}/>}
         </div>
     );
 };

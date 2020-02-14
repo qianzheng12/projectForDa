@@ -56,6 +56,12 @@
     margin-bottom:10px;
     padding-top:10px;
 }
+.signUpInput h2{
+    margin: 15px 0 0 0;
+    color: #FF9240;
+    font-size: 15px;
+    font-family: Calibri;
+}
 .signUpInput h3{
     color: #FF9240;
     padding: 0;
@@ -212,7 +218,14 @@
     left:20px;
     border-radius: 90px;
 }
+.registerThumbnail img{
 
+    height: 160px;
+    width: 160px;
+    border-radius: 150px;
+    position: relative;
+    color: #BCBCBC;
+}
 .registerThumbnail:hover{
     cursor: pointer;
 }

@@ -9,6 +9,9 @@ import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined'
 import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from '@material-ui/icons/Info';
+import {useLazyQuery} from "@apollo/react-hooks";
+import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
+import {GET_UNIVERSITY_BY_DOMAIN} from "../graphQL/query";
 
 /*
     Page for user to submit their basic information like : Names, email, education details.
@@ -16,13 +19,21 @@ import InfoIcon from '@material-ui/icons/Info';
     basic information will be distributed to database in back end. 
     Note: Use formik library for validation, might be overkill in this case.
 */
-const RegisterPageOne = ({submit,goToSign}) => {
+const RegisterPageOne = ({submit,goToSign,selectedMajorYear, setSelectedMajorYear}) => {
     const [dayRange, setDayRange] = useState(standardDays);
+    const [university,setUniversity] = useState();
     const [selectedMonth, setSelectedMonth] = useState();
     const [selectedDay, setSelectedDay] = useState();
     const [selectedYear, setSelectedYear] = useState();
-    const [selectedMajorYear, setSelectedMajorYear] = useState();
     const [showPassword , setShowPassword] = useState(false);
+    const [showBirthdayNotSelected, setShowBirthdayNotSelected] = useState(false);
+
+    const [getUniversityByDomain, { data }] = useLazyQuery(GET_UNIVERSITY_BY_DOMAIN,
+        {onCompleted: () => {
+                console.log(data);
+            },
+            fetchPolicy:"network-only"
+        });
     const selectYear = (year) => {
         setSelectedYear(year);
         if (selectedMonth) {
@@ -37,6 +48,25 @@ const RegisterPageOne = ({submit,goToSign}) => {
     };
     const selectDay = (day) => {
         setSelectedDay(day);
+    };
+
+    const checkUniversityByDomain = (value) =>{
+        fetch(`https://p3ds5bk9m7.execute-api.eu-west-2.amazonaws.com/dev/?domain=${value.split('@')[1]}`,
+            {    method: 'GET', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, *cors, same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                }}).then(res => res.json()).then(
+            res=>{
+                if(Object.entries((res)).length!==0){
+                    setUniversity(res)
+                }
+
+            }
+        )
     };
     return (
         <Formik
@@ -53,7 +83,17 @@ const RegisterPageOne = ({submit,goToSign}) => {
                 return errors;
             }}
             onSubmit={(values) => {
-                submit(values.email,values.password,values.firstName,values.lastName,values.university,values.major,setSelectedMajorYear);
+                if(!university){
+
+                }
+                else if(selectedDay&&selectedYear&&selectedMonth){
+                    setShowBirthdayNotSelected(false);
+                    submit(values.email,values.password,values.firstName,values.lastName,university.id,values.major);
+                }
+                else{
+                    setShowBirthdayNotSelected(true)
+                }
+
             }}
         >
             {({
@@ -89,11 +129,12 @@ const RegisterPageOne = ({submit,goToSign}) => {
                         <Dropdown required options={yearRange} onChange={selectYear} value={selectedYear}
                                   className="yearPicker" placeholder="Year"/>
                             <Tooltip title="Only your schoolmate can see it."><InfoIcon id="dateInfo"/></Tooltip>
-                    </div>
+                            {showBirthdayNotSelected&& <div><h2>Please enter your birthday</h2></div>}
+                        </div>
                         <div className="signUpInput">
                             <input required type="email"
                                    name="email"
-                                   onChange={handleChange}
+                                   onChange={(e)=>{handleChange(e);checkUniversityByDomain(e.target.value)}}
                                    value={values.email} placeholder="Email:" id="fullLongInput"/>
                             <h3>{errors.email}</h3>
                         </div>
@@ -111,12 +152,11 @@ const RegisterPageOne = ({submit,goToSign}) => {
                         </div>
                         <div className="signUpInput">
                             <input required type=""
-                                   name="university"
-                                   onChange={handleChange}
-                                   onBlur={handleBlur}
-                                   value={values.university}
+                                   value={!university? '' : university.name}
                                    placeholder="Current university/College"
+                                   disabled
                                    id="university"/>
+                            <h3>{!university && "Enter a valid university email will autofill this field"}</h3>
                         </div>
                         <div className="majorInput">
                             <input required type=""

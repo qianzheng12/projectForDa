@@ -32,3 +32,13 @@ export const UPDATE_SELF = gql`mutation($major:String,$year:String,$phoneNumber:
         id
     }
 }`;
+
+
+export const UPDATE_PROFILE_QUESTIONS =  gql`mutation($questions:[profileInput]){
+    updateProfileQuestions(questions:$questions)
+}`;
+
+
+export const UPDATE_PAST_EDUCATIONS =  gql`mutation($schools:[pastEducationInput]){
+    updatePastEducation(schools:$schools)
+}`;

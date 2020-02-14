@@ -13,7 +13,6 @@ import {useCommentState} from "../hooks/commentStates";
 import Button from "@material-ui/core/Button";
 import {SEND_COMMENT} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";
-import Truncate from "react-truncate";
 import TimeAgo from "react-timeago";
 import SharePopup from "../utils/sharePopup";
 import BookmarkRoundedIcon from "@material-ui/icons/BookmarkRounded";
@@ -25,10 +24,16 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
 
-    const {upvote,downvote,id,upvoteStatus} = answer
+    const {upvote, downvote, id, upvoteStatus} = answer;
     const [share, setShare] = useState(false);
-    const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
+    const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState({
+        upvote,
+        downvote,
+        id,
+        upvoteStatus
+    });
     const {commentContent, commentMode, setCommentContent, setCommentMode, emptyCommentError, setEmptyCommentError} = useCommentState();
+    const [commentHeight, setCommentHeight] = useState('40px');
     const [sendCommentMutation] = useMutation(SEND_COMMENT);
     const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked);
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
@@ -39,8 +44,9 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
 
     const {user} = answer;
     const {comments} = answer;
-    const thumbnailUrl = user.thumbnail|| require('../../resource/ted.jpg');
+    const thumbnailUrl = user.thumbnail || require('../../resource/ted.jpg');
     const sendComment = () => {
+        console.log(commentContent);
         if (commentContent === '') {
             setEmptyCommentError(true)
         } else {
@@ -67,18 +73,22 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
     return (
         <div className="card">
             <div className="answerUserInformation">
-                <Link to={'/Profile/'+user.id}><img height="40px" width="50px" src={thumbnailUrl}/></Link>
+                <Link to={'/Profile/' + user.id}><img height="40px" width="50px" src={thumbnailUrl}/></Link>
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
                     <h2><TimeAgo date={answer.lastUpdated} live={false}/></h2>
 
-                    <h3>{user.school}</h3>
+                    <h3>{user.university.name}</h3>
                 </div>
                 <div className="cardToolWrapper">
-                    <MoreVertIcon onClick={()=>{setToolWindowOpen(!toolWindowOpen)}} className="cardToolIcon"/>
+                    <MoreVertIcon onClick={() => {
+                        setToolWindowOpen(!toolWindowOpen)
+                    }} className="cardToolIcon"/>
                     {toolWindowOpen &&
                     <div className="cardToolWindow">
-                        <div onClick={()=>{setReport(true)}} className="topicToolWindowSubSection">
+                        <div onClick={() => {
+                            setReport(true)
+                        }} className="topicToolWindowSubSection">
                             <p>Report</p>
                         </div>
                         {report && <ReportWindow user={user} closeWindow={() => {
@@ -96,27 +106,39 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             <div className="answerActions">
                 <div className="thumbWrapper">
                     {!thumbUp && <Tooltip title="like"><ThumbUpAltOutlinedIcon onClick={toggleThumbUp}/></Tooltip>}
-                    {thumbUp && <Tooltip title="like"><ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/></Tooltip>}
+                    {thumbUp &&
+                    <Tooltip title="like"><ThumbUpIcon onClick={toggleThumbUp} style={{color: "#FF9240"}}/></Tooltip>}
                     <span>{upVotes}</span>
                 </div>
-                {!thumbDown &&<Tooltip title="unlike"><ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/></Tooltip>}
-                {thumbDown && <Tooltip title="unlike"><ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/></Tooltip>}
+                {!thumbDown && <Tooltip title="unlike"><ThumbDownAltOutlinedIcon onClick={toggleThumbDown}/></Tooltip>}
+                {thumbDown &&
+                <Tooltip title="unlike"><ThumbDownAltOutlinedIcon onClick={toggleThumbDown} style={{color: "#FF9240"}}/></Tooltip>}
                 <div className="rightAnswerActions">
                     <div className="commentsIconWrapper">
                         <Tooltip title="comment"><AddCommentOutlinedIcon onClick={() => setCommentMode(!commentMode)}/></Tooltip>
                         <span>{answer.comments.length}</span>
                     </div>
                     <Tooltip title="share">
-                        <ShareRoundedIcon onClick={()=>{setShare(!share)}}/>
+                        <ShareRoundedIcon onClick={() => {
+                            setShare(!share)
+                        }}/>
                     </Tooltip>
                     {share && <SharePopup url={window.location.href}/>}
-                    {bookmarkedIcon && <Tooltip title="unbookmark answer"><BookmarkRoundedIcon onClick={unBookmarkAnswer} style={{color:"#FF9240"}}/></Tooltip>}
-                    {!bookmarkedIcon && <Tooltip title="bookmark answer"><BookmarkBorderOutlinedIcon onClick={bookmarkAnswer} /></Tooltip>}
+                    {bookmarkedIcon &&
+                    <Tooltip title="unbookmark answer"><BookmarkRoundedIcon onClick={unBookmarkAnswer}
+                                                                            style={{color: "#FF9240"}}/></Tooltip>}
+                    {!bookmarkedIcon &&
+                    <Tooltip title="bookmark answer"><BookmarkBorderOutlinedIcon onClick={bookmarkAnswer}/></Tooltip>}
                 </div>
             </div>
             {commentMode &&
-            <div className="commentInputArea">
-                <input onChange={e => setCommentContent(e.target.value)} placeholder="Write your comment"/>
+            <div className="commentInputArea" contentEditable="true">
+                <textarea style={{height: commentHeight}} onChange={e => {
+                    console.log(e.target.scrollHeight)
+                    setCommentContent(e.target.value);
+                    setCommentHeight(e.target.scrollHeight + 2 + 'px')
+                }
+                } placeholder="Write your comment"/>
                 <Button onClick={sendComment}>
                     <span>{"Send"}</span>
                 </Button>
@@ -126,7 +148,6 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             {comments && comments.length >= 1 && (
                 <div className="commentsForAnswer">
                     {comments.map(comment => (
-
                         <div className="comment">
                             <CommentCard comment={comment} refetch={refetch}/>
                         </div>)

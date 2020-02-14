@@ -4,6 +4,7 @@ import RegisterPageTwo from './registerPageTwo'
 import './registerPage.css'
 import {Auth} from 'aws-amplify';
 import RegisterConfirmationPage from "./registerConfirmationPage";
+import ApolloClient, {InMemoryCache} from "apollo-boost";
 
 /* 
     Register page is used for client to register new account. It contains three steps:
@@ -15,8 +16,9 @@ import RegisterConfirmationPage from "./registerConfirmationPage";
 const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword, setUserPassword,setSignIn}) => {
     const [page, setPage] = useState(signUpStage);
     const [currentUserId, setCurrentUserId] = useState("");
-
-    const submit = (email, password,firstName,lastName,university,major,degreeYear) => {
+    const [client,setClient] = useState();
+    const [selectedMajorYear, setSelectedMajorYear] = useState();
+    const submit = (email, password,firstName,lastName,university,major) => {
         Auth.signUp({
             username: email,
             password: password,
@@ -28,7 +30,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
                 "custom:education":JSON.stringify({
                     school:university,
                     major:major,
-                    year:degreeYear
+                    year:selectedMajorYear.value
                 })
 
             },
@@ -48,12 +50,31 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
         }).catch(e => {
         });
     };
-    const submitPin = enteredPin => {
-        console.log(userEmail);
-        console.log(userPassword)
+    const submitPin = async enteredPin => {
         Auth.confirmSignUp(userEmail, enteredPin).then
             (() => {
-                setPage(3);
+                Auth.signIn({
+                    username: userEmail,
+                    password: userPassword,
+                }).then(async user => {
+                    const result = await Auth.currentSession();
+                    setClient(new ApolloClient({
+                        uri:'https://ivuzzjl262.execute-api.eu-west-2.amazonaws.com/develop/',
+                        cache:new InMemoryCache(),
+                        request: (operation) => {
+                            operation.setContext({
+                                headers: {
+                                    authorization:`Bearer ${result.getIdToken().getJwtToken()}`
+                                }
+                            })
+                        }
+                    }))
+                    setPage(3);
+                })
+                    .catch(err => {
+                        alert(err.message)
+                    });
+
             }).catch(err => {
             alert(err.message);
         });
@@ -66,6 +87,8 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
             {page === 1 &&
             <RegisterPageOne
                 goToSign={setSignIn}
+                selectedMajorYear={selectedMajorYear}
+                setSelectedMajorYear={setSelectedMajorYear}
                 submit={submit}/>}
             {page === 2 && <RegisterPageTwo
                 submit={submitPin}
@@ -74,6 +97,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
             {page === 3 &&
             <RegisterConfirmationPage
                 goToSign={setSignIn}
+                client={client}
                 submit={confirmUser} currentUserId={currentUserId}/>}
         </div>
     );

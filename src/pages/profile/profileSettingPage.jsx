@@ -4,6 +4,7 @@ import SettingField from "./settingField";
 import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_SELF} from "../graphQL/userMutation";
 import NameSettingField from "./nameSettingField";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const ProfileSettingPage = ({user,refetch}) => {
     const [firstName,setFirstName] = useState(user.firstName);
@@ -25,15 +26,22 @@ const ProfileSettingPage = ({user,refetch}) => {
     });
     const settingFields = [
         {name:"School Email",mappedField:user.email,changeField:""},
-        {name:"School",mappedField:user.school,changeField:"show/hide"},
+        {name:"School",mappedField:user.university.name,changeField:"show/hide"},
         {name:"Major",mappedField:major,updateField:updateMajor,changeField:"Edit"},
-        {name:"Year",mappedField:year,updateField:updateYear,changeField:"Change"},
+        {name:"Year",mappedField:year,updateField:(majorYear)=>{updateYear(majorYear.value)},changeField:"Change"},
         {name:"Secondary Email",mappedField:"-",changeField:"Edit"},
         {name:"Phone number",mappedField:phoneNumber,updateField:updatePhoneNumber,changeField:"Edit"},
         {name:"Password",mappedField:"******"}];
     return (
         <div className="profileHomePageWrapper">
             <div className="ProfileContentList">
+                <div className="profileSettingOverview">
+                    {user.thumbnail?<img src={user.thumbnail}/>:<AccountCircleIcon/>}
+                    <div id="introduction">
+                        <h1>{`${user.firstName} ${user.lastName}`}</h1>
+                        <span>{`${user.major} ${user.year}`}</span>
+                    </div>
+                </div>
                 <NameSettingField firstName={firstName} lastName={lastName} setFirstName={setFirstName} setLastName={setLastName} updateSelf={updateSelf}/>
                 {settingFields.map(field => (
                     <SettingField field={field} updateSelf={updateSelf}/>

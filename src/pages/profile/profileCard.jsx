@@ -70,13 +70,10 @@ const ProfileCard = ({userInformation,isMe,toggleVisitorMode,visitorMode}) => {
             <div className="profileCardBottom">
                 <div className="profileUniversityIntro">
                     <ul>
-                        <li>{userInformation.school}</li>
+                        <li>{userInformation.university.name}</li>
                         <li>{userInformation.major}</li>
                         <li>{userInformation.year}</li>
                     </ul>
-                </div>
-                <div className="profileUniversityLogo">
-                    <img height="55px" width="200px" src={require('../../resource/profileUniveristyLog.png')}/>
                 </div>
             </div>
         </div>

@@ -30,7 +30,7 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
                         <ol>
                             <li className={selectedPage==="Home"?"activeLink":"unActiveLink"}><Link to='/Home'>Home</Link></li>
                             <li className={selectedPage==="Questions"?"activeLink":"unActiveLink"}><Link to='/Answer'>Answer</Link></li>
-                            <li className={selectedPage==="Explore"?"activeLink":"unActiveLink"}><Link to='/Explore'>My school</Link></li>
+                            <li className={selectedPage==="MySchool"?"activeLink":"unActiveLink"}><Link to='/MySchool'>My school</Link></li>
                         </ol>
                     </div>
                     <SearchInput/>

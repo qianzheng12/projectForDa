@@ -14,7 +14,7 @@ const ProfilePage = props => {
     let userID = props.match.params.userId;
     const {me,refetchMe} = props;
     const [visitorMode,setVisitorMode] = useState(userID !== me.id);
-    const [selectedTopic, setSelectedTopic] = useState("Profile");
+    const [selectedTopic, setSelectedTopic] = useState("Education");
     const {loading, error, data,refetch} = useQuery(USER_INFORMATION,{variables:{userID}});
 
     if(loading) return <div/>;

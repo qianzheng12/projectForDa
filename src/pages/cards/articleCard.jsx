@@ -15,10 +15,11 @@ import Button from "@material-ui/core/Button";
 import {useCommentState} from "../hooks/commentStates";
 import TimeAgo from "react-timeago";
 import ReactHtmlParser from "react-html-parser";
+import HTMLEllipsis from "react-lines-ellipsis/lib/html";
 const ArticleCard = ({question,refetch}) => {
     const {user} = question;
-    const {upvote,downvote,id,upvoteStatus} = question
-    const [lineOfContent, setLineOfContent] = useState(5);
+    const {upvote,downvote,id,upvoteStatus} = question;
+    const [commentHeight, setCommentHeight] = useState('40px');
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
 
@@ -49,16 +50,12 @@ const ArticleCard = ({question,refetch}) => {
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
                     <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
-                    <h3>{user.school}</h3>
+                    <h3>{user.university.name}</h3>
                 </div>
                 }
             </div>
             <div className="articleContent">
-                <Typography variant="body2" color="textSecondary" component="p">
-                    <Truncate lines={lineOfContent} ellipsis={<span>...<h3 onClick={()=>setLineOfContent(-1)}> Read more</h3></span>}>
-                        <div>{ReactHtmlParser(question.description)}</div>
-                    </Truncate>
-                </Typography>
+                <HTMLEllipsis unsafeHTML={question.description}/>
             </div>
             <div className="articleTopicWrapper">
                 Topics: {question.topics.map( topic => {
@@ -84,7 +81,12 @@ const ArticleCard = ({question,refetch}) => {
             </div>
             {commentMode &&
             <div className="commentInputArea">
-                <input onChange={e=>setCommentContent(e.target.value)} placeholder="Write your comment"/>
+                                <textarea style={{height: commentHeight}} onChange={e => {
+                                    console.log(e.target.scrollHeight)
+                                    setCommentContent(e.target.value);
+                                    setCommentHeight(e.target.scrollHeight + 2 + 'px')
+                                }
+                                } placeholder="Write your comment"/>
                 <Button onClick={sendComment}>
                     <span>{"Send"}</span>
                 </Button>

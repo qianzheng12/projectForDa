@@ -1,9 +1,9 @@
 import { gql } from 'apollo-boost';
 
 
-export const POST_QUESTION_ARTICLE = gql`mutation($title:String,$description:String,$isArticle:Boolean){
+export const POST_QUESTION_ARTICLE = gql`mutation($title:String,$description:String,$isArticle:Boolean,$school:GUID){
     createQuestion(
-        input:{title:$title,description:$description,isArticle:$isArticle}){
+        input:{title:$title,description:$description,isArticle:$isArticle,school:$school}){
         id,
     }
 }`;
@@ -17,7 +17,6 @@ export const ANSWER_QUESTION = gql`mutation($questionId:GUID,$answerContent:Stri
                 id
                 firstName
                 lastName
-                school
         
             }
             lastUpdated

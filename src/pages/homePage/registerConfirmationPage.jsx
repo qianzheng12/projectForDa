@@ -7,16 +7,18 @@ import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 
+import {Auth} from "aws-amplify";
+
 /* 
     The page for user to upload thumbnail and finish registration.
 */
-const RegisterConfirmationPage = ({submit,currentUserId,goToSign}) => {
+const RegisterConfirmationPage = ({submit,currentUserId,goToSign,client}) => {
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
-    const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL);
+    const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL,{client});
     const [userThumbnail,setUserThumbnail] = useState();
-    const updateThumbnail = (pictureUrl) =>{
 
+    const updateThumbnail = async (pictureUrl) =>{
         updateThumbnailMutation({variables: {thumbnail:pictureUrl}}).then((result) =>{
             setUserThumbnail(pictureUrl);
             toggleUploadImageWindow(false)
@@ -35,7 +37,7 @@ const RegisterConfirmationPage = ({submit,currentUserId,goToSign}) => {
                 fileName={currentUserId.id}
                 callback={pictureUrl=>updateThumbnail(pictureUrl)}
                 type={"profileThumbnail"}
-                type={"topicThumbnail"}/>
+                customizedClient={client}/>
             </div>
             }
 
@@ -43,10 +45,20 @@ const RegisterConfirmationPage = ({submit,currentUserId,goToSign}) => {
                 <h1>Add profile picture</h1>
                 <div className="registerThumbnail" onMouseEnter={()=>{setCursorOn(true)}}
                      onMouseLeave={() => {setCursorOn(false)}}>
-                    <div className="registerThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
-                        {cursorOn&&<AddAPhotoIcon/>}
-                    </div>
-                    <AccountCircleIcon/>
+                    {userThumbnail&&
+                    <div>
+                        <img src={userThumbnail}/>
+                    </div>}
+                    {
+                        !userThumbnail&&
+                        <div>
+                            <div className="registerThumbnailCover" onClick={() => toggleUploadImageWindow(true)}>
+                                {cursorOn&&<AddAPhotoIcon/>}
+                            </div>
+                            <AccountCircleIcon/>
+                        </div>
+                    }
+
                 </div>
 
             </div>
