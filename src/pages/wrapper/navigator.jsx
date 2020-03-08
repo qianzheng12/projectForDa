@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
-import {BrowserRouter as Router, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import SearchInput from "./searchInput";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Button from "@material-ui/core/Button";
 import AddBoxRoundedIcon from '@material-ui/icons/AddBoxRounded';
 import { Auth } from 'aws-amplify';
-import PostPage from "../posts/postPage";
-import ReportWindow from "../utils/reportWindow";
 
 /* 
     Navigation bar for user to navgiate between three components: Home, question, School.
@@ -17,7 +15,7 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const signOut = () => {
         Auth.signOut()
-            .then(data => window.location.reload())
+            .then(() => window.location.reload())
             .catch(err => console.log(err));
     };
 
@@ -29,7 +27,7 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
                     <div className="tags">
                         <ol>
                             <li className={selectedPage==="Home"?"activeLink":"unActiveLink"}><Link to='/Home'>Home</Link></li>
-                            <li className={selectedPage==="Questions"?"activeLink":"unActiveLink"}><Link to='/Answer'>Answer</Link></li>
+                            <li className={selectedPage==="Answer"?"activeLink":"unActiveLink"}><Link to='/Answer'>Answer</Link></li>
                             <li className={selectedPage==="MySchool"?"activeLink":"unActiveLink"}><Link to='/MySchool'>My school</Link></li>
                         </ol>
                     </div>

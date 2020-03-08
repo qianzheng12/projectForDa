@@ -1,25 +1,54 @@
-import React, {useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import FeedAnswerCard from "../cards/feedAnswerCard";
 import TopicWrapper from "../topic/topicWrapper";
-import {useQuery} from "@apollo/react-hooks";
-import {GET_FEED_ANSWERS} from "../graphQL/query";
+import {useLazyQuery} from "@apollo/react-hooks";
 import SchoolCard from "./schoolCard";
 import './mySchoolPage.css'
-import {GET_MY_SCHOOL} from "../graphQL/questionQuery";
+import {GET_MORE_MY_SCHOOL, GET_MY_SCHOOL} from "../graphQL/questionQuery";
 
 const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
-    const {loading, error, data} = useQuery(GET_MY_SCHOOL);
-    const [leftMargin, setLeftMargin] = useState("20vw");
-    const [showTopic, toggleShowTopic] = useState(true);
+    const [ questions,setQuestions] = useState([]);
+    const [ getMySchool, setGetMySchool] = useState({});
+    const [ followedTopics, setTopics] = useState([]);
+    const [loadingMoreData, setLoadingMoreData] = useState(false);
+    const wrapperRef = useRef(null);
+    const [ fetchingMySchoolQuery,{loading, error, data}] = useLazyQuery(GET_MY_SCHOOL, {
+        fetchPolicy:"network-only",
+        onCompleted: ()=>{
+            setGetMySchool(data.getMySchool);
+            setQuestions(data.getMySchool.questions);
+            setTopics(data.me.followedTopics);
+        }
+    });
+    const [ fetchingMoreSchoolQuery,{data:moreQuestions}] = useLazyQuery(GET_MORE_MY_SCHOOL, {
+        fetchPolicy:"network-only",
+        onCompleted: ()=>{
+            console.log(moreQuestions);
+            setLoadingMoreData(false);
+            setQuestions([...questions,...moreQuestions.getMySchool.questions]);
+        }
+    });
+    useEffect(()=>{
+        fetchingMySchoolQuery({variables:{limit:5,lastOffset:0}})
+    },[]);
     setSelectedPage("MySchool");
     if (loading) return <div/>;
     if (error) return <div/>;
-    console.log(data);
-    const {getMySchool,getMySchool:{questions},me:{followedTopics}} = data;
-    console.log(questions);
+    const getMoreQuestions = () => {
+        if(loadingMoreData){
+            return;
+        }
+        setLoadingMoreData(true);
+        fetchingMoreSchoolQuery({variables:{limit:5,lastOffset:questions.length}});
+    };
+    const handleScroll = () => {
+        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
+        console.log(321);
+        getMoreQuestions()
+    };
     return (
-        <div className="homePage">
-            <div className="homePageContent" style={{marginLeft: leftMargin}}>
+        <div className="homePage" ref={wrapperRef} onScroll={handleScroll}>
+            <div className="homePageContent" style={{marginLeft: "20vw"}}>
                 <div className="feedAnswers">
                     <div className="schoolIntroduction">
                     <SchoolCard university={getMySchool}/>
@@ -37,13 +66,12 @@ const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
                         return null;
                     })}
                 </div>
-                {showTopic &&
                 <div className="topics">
                     <div className="topicHeader">
                         <p>Topics</p>
                     </div>
                     <TopicWrapper topics={followedTopics}/>
-                </div>}
+                </div>
             </div>
         </div>
     )

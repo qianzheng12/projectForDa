@@ -17,13 +17,10 @@ export const ME = gql`
             phone
             bookmarkedAnswers{
                 id
+                content
             }
             followedQuestions{
                 id
-            }
-            bookmarkedAnswers {
-                id
-                content
             }
         }
     }
@@ -38,6 +35,9 @@ export const USER_INFORMATION = gql` query($userID:String!)
         firstName
         major
         year
+        secondEmail
+        hideUniversity
+        numberOfFollowers
         university{
             id
             name
@@ -48,6 +48,8 @@ export const USER_INFORMATION = gql` query($userID:String!)
         answers{
             id
             content
+            title
+            isArticle
             lastUpdated
             question{
                 id
@@ -62,7 +64,6 @@ export const USER_INFORMATION = gql` query($userID:String!)
             id
             title
             description
-            isArticle
             lastUpdated
             topics{
                 id
@@ -153,6 +154,7 @@ export const USER_BOOKMARKED_ANSWERS = gql`
                         year
                     }
                     topics {
+                        id
                         name
                     }
                 }

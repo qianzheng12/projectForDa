@@ -6,6 +6,11 @@
     float: left;
     margin-left: 10px;
     margin-top: 10px;
+    -webkit-animation: fadein 1.0s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1.0s; /* Firefox < 16 */
+    -ms-animation: fadein 1.0s; /* Internet Explorer */
+    -o-animation: fadein 1.0s; /* Opera < 12.1 */
+    animation: fadein 1.0s;
 }
 .followingContent img{
     position:relative;
@@ -23,20 +28,24 @@
     margin: 0;
 }
 .followingPeopleIntro{
-    width: 140px;
+    width: 160px;
     top: 12px;
     float:left;
     height: 60px;
     margin-left:26px;
     position: relative;
 }
+.followingPeopleIntro a{
+    text-decoration: none;
+    color:black;
+}
 .followingPeopleIntro h1{
-    font-family: Calibri;
+    font-family: Calibri, serif;
     font-size: 16px;
     margin:0;
 }
 .followingPeopleIntro p{
-    font-family: Calibri;
+    font-family: Calibri, serif;
     font-size: 16px;
     margin: 0;
     color: #999999;
@@ -44,7 +53,7 @@
 .followingContent svg{
     position: relative;
     float: left;
-    left: 20px;
+    left:5px;
     top:30px;
     color: #333333;
 }
@@ -60,9 +69,12 @@
     position: relative;
 }
 .followingTopicName h1{
-
-    font-family: Calibri;
+    font-family: Calibri, serif;
     font-size: 16px;
     height: 20px;
     margin:20px 0 0 0;
+}
+.followingTopicName a{
+    text-decoration: none;
+    color:black;
 }

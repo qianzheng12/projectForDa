@@ -1,9 +1,8 @@
 .questionAnswerWrapper{
     overflow: auto;
-    height: 94vh;
+    height: 92vh;
     width: 100%;
-    position: fixed;
-    top: 60px;
+    position: relative;
 }
 .questionAnswerContent{
     width: 850px;
@@ -26,10 +25,17 @@
     animation: fadein 1s;
 }
 .answers{
-    height: 1200px;
+    min-height: 1200px;
     position: relative;
     width: 746px;
     top:20px;
+    margin-bottom: 50px;
+}
+.answers #loadingCircle{
+    position: relative;
+    color: rgb(255, 146, 64);
+    left:50%;
+    top:30px;
 }
 .answer{
     position:relative;
@@ -70,7 +76,7 @@
     position: relative;
     left: 0;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri, serif;
     margin: 0;
     top:20px;
     float: left;

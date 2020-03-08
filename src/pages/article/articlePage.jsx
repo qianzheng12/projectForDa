@@ -1,26 +1,22 @@
 import React from 'react'
-import QuestionCard from "../cards/questionCard";
 import {useQuery} from "@apollo/react-hooks";
-import AnswerWithCommentsCard from "../cards/answerWithCommentsCard";
-import SortMethodButton from "../sortButton/sortMethodButton";
-import {GET_QUESTION} from "../graphQL/query";
+import {GET_ARTICLE} from "../graphQL/query";
 import ArticleCard from "../cards/articleCard";
 import './articlePage.css';
 import CommentCard from "../cards/commentCard";
 const ArticlePage = props => {
     let id = props.match.params.id;
 
-    const { loading, error, data,client,refetch } = useQuery(GET_QUESTION,{ variables: { id,orderBy:"RECENT" },});
+    const { loading, error, data,client,refetch } = useQuery(GET_ARTICLE,{ variables: { answerID:id,orderBy:"RECENT" },});
 
     if (loading) return <div/>;
     if (error) return <div/>;
-
-    const {comments} = data.getQuestion;
+    const {comments} = data.getAnswer;
     return (
         <div className="questionAnswerWrapper">
             <div className="questionAnswerContent">
                 <div className="articleWrapper">
-                    <ArticleCard question={(data.getQuestion)} refetch={refetch}/>
+                    <ArticleCard article={(data.getAnswer)} refetch={refetch}/>
                 </div>
                 {comments.length > 0 &&
                 <div className="commentsWrapper">

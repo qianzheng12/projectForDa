@@ -1,52 +1,65 @@
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './profileBookmark.css'
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import {useQuery} from "@apollo/react-hooks";
-import {GET_FEED_ANSWERS} from "../graphQL/query";
+import {useLazyQuery} from "@apollo/react-hooks";
 import FeedAnswerCard from "../cards/feedAnswerCard";
 import {USER_BOOKMARKED_ANSWERS} from "../graphQL/userQuery";
-const ProfileBookmarkPage = props => {
-    const {loading, error, data,refetch} = useQuery(USER_BOOKMARKED_ANSWERS,{fetchPolicy: "network-only"});
+const ProfileBookmarkPage = () => {
+    const [bookmarkedAnswers,setBookmarkedAnswer] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
+    const [userBookmarkAnswerQuery,{loading, error, data}] = useLazyQuery(USER_BOOKMARKED_ANSWERS,{
+        onCompleted: ()=>{
+            const {me} = data;
+            setBookmarkedAnswer(me.bookmarkedAnswers);
+        },
+        fetchPolicy: "network-only"
+    });
+    useEffect(()=>{
+        userBookmarkAnswerQuery()
+
+    },[]);
+
     if (loading) return <div/>;
     if (error) return <div/>;
-    console.log(11);
-    const {me:{bookmarkedAnswers}} = data;
+    const unBookmark = (removedId) => {
+        const newAnswers = bookmarkedAnswers.filter(answer => {
+            return answer.id !== removedId
+        });
+        setBookmarkedAnswer(newAnswers);
+    };
+
+    const search = (input) => {
+        const {me} = data;
+        setSearchInput(input);
+        const updatedAnswers = me.bookmarkedAnswers.filter(answer=>(answer.question.title.includes(input)));
+        setBookmarkedAnswer(updatedAnswers);
+    };
     return (
         <div className="profileRightPartWrapper">
             <div className="profileContentSearch">
                 <SearchOutlinedIcon />
-                <input placeholder="search"/>
+                <input value={searchInput} onChange={e=>search(e.target.value)} placeholder="search"/>
             </div>
-            <BookmarkAnswers bookmarkedAnswers={bookmarkedAnswers}/>
+            <div className="profileRightPartContent">
+                {bookmarkedAnswers.map(bookmarkAnswer => {
+                    const {question} = bookmarkAnswer;
+                    return (
+                        <div key={bookmarkAnswer.id} className="feedAnswer">
+                            <FeedAnswerCard
+                                bookmarked={true}
+                                key={question.id}
+                                question={question}
+                                answer={bookmarkAnswer}
+                                profileBookmarkAnswer={true}
+                                showAction={false}
+                                callback={()=>unBookmark(bookmarkAnswer.id)}/>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     )
 };
 
-const BookmarkAnswers = ({bookmarkedAnswers}) =>{
-    const [answers,setAnswers] = useState(bookmarkedAnswers);
-    const unBookmark = (removedId) => {
-        const newAnswers = answers.filter(answer => {
-            return answer.id !== removedId
-        })
-        setAnswers(newAnswers);
-    }
-    return (<div className="profileRightPartContent">
-        {answers.map(bookmarkAnswer => {
-            const {question} = bookmarkAnswer;
-            return (
-                <div key={bookmarkAnswer.id} className="feedAnswer">
-                    <FeedAnswerCard
-                        bookmarked={true}
-                        key={question.id}
-                        question={question}
-                        answer={bookmarkAnswer}
-                        profileBookmarkAnswer={true}
-                        showAction={false}
-                        callback={()=>unBookmark(bookmarkAnswer.id)}/>
-                </div>
-            );
-        })}
-    </div>)
-}
 export default ProfileBookmarkPage;

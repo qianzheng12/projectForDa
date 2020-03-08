@@ -1,37 +1,51 @@
 import React, {useState} from "react";
 import './profileHomePage.css'
 import './profileQuestion.css'
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import ProfileQuestionCard from "../cards/profileQuestionCard";
-const ProfileQuestionsPage = ({type,data}) => {
+
+const ProfileQuestionsPage = ({type, data}) => {
+    const [posts, setPosts] = useState(data);
+    const [searchInput, setSearchInput] = useState('');
+
+    const search = (input) => {
+        setSearchInput(input);
+        let updatedAnswers = [];
+        if(type === "question"){
+            updatedAnswers = data.filter(question=>(question.title.includes(input)));
+        }
+        else if (type === "answer"){
+            updatedAnswers = data.filter(answer=>(answer.question.title.includes(input)));
+        }
+        setPosts(updatedAnswers);
+    };
     return (
         <div className="profileRightPartWrapper">
             <div className="profileContentSearch">
-                <SearchOutlinedIcon />
-                <input placeholder="search"/>
+                <input value={searchInput} onChange={e=>search(e.target.value)} placeholder="search"/>
             </div>
             {type === "question" &&
-                data.map(post => (
-                    !post.isArticle &&
-                    <div className="profileQuestion">
-                        <ProfileQuestionCard post={post} content={post.description} type={"questions"}/>
-                    </div>
-                ))
+            posts.map(post => (
+                !post.isArticle &&
+                <div className="profileQuestion">
+                    <ProfileQuestionCard post={post} content={post.description} type={"questions"}/>
+                </div>
+            ))
             }
             {type === "answer" &&
-                data.map(answer => (
-                    <div className="profileQuestion">
-                        <ProfileQuestionCard post={answer.question} content={answer.content} type={"answer"}/>
-                    </div>
-                ))
+            posts.map(answer => (
+                !answer.isArticle &&
+                <div className="profileQuestion">
+                    <ProfileQuestionCard post={answer.question} content={answer.content} type={"answer"}/>
+                </div>
+            ))
             }
             {type === "article" &&
-                data.map(post => (
-                    post.isArticle &&
-                    <div className="profileQuestion">
-                        <ProfileQuestionCard post={post} content={post.description} type={"article"}/>
-                    </div>
-                ))
+            posts.map(post => (
+                post.isArticle &&
+                <div className="profileQuestion">
+                    <ProfileQuestionCard post={post} content={post.content} type={"article"}/>
+                </div>
+            ))
             }
 
         </div>

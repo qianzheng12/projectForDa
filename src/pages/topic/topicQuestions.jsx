@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import FeedAnswerCard from "../cards/feedAnswerCard";
 import {useQuery} from "@apollo/react-hooks";
-import {GET_QUESTION_BY_TOPIC} from "../graphQL/topicQuery";
 import {SEARCH_ANSWER} from "../graphQL/query";
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
@@ -10,7 +9,6 @@ const TopicQuestions = ({topic}) => {
         variables:{topicIDs:[topic.id]},fetchPolicy: "network-only"});
     const [searchedValue,setSearchedValue] = useState('');
     if(loading) return <div/>;
-    console.log(data);
     const {search:searchResult} = data;
     const filteredOutQuestions = searchResult.filter(question => question.answers.length > 0);
 

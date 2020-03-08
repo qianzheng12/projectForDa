@@ -1,19 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import ReactQuill from "react-quill";
 import './textInputArea.css'
 
-function uploadImage(quillEditor, props, updateState) {
-    updateState();
-    const cursorPosition = quillEditor.getSelection().index;
-    quillEditor.insertEmbed(cursorPosition, "image","https:/dncg7mmslg3sw.cloudfront.net/profileThumbnail/1805b324-61a5-40a3-a150-4b6e67e4895f 1576009877070");
-    quillEditor.setSelection(cursorPosition + 1);
-    updateState();
-
-}
 class TextInputAreaTEST extends React.Component{
     constructor(props) {
         super(props);
-        this.reactQuillRef = null
+        this.reactQuillRef = null;
         this.state = {
             uploadImageWindow: false
         }
@@ -30,15 +22,10 @@ class TextInputAreaTEST extends React.Component{
                 ['blockquote', 'code-block'],
             ],  handlers: {
                 'image': ()=> this.setState({uploadImageWindow:true})
-                /*'image': () => uploadImage(
-                    this.reactQuillRef.getEditor(),
-                    this.props,
-                    ()=>this.setState({uploadImageWindow:true})
-                )*/
             }
 
         }
-    }
+    };
 
 
     render() {

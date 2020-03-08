@@ -27,8 +27,9 @@ export const UN_FOLLOW_USER = gql`mutation($followedUserID:String!){
     unFollowUser(followedUserID:$followedUserID)
 }`;
 
-export const UPDATE_SELF = gql`mutation($major:String,$year:String,$phoneNumber:PhoneNumber,$firstName:String,$lastName:String){
-    updateSelf(input:{major:$major,year:$year,phone:$phoneNumber,firstName:$firstName,lastName:$lastName}){
+export const UPDATE_SELF = gql`mutation($major:String,$year:String,$phoneNumber:String,$firstName:String,
+    $lastName:String,$secondEmail:EmailAddress,$hideUniversity:Boolean){
+    updateSelf(input:{major:$major,year:$year,phone:$phoneNumber,firstName:$firstName,lastName:$lastName,secondEmail:$secondEmail,hideUniversity:$hideUniversity}){
         id
     }
 }`;

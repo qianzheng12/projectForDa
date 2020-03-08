@@ -1,48 +1,88 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import './feedAnswerPage.css'
 import FeedAnswerCard from "../cards/feedAnswerCard";
 import TopicWrapper from "../topic/topicWrapper";
-import {useQuery} from '@apollo/react-hooks';
-import ImageUploader from 'react-images-upload';
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-import {GET_FEED_ANSWERS} from '../graphQL/query'
+import {useLazyQuery} from '@apollo/react-hooks';
+import {GET_ANSWERS, GET_FEED_ANSWERS} from '../graphQL/query'
 
-const FeedAnswerPage = ({setSelectedPage,bookMarkedAnswers}) => {
-    const {loading, error, data} = useQuery(GET_FEED_ANSWERS,{fetchPolicy: "network-only"});
-    const [leftMargin, setLeftMargin] = useState("20vw");
-    const [showTopic, toggleShowTopic] = useState(true);
+const FeedAnswerPage = ({setSelectedPage}) => {
+    const [answers, setAnswers] = useState([]);
+    const [followedTopics, setFollowedTopics] = useState([]);
+    const [bookmarkedAnswers, setBookmarkedAnswers] = useState([]);
+    const [loadingMoreData, setLoadingMoreData] = useState(false);
+    const [noMoreFeed, setNoMoreFeed] = useState(false);
+    const [nonFeedAnswersIndex,setNonFeedAnswersIndex] = useState(0);
+    const wrapperRef = useRef(null);
+
+    const [fetchAnswersQuery, {data:fetchedQuestions}] = useLazyQuery(GET_ANSWERS,{
+        fetchPolicy:"network-only",
+        onCompleted: ()=>{
+            setLoadingMoreData(false);
+            const {answers:answerFeed} = fetchedQuestions;
+            setAnswers([...answers,...answerFeed]);
+            setNonFeedAnswersIndex(nonFeedAnswersIndex+10);
+        }
+    });
+    const [getFeedAnswerQuery, {error, data}] = useLazyQuery(GET_FEED_ANSWERS,{
+        fetchPolicy: "network-only",
+        onCompleted: ()=>{
+            setLoadingMoreData(false);
+            const {ratingFeed,recentFeed,me:{followedTopics:fetchedTopics,bookmarkedAnswers:fetchedAnswers}} = data;
+            if(answers.length === 0){
+                setBookmarkedAnswers(fetchedAnswers);
+                setFollowedTopics(fetchedTopics);
+            }
+            setAnswers([...answers,...ratingFeed,...recentFeed]);
+            if(ratingFeed.length+recentFeed.length < 10) {
+                setNoMoreFeed(true);
+                fetchAnswersQuery({variables:{lastOffset:0}})
+            }
+
+        }
+    });
+
+    useEffect(()=>{
+        getFeedAnswerQuery();
+    },[])
     setSelectedPage("Home");
-    if (loading) return <div/>;
     if (error) return <div/>;
-    console.log(data);
-    const {questions,me:{followedTopics}} = data;
 
+    const getMoreAnswers = () => {
+        if(loadingMoreData){
+            return;
+        }
+        setLoadingMoreData(true);
+        if(noMoreFeed){
+            fetchAnswersQuery({variables:{lastOffset:nonFeedAnswersIndex}});
+        }
+        else{
+            getFeedAnswerQuery({variables:{ratingLastOffset:Math.ceil(answers.length*0.2),recentLastOffset:Math.ceil(answers.length*0.8)}});
+        }
+
+    };
+    const handleScroll = () => {
+        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
+        getMoreAnswers()
+    };
     return (
-        <div className="homePage">
-            <div className="homePageContent" style={{marginLeft: leftMargin}}>
+        <div className="homePage" ref={wrapperRef} onScroll={handleScroll}>
+            <div className="homePageContent" style={{marginLeft: "20vw"}}>
                 <div className="feedAnswers">
-                    {questions.map(question => {
-                        const {answers} = question;
-                        if(answers.length >= 1){
+                    {answers.map(answer => {
                             return (
-                                <div className="feedAnswer">
-
-                                    <FeedAnswerCard bookmarked={bookMarkedAnswers.some((b)=>{return b.id === answers[0].id})}
-                                                    key={question.id} question={question} answer={answers[0]} profileBookmarkAnswer={false} showAction={true}/>
-
+                                <div key={answer.id} className="feedAnswer">
+                                    <FeedAnswerCard bookmarked={bookmarkedAnswers.some((b)=>{return b.id === answer.id})}
+                                                    key={answer.id} question={answer.question} answer={answer} profileBookmarkAnswer={false} showAction={true}/>
                                 </div>
                             )
-                        }
-                        return null;
                     })}
                 </div>
-                {showTopic &&
                 <div className="topics">
                     <div className="topicHeader">
                         <p>Topics</p>
                     </div>
                     <TopicWrapper topics={followedTopics}/>
-                </div>}
+                </div>
             </div>
         </div>
 

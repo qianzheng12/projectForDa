@@ -22,10 +22,10 @@ import ReportWindow from "../utils/reportWindow";
 import {Link} from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 
-const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
-
+const AnswerWithCommentsCard = ({answer, bookmarked,questionId }) => {
     const {upvote, downvote, id, upvoteStatus} = answer;
     const [share, setShare] = useState(false);
+    const [comments, setComments] = useState(answer.comments);
     const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState({
         upvote,
         downvote,
@@ -43,16 +43,15 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
 
 
     const {user} = answer;
-    const {comments} = answer;
     const thumbnailUrl = user.thumbnail || require('../../resource/ted.jpg');
     const sendComment = () => {
-        console.log(commentContent);
         if (commentContent === '') {
             setEmptyCommentError(true)
         } else {
             sendCommentMutation({variables: {answerId: answer.id, commentContent}}).then(
                 (result) => {
-                    refetch()
+                    const {data:{createComment}} = result;
+                    setComments([createComment, ...comments])
                 }
             );
             setEmptyCommentError(false);
@@ -60,12 +59,12 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
         }
     };
     const unBookmarkAnswer = () => {
-        unBookmarkMutation({variables: {answerID: answer.id}}).then((result) => {
+        unBookmarkMutation({variables: {answerID: answer.id}}).then(() => {
             setBookmarkedIcon(false)
         })
     };
     const bookmarkAnswer = () => {
-        bookmarkAnswerMutation({variables: {answerID: answer.id}}).then((result) => {
+        bookmarkAnswerMutation({variables: {answerID: answer.id}}).then(() => {
             setBookmarkedIcon(true)
         })
     };
@@ -75,10 +74,10 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             <div className="answerUserInformation">
                 <Link to={'/Profile/' + user.id}><img height="40px" width="50px" src={thumbnailUrl}/></Link>
                 <div className="answerUserDetail">
-                    <span>{user.firstName + ' ' + user.lastName}</span>
+                    <Link to={'/Profile/' + user.id}> <span>{user.firstName + ' ' + user.lastName}</span></Link>
                     <h2><TimeAgo date={answer.lastUpdated} live={false}/></h2>
 
-                    <h3>{user.university.name}</h3>
+                    {!user.hideUniversity&&<h3>{user.university.name}</h3>}
                 </div>
                 <div className="cardToolWrapper">
                     <MoreVertIcon onClick={() => {
@@ -91,7 +90,7 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
                         }} className="topicToolWindowSubSection">
                             <p>Report</p>
                         </div>
-                        {report && <ReportWindow user={user} closeWindow={() => {
+                        {report && <ReportWindow user={user} reportContent={`We have received a report on this question /question/${questionId}`} closeWindow={() => {
                             setReport(false)
                         }}/>}
                     </div>}
@@ -134,7 +133,6 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             {commentMode &&
             <div className="commentInputArea" contentEditable="true">
                 <textarea style={{height: commentHeight}} onChange={e => {
-                    console.log(e.target.scrollHeight)
                     setCommentContent(e.target.value);
                     setCommentHeight(e.target.scrollHeight + 2 + 'px')
                 }
@@ -148,8 +146,8 @@ const AnswerWithCommentsCard = ({answer, refetch, bookmarked}) => {
             {comments && comments.length >= 1 && (
                 <div className="commentsForAnswer">
                     {comments.map(comment => (
-                        <div className="comment">
-                            <CommentCard comment={comment} refetch={refetch}/>
+                        <div key={comment.id} className="comment">
+                            <CommentCard comment={comment}/>
                         </div>)
                     )}
                 </div>

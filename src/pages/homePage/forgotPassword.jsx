@@ -9,7 +9,7 @@ const ForgotPassword = ({userEmail,setSighIn}) => {
     const resendConfirmationCode = () => {
         Auth.forgotPassword(userEmail)
             .then(data => {
-                alert("Confirmation code has been resent to your email");
+                alert(data.message);
             })
             .catch(err =>{
                     if(err.name === "UserNotFoundException"){

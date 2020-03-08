@@ -16,9 +16,9 @@
     position: absolute;
     left:30px;
     border:1px #BCBCBC solid;
-    top:0px;
+    top:0;
     width: 78px;
-    height: 30px;
+    min-height: 30px;
     background: white;
     border-radius: 6px;
     box-shadow: 2px 2px 5px #BCBCBC;
@@ -45,7 +45,7 @@
     top: 0;
     font-weight: bold;
     font-size: 16px;
-    font-family: Calibri;
+    font-family: Calibri, serif;
 }
 .answerUserDetail{
     margin-left: 2%;
@@ -66,7 +66,7 @@
     color: #6B6B6B;
     font-size: 14px;
     font-weight: normal;
-    font-family: Calibri;
+    font-family: Calibri, serif;
 }
 .answerUserDetail h3{
     position: relative;
@@ -80,7 +80,8 @@
 }
 .answerContents{
     min-height: 80px;
-    width: 90%;
+    overflow: hidden;
+    width: 100%;
     position: relative;
     word-wrap: break-word;
     margin-bottom: 30px;
@@ -98,14 +99,14 @@
 .answerContents a{
     color: #169BD5;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri, serif;
 }
 .answerContents span{
     margin: 0;
 }
 .answerContents p{
     color: black;
-    font-family: Calibri;
+    font-family: Calibri, serif;
     margin:0;
     font-size: 15px;
 }

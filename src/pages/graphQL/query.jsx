@@ -1,30 +1,79 @@
 import {gql} from 'apollo-boost';
 
-export const GET_FEED_ANSWERS = gql`
-    {
-        questions  {
+export const GET_FEED_ANSWERS = gql` query ($recentLastOffset:Int,$ratingLastOffset:Int)
+{
+    recentFeed:answerFeed(lastOffset:$recentLastOffset,limit:8,orderBy:RECENT)  {
+        id
+        title
+        content
+        comments{
+            id
+        }
+        user {
+            hideUniversity
+            id
+            university{
+                id
+                name
+            }
+            firstName
+            lastName
+            thumbnail
+        }
+        upvote
+        downvote
+        upvoteStatus
+        question{
+            school{
+                id
+            }
             id
             title
-
-            answers(orderBy: RECENT, limit:1){
+            lastUpdated
+            user {
                 id
-                content
-                comments{
+                thumbnail
+                firstName
+                lastName
+                university{
                     id
+                    name
                 }
-                user {
-                    id
-                    university{
-                        id
-                        name
-                    }
-                    firstName
-                    lastName
-                    thumbnail
-                }
-                upvote
-                downvote
-                upvoteStatus
+
+
+            }
+            topics{
+                id
+                name
+            }
+        }
+    }
+    ratingFeed:answerFeed(lastOffset:$ratingLastOffset,limit:2,orderBy:RATING)  {
+        id
+        content
+        title
+        comments{
+            id
+        }
+        user {
+            id
+            hideUniversity
+            university{
+                id
+                name
+            }
+            firstName
+            lastName
+            thumbnail
+        }
+        upvote
+        downvote
+        upvoteStatus
+        question{
+            id
+            title
+            school{
+                id
             }
             lastUpdated
             user {
@@ -43,34 +92,142 @@ export const GET_FEED_ANSWERS = gql`
                 id
                 name
             }
-
         }
-        me{
+    }
+
+    me{
+        id
+        followedTopics{
             id
-            followedTopics{
+            name
+            thumbnail
+        }
+        bookmarkedAnswers{
+            id
+        }
+    }
+}
+`;
+
+export const GET_ANSWERS = gql` query ($lastOffset:Int)
+{
+    answers(lastOffset:$lastOffset,,orderBy:RECENT)  {
+        id
+        title
+        content
+        comments{
+            id
+        }
+        user {
+            id
+            hideUniversity
+            university{
                 id
                 name
+            }
+            firstName
+            lastName
+            thumbnail
+        }
+        upvote
+        downvote
+        upvoteStatus
+        question{
+            id
+            school{
+                id
+            }
+            title
+            lastUpdated
+            user {
+                id
                 thumbnail
+                firstName
+                lastName
+                university{
+                    id
+                    name
+                }
+
+
+            }
+            topics{
+                id
+                name
             }
         }
     }
+}
 `;
 
-export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID])
-{
+
+export const SEARCH_MORE_ANSWER = gql` query($searchString:String,$topicIDs:[GUID],$lastOffset:Int){
     search(searchString:$searchString,topicIDs:$topicIDs) {
         id
         title
-        answers(orderBy: RECENT, limit:1){
+        answers(orderBy: RECENT, lastOffset:$lastOffset){
             content
             comments{
                 id
             }
             user {
                 id
+                hideUniversity
                 firstName
                 lastName
-
+                university{
+                    id
+                    name
+                }
+            }
+            school{
+                id
+            }
+            upvote
+            downvote
+            upvoteStatus
+        }
+        topics{
+            id
+            name
+        }
+        school{
+            id
+        }
+        lastUpdated
+        user {
+            id
+            firstName
+            lastName
+            university{
+                id
+                name
+            }
+        }
+    }
+}`;
+export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID],$lastOffset:Int,$limit:Int)
+{
+    search(searchString:$searchString,topicIDs:$topicIDs, limit:$limit,lastOffset:$lastOffset) {
+        id
+        title
+        school{
+            id
+        }
+        answers(orderBy: RECENT){
+            content
+            comments{
+                id
+            }
+            user {
+                hideUniversity
+                id
+                firstName
+                lastName
+                university{
+                    id
+                    name
+                }
             }
             upvote
             downvote
@@ -85,7 +242,10 @@ export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID])
             id
             firstName
             lastName
-
+            university{
+                id
+                name
+            }
         }
     }
 
@@ -99,18 +259,19 @@ export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID])
     }
 }
 `;
-export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
+
+export const FETCH_MORE_ANSWER_FOR_QUESTION = gql`query($id:GUID!,$lastOffset:Int,$orderBy:OrderType)
 {
-    getQuestion (questionID:$id) {
-        title
+    getQuestion(questionID:$id){
         id
-        upvote
-        downvote
-        upvoteStatus
-        answers(orderBy: $orderBy) {
+        school{
+            id
+        }
+        answers(lastOffset: $lastOffset,orderBy: $orderBy) {
             id
             content
             user {
+                hideUniversity
                 id
                 firstName
                 lastName
@@ -127,6 +288,83 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
             comments{
                 id
                 user {
+                    id
+                    firstName
+                    lastName
+                    thumbnail
+                    hideUniversity
+                    university{
+                        id
+                        name
+                    }
+                }
+                upvote
+                downvote
+                upvoteStatus
+                content
+                replies{
+                    id
+                    upvote
+                    downvote
+                    upvoteStatus
+                    user{
+                        firstName
+                        lastName
+                        thumbnail
+
+                    }
+                    replyTo{
+                        id
+                        user{
+                            firstName
+                            lastName
+                        }
+                    }
+                    comment{
+                        user{
+                            firstName
+                            lastName
+                        }
+
+                    }
+
+                    dateReplied
+                    content
+                }
+                dateCommented
+            }
+        }
+    }
+}
+`;
+export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
+{
+    getQuestion (questionID:$id) {
+        title
+        id
+        anonymous
+        answers(orderBy: $orderBy) {
+            id
+            content
+            user {
+                hideUniversity
+                id
+                firstName
+                lastName
+                thumbnail
+                university{
+                    id
+                    name
+                }
+            }
+            upvote
+            downvote
+            upvoteStatus
+            lastUpdated
+            comments{
+                id
+                user {
+                    hideUniversity
                     id
                     firstName
                     lastName
@@ -179,6 +417,7 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
         description
         lastUpdated
         user {
+            hideUniversity
             id
             firstName
             lastName
@@ -191,6 +430,34 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
             thumbnail
 
         }
+        
+    }
+}
+`;
+
+export const GET_ARTICLE = gql` query($answerID:GUID!)
+{
+    getAnswer(answerID:$answerID){
+        id
+        title
+        upvote
+        downvote
+        upvoteStatus
+        user {
+            hideUniversity
+            id
+            firstName
+            lastName
+            university{
+                id
+                name
+            }
+            major
+            year
+            thumbnail
+
+        }
+        content
         comments{
             id
             dateCommented
@@ -198,6 +465,7 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
             downvote
             upvoteStatus
             user {
+                hideUniversity
                 id
                 firstName
                 thumbnail
@@ -211,6 +479,7 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
             }
             content
             replies{
+                id
                 user{
                     firstName
                     lastName
@@ -242,43 +511,78 @@ export const GET_QUESTION = gql` query($id:GUID!,$orderBy:OrderType)
                 upvoteStatus
             }
         }
+    }   
+}`
+export const FEED_QUESTIONS = gql` query ($lastOffset:Int)
+{
+    questionFeed(lastOffset:$lastOffset) {
+        id
+        title
+        description
+        lastUpdated
+        anonymous
+        topics{
+            id
+            name
+        }
+        school{
+            id
+        }
+        user {
+            id
+            firstName
+            lastName
+            university{
+                id
+                name
+            }
+            major
+            year
+
+        }
+    }
+    me{
+        id
+        followedTopics{
+            id
+            name
+            thumbnail
+        }
+        followedQuestions{
+            id
+        }
     }
 }
 `;
-
-export const FEED_QUESTIONS = gql`
-    {
-        questions {
+export const GET_QUESTIONS = gql` query ($lastOffset:Int,$limit:Int)
+{
+    questions(lastOffset:$lastOffset, limit:$limit) {
+        id
+        title
+        description
+        lastUpdated
+        anonymous
+        topics{
             id
-            title
-            description
-            lastUpdated
-            topics{
-                id
-                name
-            }
-            user {
-                id
-                firstName
-                lastName
-                university{
-                    id
-                    name
-                }
-                major
-                year
-
-            }
+            name
         }
-        me{
+        school{
             id
-            followedTopics{
+        }
+        user {
+            id
+            firstName
+            lastName
+            university{
                 id
                 name
-                thumbnail
             }
+            major
+            year
+
         }
     }
+}
 `;
 
 export const GET_TOPICS = gql`
@@ -299,3 +603,4 @@ export const GET_UNIVERSITY_BY_DOMAIN = gql`query($domain:String!)
     }
 }
 `;
+

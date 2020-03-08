@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './sortMethodButton.css'
 const SortMethodButton = ({refetch,selectedSortingMethod, setSelectedSortingMethod}) => {
     const autoButtonColor = selectedSortingMethod === 'Auto' ? '#E4E4E4' : "white";

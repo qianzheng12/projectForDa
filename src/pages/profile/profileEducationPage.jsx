@@ -2,22 +2,18 @@ import React, {useState} from "react";
 import './profileHomePage.css'
 import DraggableList from "./DraggableList";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import {Formik} from "formik";
 import CloseIcon from '@material-ui/icons/Close';
-import TextInputArea from "../posts/textInputArea";
-import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import yearRange, {educationDegree, educationYearRange} from "../utility/dateFixture";
+import  {educationDegree, educationToYearRangeOption, educationFromYearRangeOption} from "../utility/dateFixture";
 import Dropdown from "react-dropdown";
 import {useMutation, useQuery} from "@apollo/react-hooks";
 import {GET_PAST_EDUCATION} from "../graphQL/userQuery";
-import {UPDATE_PAST_EDUCATIONS, UPDATE_PROFILE_QUESTIONS} from "../graphQL/userMutation";
+import {UPDATE_PAST_EDUCATIONS} from "../graphQL/userMutation";
 
 const ProfileEducationPage = ({visitorMode}) => {
-    const {data,loading,error} = useQuery(GET_PAST_EDUCATION);
+    const {data,loading,error} = useQuery(GET_PAST_EDUCATION,{fetchPolicy:"network-only"});
     if(loading) return <div/>;
     if(error) return <div/>;
-    console.log(data)
     const {me:{pastEducation}} = data;
     const processedData =pastEducation.map((education,index)=>{
         return {...education,id:`${index}`};
@@ -29,7 +25,6 @@ const ProfileEducationPage = ({visitorMode}) => {
 };
 
 const PastEducations = ({visitorMode, pastEducation}) => {
-    console.log(pastEducation);
     const [addMode, setAddMode] = useState(false);
     const [items, setItems] = useState(pastEducation);
     const [school, setSchool] = useState();
@@ -40,14 +35,14 @@ const PastEducations = ({visitorMode, pastEducation}) => {
     const [updatePastEducations] = useMutation(UPDATE_PAST_EDUCATIONS);
     const updateItems = (newItems)=>{
         const updateItem = newItems.map(item=>{
-            console.log(item);
+
             return {school:item.school,degree:item.degree,from:item.from,to:item.to,major:item.major};
         });
-        updatePastEducations({variables:{schools:updateItem}}).then(data=>{
-            console.log(data);
+        updatePastEducations({variables:{schools:updateItem}}).then(()=>{
+
         })
 
-    }
+    };
     const handleAddNewItem = () => {
         if(educationFromYearRange === '' || educationToYearRange === ''||educationDegreeValue===''||school===''||educationDegree===''){
             alert('Please enter required value');
@@ -56,6 +51,11 @@ const PastEducations = ({visitorMode, pastEducation}) => {
             const newItems = [...items,{...{school,from:educationFromYearRange.value.toString(),to:educationToYearRange.value.toString(),major,degree:educationDegreeValue.value},id:`${items.length}`,isSelected:false}];
             setItems(newItems);
             setAddMode(false);
+            setSchool('');
+            setMajor('');
+            setFromYear('');
+            setToYear('');
+            setEducationDegree('');
             updateItems(newItems);
         }
     };
@@ -91,13 +91,13 @@ const PastEducations = ({visitorMode, pastEducation}) => {
                                         </div>
                                         <div className="year">
                                             <h1>To:</h1>
-                                            <Dropdown required options={educationYearRange} onChange={setToYear} value={educationToYearRange}
+                                            <Dropdown required options={educationToYearRangeOption} onChange={setToYear} value={educationToYearRange}
                                                       className="educationYearPicker" id="educationYearPicker" placeholder="Year"/>
                                         </div>
                                         <div className="year">
                                             <h1>From:</h1>
 
-                                            <Dropdown required options={educationYearRange} onChange={setFromYear} value={educationFromYearRange}
+                                            <Dropdown required options={educationFromYearRangeOption} onChange={setFromYear} value={educationFromYearRange}
                                                       className="educationYearPicker" id="educationYearPicker" placeholder="Year"/>
                                         </div>
 
@@ -119,11 +119,8 @@ const PastEducations = ({visitorMode, pastEducation}) => {
             {
                 visitorMode &&
                 <div className="ProfileContentList">
-                    {items.map((item, index) => (
-                        <div
-                            className="ProfileListItem"
-                        >
-
+                    {items.map((item) => (
+                        <div className="ProfileListItem">
                             <div className="unDragContent">
                                 <div className="dragEducationIntro">
                                     <h1>{item.school}</h1>
@@ -139,5 +136,5 @@ const PastEducations = ({visitorMode, pastEducation}) => {
             }
         </div>
     )
-}
+};
 export default ProfileEducationPage;

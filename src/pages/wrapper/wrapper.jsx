@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import "./wrapper.css";
 import '../cards/cards.css'
@@ -21,17 +20,13 @@ Amplify.configure(awsconfig);
     */
 const Wrapper = () => {
     const [authStatus, setAuthStatus] = useState(undefined);
-    const [user, setUser] = useState();
     const [token, setToken] = useState();
-    const REACT_VERSION = React.version;
-    console.log(REACT_VERSION);
     async function getAuthState() {
         try {
             const result = await Auth.currentSession();
             setToken(result.getIdToken().getJwtToken());
             setAuthStatus(true);
-            const user = await Auth.currentAuthenticatedUser();
-            setUser(user);
+            await Auth.currentAuthenticatedUser();
             } catch (error) {
             if (error !== 'No current user') {
             }
@@ -42,7 +37,7 @@ const Wrapper = () => {
     }
 
     useEffect(() => {
-        getAuthState().then(data => {
+        getAuthState().then(() => {
 
         });
 
@@ -58,7 +53,7 @@ const Wrapper = () => {
             window.onbeforeunload = ()=>{
             }
         }
-        getAuthState().then(data=>{
+        getAuthState().then(()=>{
 
         })
     };

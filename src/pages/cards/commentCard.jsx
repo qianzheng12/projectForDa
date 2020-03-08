@@ -15,8 +15,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import ReportWindow from "../utils/reportWindow";
 import ReactHtmlParser from "react-html-parser";
 
-const CommentCard = ({comment, refetch}) => {
-    const replies = comment.replies;
+const CommentCard = ({comment}) => {
+    const [replies, setReplies] = useState(comment.replies);
     const {user, upvote, downvote, id, upvoteStatus} = comment;
     const {thumbUp, thumbDown, toggleThumbDown, toggleThumbUp, upVotes} = useVotesState({
         upvote,
@@ -24,7 +24,6 @@ const CommentCard = ({comment, refetch}) => {
         id,
         upvoteStatus
     });
-    const [lineOfContent, setLineOfContent] = useState(5);
     const [commentHeight, setCommentHeight] = useState('40px');
     const [repliesExpanded, setRepliesExpanded] = useState(false);
     const [createReply] = useMutation(CREATE_REPLY);
@@ -32,15 +31,21 @@ const CommentCard = ({comment, refetch}) => {
     const {commentContent, commentMode, setCommentContent, setCommentMode, emptyCommentError, setEmptyCommentError} = useCommentState();
     const [report, setReport] = useState(false);
     const sendReply = () => {
-        createReply({variables: {commentID: comment.id, content: commentContent, replyTo: null}}).then(
-            () => {
-                refetch();
-                setRepliesExpanded(true);
-                setCommentContent('');
-                setCommentMode(false);
+        if (commentContent === '') {
+            setEmptyCommentError(true)
+        } else {
+            createReply({variables: {commentID: comment.id, content: commentContent, replyTo: null}}).then(
+                (result) => {
+                    const {data: {createReply}} = result;
+                    setReplies([createReply, ...replies]);
+                    setRepliesExpanded(true);
+                    setCommentContent('');
+                    setCommentMode(false);
 
-            }
-        )
+                }
+            )
+        }
+
     };
     comment.content.replace('\n', '<br/>');
     return (
@@ -51,7 +56,7 @@ const CommentCard = ({comment, refetch}) => {
                     <span>{user.firstName + ' ' + user.lastName}</span>
                     <h2><TimeAgo date={comment.dateCommented} live={false}/></h2>
 
-                    <h3>{user.university.name}</h3>
+                    {!user.hideUniversity && <h3>{user.university.name}</h3>}
                 </div>
                 <div className="cardToolWrapper">
                     <MoreVertIcon onClick={() => {
@@ -93,11 +98,11 @@ const CommentCard = ({comment, refetch}) => {
                         setCommentContent(e.target.value);
                         setCommentHeight(e.target.scrollHeight + 2 + 'px')
                     }
-                } placeholder="Write your comment"/>
+                } placeholder="Write your reply"/>
                 <Button onClick={sendReply}>
                     <span>{"Send"}</span>
                 </Button>
-                {emptyCommentError && <h2>Please enter comment before send.</h2>}
+                {emptyCommentError && <h2>Please enter reply before send.</h2>}
             </div>}
             {replies.length > 0 &&
             <div className="repliesWrapper">
@@ -107,7 +112,9 @@ const CommentCard = ({comment, refetch}) => {
                 {repliesExpanded &&
                 <div className="repliesContent">
                     {replies.map(reply => (
-                        <ReplyContent commentId={comment.id} refetch={refetch} reply={reply}/>
+                        <ReplyContent key={reply.id} commentId={comment.id} reply={reply} addReply={(newReply) => {
+                            setReplies([newReply, ...replies])
+                        }}/>
                     ))}
                 </div>}
             </div>}

@@ -3,21 +3,19 @@
     font-family: 'VGARound';
     font-style: normal;
     font-weight: normal;
-    src:
-            url(../../resource/font/VAGRoundedNext-HeavyIt.OTF)
+    src: url(../../resource/font/VAGRoundedNext-HeavyIt.OTF)
 }
 .wrapper{
     background: #F8F8F8;
     height: 100vh;
 }
 .contentWrapper{
-    position: fixed;
+    position: relative;
     top: 60px;
     width: 100%;
     height: 92%;
     margin:0;
     z-index: 1;
-    overflow: auto;
 }
 .navBar{
     background: white;
@@ -25,7 +23,7 @@
     width: 100%;
     display: block;
     z-index: 10;
-    box-shadow: 0 2px 3px 0px rgba(52, 52, 52, 0.27);
+    box-shadow: 0 2px 3px 0 rgba(52, 52, 52, 0.27);
     margin:0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -37,7 +35,7 @@
     font-size: 25px;
     margin:0 0 0 0;
     top:5px;
-    font-family: VGARound;
+    font-family: VGARound, serif;
     position:relative;
     float: left;
     color: #E36100;
@@ -56,7 +54,7 @@
     text-decoration: none;
     color: black;
     font-size: 16px;
-    font-family: Calibri;
+    font-family: Calibri, serif;
     font-weight: lighter;
 }
 .tags li{
@@ -177,7 +175,7 @@ nav{
 .accountIcon svg{
     width: 30px;
     height: 30px;
-    color: #906604;
+    color: #FF9240;
 }
 .accountIcon img{
     width: 30px;
@@ -206,7 +204,7 @@ nav{
     color: black;
 }
 .wrapperToolWindowSubSection span{
-    font-family: Calibri;
+    font-family: Calibri, serif;
     font-size: 15px;
     position: relative;
     top: 13px;

@@ -11,25 +11,37 @@ const ProfileSettingPage = ({user,refetch}) => {
     const [lastName,setLastName] = useState(user.lastName);
     const [major,updateMajor] = useState(user.major);
     const [year,updateYear] = useState(user.year);
+    const [secondEmail,updateSecondEmail] = useState(user.secondEmail);
     const [phoneNumber,updatePhoneNumber] = useState(user.phone);
-    const [updateSelfMutation] = useMutation(UPDATE_SELF);
-    const updateSelf = ()=>updateSelfMutation({variables:{
+    const [updateSelfMutation,{error:updateError}] = useMutation(UPDATE_SELF);
+    const [hideUniversity, setHideUniversity] = useState(user.hideUniversity);
+    const updateSelf= ()=>updateSelfMutation({variables:{
             phoneNumber,
             firstName,
             lastName,
             major,
-            year
-        }}).then(result=>{
+            year,
+            secondEmail,
+            hideUniversity:!hideUniversity
+        },
+        onError:(err=>{
+            console.log(err)
+    })
+    }).then(result=>{
             if(result){
                 refetch()
             }
-    });
+    }).catch();
+
+    if(updateError){
+        alert(updateError);
+    }
     const settingFields = [
         {name:"School Email",mappedField:user.email,changeField:""},
-        {name:"School",mappedField:user.university.name,changeField:"show/hide"},
+        {name:"School",mappedField:user.university.name,changeField:hideUniversity,updateField:()=>setHideUniversity(!hideUniversity)},
         {name:"Major",mappedField:major,updateField:updateMajor,changeField:"Edit"},
         {name:"Year",mappedField:year,updateField:(majorYear)=>{updateYear(majorYear.value)},changeField:"Change"},
-        {name:"Secondary Email",mappedField:"-",changeField:"Edit"},
+        {name:"Secondary Email",mappedField:secondEmail,updateField:updateSecondEmail,changeField:"Edit"},
         {name:"Phone number",mappedField:phoneNumber,updateField:updatePhoneNumber,changeField:"Edit"},
         {name:"Password",mappedField:"******"}];
     return (
@@ -44,7 +56,7 @@ const ProfileSettingPage = ({user,refetch}) => {
                 </div>
                 <NameSettingField firstName={firstName} lastName={lastName} setFirstName={setFirstName} setLastName={setLastName} updateSelf={updateSelf}/>
                 {settingFields.map(field => (
-                    <SettingField field={field} updateSelf={updateSelf}/>
+                    <SettingField field={field} key={field.name} updateSelf={updateSelf}/>
                 ))}
             </div>
         </div>

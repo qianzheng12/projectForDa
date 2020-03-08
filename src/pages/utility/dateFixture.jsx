@@ -1,6 +1,7 @@
 Array.range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + start);
 const yearRange = Array.range(1965,2009).reverse();
-export const educationYearRange = Array.range(1965,2020).reverse();
+export const educationFromYearRangeOption = Array.range(1965,2020).reverse();
+export const educationToYearRangeOption = Array.range(1965,2030).reverse();
 export const educationDegree = [{number:1,value:"High school diploma"},{number:2,value:"Bachelor's degree"},{number:3,value:"Master's degree"},{number:4,value:"PhD"},{number:5,value:"MD"}];
 export const standardDays = Array.range(1,32);
 export const monthRange = [{number:1,value:"January"}, {number:2,value:"February"}, {number:3,value:"March"},
@@ -20,7 +21,7 @@ export const calculateDays = (year, month) => {
     return Array.range(1,30)
 
 
-}
+};
 
 export const degreeYearRange = ["Undergraduate 1st year","Undergraduate 2nd year","Undergraduate 3rd year",
     "Undergraduate 4th year","Undergraduate 5th year","Professional degree","Master's degree","Doctorates"];

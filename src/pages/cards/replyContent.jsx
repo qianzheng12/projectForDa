@@ -12,7 +12,7 @@ import ThumbDownAltOutlinedIcon from "@material-ui/icons/ThumbDownAltOutlined";
 import {useVotesState} from "../hooks/answerStates";
 import ReportWindow from "../utils/reportWindow";
 import ReactHtmlParser from "react-html-parser";
-const ReplyContent = ({reply,refetch,commentId}) => {
+const ReplyContent = ({reply,commentId,addReply}) => {
     const [createReply] = useMutation(CREATE_REPLY);
     const {user,upvote,downvote,id,upvoteStatus}= reply;
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
@@ -20,18 +20,26 @@ const ReplyContent = ({reply,refetch,commentId}) => {
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const {replyTo,comment} = reply;
     const [report, setReport] = useState(false);
+    const [reportContent] = useState("We have received a report for a reply");
     const replyToReplies = () =>{
-        createReply({ variables: { commentID:commentId,content:commentContent,replyTo:reply.id}}).then(
-            () => {
-                setCommentContent('');
-                setCommentMode(false);
-                refetch()
-            }
-        )
+        if (commentContent === '') {
+            setEmptyCommentError(true)
+        }else{
+            createReply({ variables: { commentID:commentId,content:commentContent,replyTo:reply.id}}).then(
+                (result) => {
+                    setCommentContent('');
+                    setCommentMode(false);
+
+                    const {data:{createReply}} = result;
+                    addReply(createReply)
+                }
+            )
+        }
+
     };
     return (
         <div className="reply">
-            {report && <ReportWindow user={reply.user} closeWindow={() => {
+            {report && <ReportWindow user={reply.user} reportContent={reportContent} closeWindow={() => {
                 setReport(false)
             }}/>}
             <div className="replyHeader">
@@ -65,11 +73,11 @@ const ReplyContent = ({reply,refetch,commentId}) => {
             </div>
             {commentMode &&
             <div className="commentInputArea">
-                <input onChange={e=>setCommentContent(e.target.value)} placeholder="Write your comment"/>
+                <textarea onChange={e=>setCommentContent(e.target.value)} placeholder="Write your reply"/>
                 <Button onClick={replyToReplies}>
                     <span>{"Send"}</span>
                 </Button>
-                {emptyCommentError && <h2>Please enter comment before send.</h2>}
+                {emptyCommentError && <h2>Please enter reply before send.</h2>}
             </div>}
         </div>
     );

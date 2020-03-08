@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React  from "react";
 import './sharePopup.css'
 import {
     FacebookIcon,
@@ -8,7 +8,6 @@ import {
     TwitterIcon,
     TwitterShareButton,
 } from "react-share";
-import {borderBottom} from "@material-ui/system";
 import {CopyToClipboard} from "react-copy-to-clipboard";
 const SharePopup = ({url="www.singularity.com"}) => {
     return (

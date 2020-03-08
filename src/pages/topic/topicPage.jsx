@@ -1,15 +1,13 @@
 import React, { useState} from 'react'
 import TopicWrapper from "./topicWrapper";
 import './topicPage.css'
-import {useLazyQuery, useMutation, useQuery} from "@apollo/react-hooks";
+import { useMutation, useQuery} from "@apollo/react-hooks";
 import TopicCard from "../cards/topicCard";
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import AddAliasesCard from "../cards/addAliasesCard";
 import Button from "@material-ui/core/Button";
-import {SEARCH_TOPIC_BY_NAME, TOPIC_PAGE_QUERY} from "../graphQL/topicQuery";
+import {TOPIC_PAGE_QUERY} from "../graphQL/topicQuery";
 import {ADD_TOPIC_RELATIONSHIP, REMOVE_TOPIC_RELATIONSHIP} from "../graphQL/topicMutation";
 import TopicQuestions from "./topicQuestions";
-import {SEARCH_ANSWER} from "../graphQL/query";
 const TopicPage = props => {
     const topicID = props.match.params.topicName;
     const {loading,error,data,refetch}= useQuery(TOPIC_PAGE_QUERY,{
@@ -61,7 +59,7 @@ const TopicPage = props => {
                 refetch();
             }
         })
-    }
+    };
     return (
         <div className="topicPageWrapper">
             <div className="homePageContent" style={{marginLeft: "20vw"}}>

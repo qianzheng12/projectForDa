@@ -1,41 +1,41 @@
 import { gql } from 'apollo-boost';
 
 
-export const POST_QUESTION_ARTICLE = gql`mutation($title:String,$description:String,$isArticle:Boolean,$school:GUID){
+export const POST_QUESTION = gql`mutation($title:String,$description:String,$school:GUID,$anonymous:Boolean){
     createQuestion(
-        input:{title:$title,description:$description,isArticle:$isArticle,school:$school}){
+        input:{title:$title,description:$description,school:$school,anonymous:$anonymous}){
         id,
     }
 }`;
 
+export const POST_ARTICLE = gql`mutation($title:String,$content:String){
+    createAnswer(
+        input:{title:$title,content:$content,isArticle:true}){
+        id,
+    }
+}`;
 export const ANSWER_QUESTION = gql`mutation($questionId:GUID,$answerContent:String){
     createAnswer(input:{content:$answerContent,
         questionID:$questionId}){
+        id
+        content
+        user {
             id
-            content
-            user {
+            firstName
+            lastName
+            thumbnail
+            university{
                 id
-                firstName
-                lastName
-        
+                name
             }
-            lastUpdated
-            comments{
-                id
-                user {
-                    id
-                    firstName
-                    lastName
-                }
-                content
-                replies{
-                    user{
-                        firstName
-                        lastName
-                    }
-                    content
-                }
-            }
+        }
+        upvote
+        downvote
+        upvoteStatus
+        lastUpdated
+        comments{
+            id
+        }
         }
 }`;
 
@@ -46,6 +46,26 @@ export const SEND_COMMENT = gql`mutation($answerId:GUID,$commentContent:String){
         answerID:$answerId})
     {
         id
+        dateCommented
+        upvote
+        downvote
+        upvoteStatus
+        user {
+            id
+            firstName
+            thumbnail
+            university{
+                id
+                name
+            }
+            major
+            year
+            lastName
+        }
+        content
+        replies{
+            id
+        }
     }
 }`;
 
@@ -66,6 +86,35 @@ export const CREATE_REPLY = gql`mutation($commentID:GUID!,$content:String!,$repl
             replyTo:$replyTo
             commentID:$commentID}){
         id
+        user{
+            firstName
+            lastName
+            thumbnail
+            university{
+                id
+                name
+            }
+            major
+            year
+        }
+        replyTo{
+            id
+            user{
+                firstName
+                lastName
+            }
+        }
+        comment{
+            user{
+                firstName
+                lastName
+            }
+        }
+        dateReplied
+        content
+        upvote
+        downvote
+        upvoteStatus
     }
 }`;
 
@@ -77,11 +126,11 @@ export const UPLOAD_IMAGE = gql`mutation($fileName:String!,$type:ImageType!,$bas
 }`;
 
 
-export const COMMENT_ARTICLE = gql`mutation($questionID:GUID,$commentContent:String){
+export const COMMENT_ARTICLE = gql`mutation($answerID:GUID,$commentContent:String){
     createComment(input:
     {
         content:$commentContent,
-        questionID:$questionID
+        answerID:$answerID
     })
     {
         id

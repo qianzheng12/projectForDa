@@ -1,24 +1,20 @@
 import React, {useState} from 'react'
-import Typography from "@material-ui/core/Typography";
-import {ANSWER_QUESTION, COMMENT_ARTICLE, SEND_COMMENT} from "../graphQL/mutations";
+import {COMMENT_ARTICLE} from "../graphQL/mutations";
 import {useMutation} from "@apollo/react-hooks";import ThumbUpAltOutlinedIcon from '@material-ui/icons/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ShareRoundedIcon from '@material-ui/icons/ShareRounded';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import Truncate from "react-truncate";
-import {Link} from "react-router-dom";
 import {useVotesState} from "../hooks/answerStates";
 import './articleCard.css'
 import AddCommentOutlinedIcon from '@material-ui/icons/AddCommentOutlined';
 import Button from "@material-ui/core/Button";
 import {useCommentState} from "../hooks/commentStates";
 import TimeAgo from "react-timeago";
-import ReactHtmlParser from "react-html-parser";
 import HTMLEllipsis from "react-lines-ellipsis/lib/html";
-const ArticleCard = ({question,refetch}) => {
-    const {user} = question;
-    const {upvote,downvote,id,upvoteStatus} = question;
+const ArticleCard = ({article,refetch}) => {
+    const {user} = article;
+    const {upvote,downvote,id,upvoteStatus} = article;
     const [commentHeight, setCommentHeight] = useState('40px');
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
@@ -30,8 +26,8 @@ const ArticleCard = ({question,refetch}) => {
             setEmptyCommentError(true)
         }
         else{
-            sendCommentMutation({ variables: { questionID:question.id,commentContent}}).then(
-                (result)=>{
+            sendCommentMutation({ variables: { answerID:article.id,commentContent}}).then(
+                ()=>{
                     refetch()
                 }
             );
@@ -42,25 +38,22 @@ const ArticleCard = ({question,refetch}) => {
     return (
         <div className="card">
             <div className="questionHeader">
-                <h3>{question.title}</h3>
+                <h3>{article.title}</h3>
             </div>
             <div className="answerUserInformation">
                 <img height="40px" width="50px" src={user.thumbnail||require('../../resource/profile.svg')}/>
                 { user &&
                 <div className="answerUserDetail">
                     <span>{user.firstName + ' ' + user.lastName}</span>
-                    <h2><TimeAgo date={question.lastUpdated} live={false}/></h2>
+                    <h2><TimeAgo date={article.lastUpdated} live={false}/></h2>
                     <h3>{user.university.name}</h3>
                 </div>
                 }
             </div>
             <div className="articleContent">
-                <HTMLEllipsis unsafeHTML={question.description}/>
+                <HTMLEllipsis unsafeHTML={article.content}/>
             </div>
             <div className="articleTopicWrapper">
-                Topics: {question.topics.map( topic => {
-                    return (<Link to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
-                })}
             </div>
             <div className="answerActions">
                 <div className="thumbWrapper">
@@ -73,7 +66,7 @@ const ArticleCard = ({question,refetch}) => {
                 <div className="rightAnswerActions">
                     <div className="commentsIconWrapper">
                         <AddCommentOutlinedIcon onClick={()=>setCommentMode(!commentMode)}/>
-                        <span>{question.comments.length}</span>
+                        <span>{article.comments.length}</span>
                     </div>
                     <ShareRoundedIcon/>
                     <BookmarkBorderOutlinedIcon/>
@@ -82,7 +75,6 @@ const ArticleCard = ({question,refetch}) => {
             {commentMode &&
             <div className="commentInputArea">
                                 <textarea style={{height: commentHeight}} onChange={e => {
-                                    console.log(e.target.scrollHeight)
                                     setCommentContent(e.target.value);
                                     setCommentHeight(e.target.scrollHeight + 2 + 'px')
                                 }

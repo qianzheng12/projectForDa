@@ -1,26 +1,24 @@
-import React, {useEffect, useState} from 'react'
-import Typography from "@material-ui/core/Typography";
+import React, {useState} from 'react'
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarRoundedIcon from '@material-ui/icons/StarRounded';
 import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
 import FlagOutlinedIcon from '@material-ui/icons/FlagOutlined';
 import {ANSWER_QUESTION} from "../graphQL/mutations";
-import {useMutation} from "@apollo/react-hooks";
+import {useLazyQuery, useMutation} from "@apollo/react-hooks";
 import Button from '@material-ui/core/Button';
-import ReactQuill from "react-quill";
-import {questionCardModoules} from "../utils/quillModules";
 import {FOLLOW_QUESTION, UNFOLLOW_QUESTION} from "../graphQL/userMutation";
 import TimeAgo from "react-timeago";
 import {Link} from "react-router-dom";
 import ReportWindow from "../utils/reportWindow";
-import Truncate from "react-truncate";
+import SearchIcon from '@material-ui/icons/Search';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html'
-import LinesEllipsis from 'react-lines-ellipsis'
 import ReactHtmlParser from "react-html-parser";
 import TextInputArea from "../posts/textInputArea";
 import Tooltip from "@material-ui/core/Tooltip";
+import {SEARCH_USER} from "../graphQL/messageQuery";
+import {SEND_MESSAGE} from "../graphQL/messageMutation";
 
-const QuestionCard = ({question, refetch, feedCard, followed,setGreyCover}) => {
+const QuestionCard = ({question, addAnswer, feedCard, followed,me}) => {
     const {user} = question;
     const [answerMode, toggleAnswerButton] = useState(false);
     const [highLightFollowIcon, setHighLightFollowIcon] = useState(followed);
@@ -28,24 +26,53 @@ const QuestionCard = ({question, refetch, feedCard, followed,setGreyCover}) => {
     const [answerQuestion] = useMutation(ANSWER_QUESTION);
     const [followQuestionMutation] = useMutation(FOLLOW_QUESTION);
     const [unFollowQuestionMutation] = useMutation(UNFOLLOW_QUESTION);
+    const [sendMessageMutation] = useMutation(SEND_MESSAGE);
     const [postExpanded,setExpanded] = useState(false);
     const [showWarning, setShowWarning] = useState(false);
-    const [lineOfContent, setLineOfContent] = useState(5);
+    const [searchedUser, setSearchedUser] = useState([]);
+    const [inviteUserMode, setInviteUserMode] = useState(false);
+    const [searchUserQuery, {data:userData}] = useLazyQuery(SEARCH_USER, {
+        onCompleted: () => {
+            const {searchUser} = userData;
+            setSearchedUser(searchUser)
+        }
+    });
     const [report, setReport] = useState(false);
 
 
     const followQuestion = () => {
-        followQuestionMutation({variables: {questionID: question.id}}).then((result) => {
+        followQuestionMutation({variables: {questionID: question.id}}).then(() => {
             setHighLightFollowIcon(true);
         })
     };
     const unFollowQuestion = () => {
-        unFollowQuestionMutation({variables: {questionID: question.id}}).then((result) => {
+        unFollowQuestionMutation({variables: {questionID: question.id}}).then(() => {
             setHighLightFollowIcon(false);})
     };
     const expand = ()=>{
         setExpanded(true);
     };
+    const searchUser = (input) => {
+        if(input.length === ""){
+            setSearchedUser([]);
+        }
+        else{
+            searchUserQuery({variables:{name:input}});
+        }
+
+    };
+    const invitationMessage = `${me.firstName} ${me.lastName} has invited you to answer this question: \n 
+    ${window.location.hostname}/question/${question.id}`;
+    const sendInvitation = (userId) => {
+        sendMessageMutation({variables: {from: me.id, to: userId, content: invitationMessage}}).then(
+            res => {
+                if (res.data) {
+                    setInviteUserMode(false);
+                }
+            }
+        )
+    };
+
     const onPost = () => {
         if (answerMode) {
             if (editorState === "") {
@@ -53,7 +80,7 @@ const QuestionCard = ({question, refetch, feedCard, followed,setGreyCover}) => {
             } else {
                 answerQuestion({variables: {questionId: question.id, answerContent: editorState}}).then((result) => {
                     setEditorState('');
-                    refetch();
+                    addAnswer(result.data.createAnswer)
                 });
                 toggleAnswerButton(!answerMode);
                 setShowWarning(false);
@@ -69,12 +96,13 @@ const QuestionCard = ({question, refetch, feedCard, followed,setGreyCover}) => {
             <div className="questionHeader">
                 <div className="questionTopics">
                     {question.topics.map(topic => {
-                        return (<Link to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
+                        return (<Link key={topic.id} to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
                     })}
                 </div>
                 <h3>{question.title}</h3>
                 {user && <div><p>post by</p>
-                    <Link to={"/Profile/"+ user.id}><p style={{color: '#FF9240', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>
+                    {question.anonymous ?<p style={{color: '#FF9240', marginLeft: '0.5%'}}>Anonymous user</p>
+                        : <Link to={"/Profile/"+ user.id}><p style={{color: '#FF9240', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>}
                     <p style={{marginLeft: '0.5%'}}><TimeAgo date={question.lastUpdated} live={false}/></p>
                 </div>}
 
@@ -91,14 +119,34 @@ const QuestionCard = ({question, refetch, feedCard, followed,setGreyCover}) => {
             <div className='questionActions'>
                 {!highLightFollowIcon && <Tooltip title="follow question"><StarBorderIcon onClick={followQuestion}/></Tooltip>}
                 {highLightFollowIcon && <Tooltip title="unfollow question"><StarRoundedIcon onClick={unFollowQuestion} style={{color: "#FF9240"}}/></Tooltip>}
-                <Tooltip title="invite friend"><EmojiPeopleIcon/></Tooltip>
+                <Tooltip title="invite friend"><EmojiPeopleIcon id="inviteIcon" onClick={()=>{setInviteUserMode(!inviteUserMode)}}/></Tooltip>
+                {
+                    inviteUserMode &&
+                    <div className="inviteFriendWrapper">
+                        <div className="searchUsersWrapper">
+                            <input placeholder={"Search user"} onChange={(e)=>searchUser(e.target.value)}/>
+                            <SearchIcon/>
+                            <div className="searchUsersResults">
+                                {searchedUser.map(
+                                    user=>(
+                                        <div key={user.id} onClick={()=>sendInvitation(user.id)} className="briefMessageContent">
+                                            <img src={user.thumbnail}></img>
+                                            <div id="text">
+                                                <h1>{user.firstName} {user.lastName}</h1>
+                                            </div>
+                                        </div>
+                                    )
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                }
                 <Tooltip title="report"><FlagOutlinedIcon onClick={() => {
                     setReport(true);
                 }}/></Tooltip>
                 {report && <div>
-                    <div className="greyOutCoverBackground">
-                    </div>
-                    <ReportWindow user={user} closeWindow={() => {
+
+                    <ReportWindow user={user} reportContent={`We have received a report on this question /question/${question.id}`} closeWindow={() => {
                     setReport(false)
                 }}/></div>}
                 <div className="postButton">

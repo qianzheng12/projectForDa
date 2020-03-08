@@ -11,7 +11,7 @@
     font-family: Helvetica, Arial, sans-serif;
     font-size: 13px;
     height: 200px;
-    margin: 0px;
+    margin: 0;
     position: relative;
 }
 .ql-container.ql-disabled .ql-tooltip {
@@ -696,7 +696,7 @@
     right: 4px;
 }
 .ql-snow .ql-icon-picker .ql-picker-options {
-    padding: 4px 0px;
+    padding: 4px 0;
 }
 .ql-snow .ql-icon-picker .ql-picker-item {
     height: 24px;
@@ -712,7 +712,7 @@
     float: left;
     height: 16px;
     margin: 2px;
-    padding: 0px;
+    padding: 0;
     width: 16px;
 }
 .ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
@@ -821,15 +821,15 @@
 }
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="15px"]::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="15px"]::before {
-    content: 'body';
+    content: 'small';
 }
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="18px"]::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before {
-    content: 'heading1';
+    content: 'medium';
 }
 .ql-snow .ql-picker.ql-size .ql-picker-label[data-value="22px"]::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="22px"]::before {
-    content: 'heading2';
+    content: 'big';
 }
 .ql-snow .ql-picker.ql-size .ql-picker-item[data-value=small]::before {
     font-size: 10px;

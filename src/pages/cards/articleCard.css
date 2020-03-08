@@ -20,6 +20,9 @@
 .articleTopicWrapper{
     height: 30px;
     width: 100%;
+    position: relative;
+    top:20px;
+    margin-bottom: 20px;
     overflow: hidden;
 }
 .articleTopicWrapper span{
@@ -29,4 +32,7 @@
 }
 .articleTopicWrapper a{
     text-decoration: none;
+}
+.articleTopicWrapper a:hover{
+    cursor: pointer;
 }

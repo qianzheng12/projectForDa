@@ -5,6 +5,7 @@ import './registerPage.css'
 import {Auth} from 'aws-amplify';
 import RegisterConfirmationPage from "./registerConfirmationPage";
 import ApolloClient, {InMemoryCache} from "apollo-boost";
+import {degreeYearRange} from "../utility/dateFixture";
 
 /* 
     Register page is used for client to register new account. It contains three steps:
@@ -17,7 +18,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
     const [page, setPage] = useState(signUpStage);
     const [currentUserId, setCurrentUserId] = useState("");
     const [client,setClient] = useState();
-    const [selectedMajorYear, setSelectedMajorYear] = useState();
+    const [selectedMajorYear, setSelectedMajorYear] = useState(degreeYearRange[0]);
     const submit = (email, password,firstName,lastName,university,major) => {
         Auth.signUp({
             username: email,
@@ -47,7 +48,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
     const resendConfirmationCode = () => {
         Auth.resendSignUp(userEmail).then(() => {
             alert('code resent successfully');
-        }).catch(e => {
+        }).catch(() => {
         });
     };
     const submitPin = async enteredPin => {
@@ -56,7 +57,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
                 Auth.signIn({
                     username: userEmail,
                     password: userPassword,
-                }).then(async user => {
+                }).then(async () => {
                     const result = await Auth.currentSession();
                     setClient(new ApolloClient({
                         uri:'https://ivuzzjl262.execute-api.eu-west-2.amazonaws.com/develop/',
@@ -68,7 +69,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
                                 }
                             })
                         }
-                    }))
+                    }));
                     setPage(3);
                 })
                     .catch(err => {

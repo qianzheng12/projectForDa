@@ -1,22 +1,22 @@
 import React, {useState} from 'react'
 import './postPage.css';
 import CloseIcon from '@material-ui/icons/Close';
-import {useLazyQuery, useMutation, useQuery} from '@apollo/react-hooks';
-import {ADD_TOPIC_TO_QUESTION, POST_QUESTION_ARTICLE, CREATE_TOPIC} from '../graphQL/mutations';
+import {useLazyQuery, useMutation} from '@apollo/react-hooks';
+import {ADD_TOPIC_TO_QUESTION, POST_QUESTION, CREATE_TOPIC, POST_ARTICLE} from '../graphQL/mutations';
 import {Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import {Link} from "react-router-dom";
 import TextInputArea from "./textInputArea";
 import SearchTopicDropDown from "../search/searchTopicDropDown";
 import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
-import {extractImage} from "../utils/extractImg";
+import { useHistory } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
-import ThumbUpAltOutlinedIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Tooltip from "@material-ui/core/Tooltip";
 const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => {
     const [topics,setTopics] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
-    const [checkTopicName, { loading, data }] = useLazyQuery(SEARCH_TOPIC_BY_NAME,
+    const history = useHistory();
+    const [checkTopicName, { data }] = useLazyQuery(SEARCH_TOPIC_BY_NAME,
         {onCompleted: () => {
             const topic = data.getTopicByName;
             if(topic){
@@ -34,8 +34,9 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
             fetchPolicy:"network-only"
         });
 
-    const [askQuestion] = useMutation(POST_QUESTION_ARTICLE);
+    const [askQuestion] = useMutation(POST_QUESTION);
     const [createTopic] = useMutation(CREATE_TOPIC);
+    const [postArticle] = useMutation(POST_ARTICLE);
     const [addTopicToQuestion] = useMutation(ADD_TOPIC_TO_QUESTION);
     const [topicEmptyError, showEmptyTopicError] = useState(false);
     const [postContent, setPostContent] = useState("");
@@ -60,37 +61,43 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
             {
                 variables:{topicName:topic}
             });
-
     };
 
     return (
         <Formik
             initialValues={{title: '', anonymouslyCheck: false,description:'', mySchool:false}}
 
-            onSubmit={(values, {setSubmitting}) => {
+            onSubmit={(values) => {
                 if(topics.length === 0){
                     showEmptyTopicError(true);
                 }
                 else{
-                    const variables = { title:values.title,description:postContent, isArticle:type==="article"};
-                    askQuestion({ variables: values.mySchool?{...variables,school:universityId}:variables}).then(
-                        (result)=>{
-                            const{data} = result;
-                            topics.map((topic) => {
-                                addTopicToQuestion({ variables: { questionID:data.createQuestion.id,topicID:topic.topicId}}).then();
-                                return topic
-                            });
-                            showEmptyTopicError(false);
-                            if(type === "question"){
+
+                    if(type==="article"){
+                        postArticle({ variables:{title:values.title,content:postContent} }).then(
+                            ()=>{
+                                history.push("/home");
+                            }
+                        ).catch(
+
+                        )
+                    }else{
+                        const variables = { title:values.title,description:postContent,anonymous:values.anonymouslyCheck};
+                        askQuestion({ variables: values.mySchool?{...variables,school:universityId}:variables}).then(
+                            (result)=>{
+                                const{data} = result;
+                                topics.map((topic) => {
+                                    addTopicToQuestion({ variables: { questionID:data.createQuestion.id,topicID:topic.topicId}}).then();
+                                    return topic
+                                });
+                                showEmptyTopicError(false);
                                 toggleAskQuestionMode();
                             }
-                            else{
-                                window.location.reload();
-                            }
-                        }
-                    ).catch(
+                        ).catch(
 
-                    )
+                        )
+                    }
+
                 }
             }}
         >{({
@@ -197,6 +204,6 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
         )}
         </Formik>
     )
-}
+};
 
 export default PostPage;

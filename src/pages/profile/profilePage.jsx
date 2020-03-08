@@ -12,10 +12,10 @@ import {useQuery} from "@apollo/react-hooks";
 import {USER_INFORMATION} from "../graphQL/userQuery";
 const ProfilePage = props => {
     let userID = props.match.params.userId;
-    const {me,refetchMe} = props;
+    const {me,refetchMe,createOverviewMessage,openMessageMenu} = props;
     const [visitorMode,setVisitorMode] = useState(userID !== me.id);
-    const [selectedTopic, setSelectedTopic] = useState("Education");
-    const {loading, error, data,refetch} = useQuery(USER_INFORMATION,{variables:{userID}});
+    const [selectedTopic, setSelectedTopic] = useState("Profile");
+    const {loading, error, data,refetch} = useQuery(USER_INFORMATION,{variables:{userID},fetchPolicy: "network-only"});
 
     if(loading) return <div/>;
     if(error) return <div/>;
@@ -27,7 +27,15 @@ const ProfilePage = props => {
         <div className="profilePageWrapper">
             <div className="profileWrapper">
                 <div className="profileHeader">
-                    <ProfileCard userInformation={user} isMe={userID === me.id} toggleVisitorMode={()=>{setVisitorMode(!visitorMode)}} visitorMode={visitorMode} refetchMe={refetchMe}/>
+                    <ProfileCard
+                        userInformation={user}
+                        isMe={userID === me.id}
+                        toggleVisitorMode={()=>{setVisitorMode(!visitorMode);setSelectedTopic('Profile')}}
+                        visitorMode={visitorMode}
+                        refetchMe={refetchMe}
+                        createOverviewMessage={createOverviewMessage}
+                        openMessageMenu={openMessageMenu}
+                    />
                 </div>
                 <div className="profileContent">
                     <div className="profileNavigator">
@@ -44,14 +52,14 @@ const ProfilePage = props => {
                         </ul>
                     </div>
                     <div className="profileSection">
-                        {(selectedTopic === 'Profile') && (<ProfileHomePage visitorMode={visitorMode}/>)}
+                        {(selectedTopic === 'Profile') && (<ProfileHomePage visitorMode={visitorMode} />)}
                         {(selectedTopic === 'Education') && <ProfileEducationPage visitorMode={visitorMode}/>}
                         {(selectedTopic === 'My bookmarks'  && !visitorMode) && <ProfileBookmarkPage/>}
                         {(selectedTopic === 'My following' && !visitorMode) && <ProfileFollowingPage/>}
                         {(selectedTopic === 'My topics'  && !visitorMode) && <ProfileFollowingTopic />}
                         {(selectedTopic === 'My questions') && <ProfileQuestionsPage type={"question"} data={user.questions}/>}
                         {(selectedTopic === 'My answers') && <ProfileQuestionsPage type={"answer"} data={user.answers}/>}
-                        {(selectedTopic === 'My articles') && <ProfileQuestionsPage type={"article"} data={user.questions}/>}
+                        {(selectedTopic === 'My articles') && <ProfileQuestionsPage type={"article"} data={user.answers}/>}
                         {(selectedTopic === 'Settings'  && !visitorMode) && <ProfileSettingPage user={user} refetch={refetch}/>}
                     </div>
                 </div>

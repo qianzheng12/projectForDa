@@ -6,15 +6,13 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import SendIcon from '@material-ui/icons/Send';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {USER_INFORMATION} from "../graphQL/userQuery";
+import {useMutation} from "@apollo/react-hooks";
 import {FOLLOW_USER, UN_FOLLOW_USER, UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import PersonIcon from '@material-ui/icons/Person';
-import PersonAddDisabledIcon from '@material-ui/icons/PersonAddDisabled';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import DoneIcon from '@material-ui/icons/Done';
-const ProfileCard = ({userInformation,isMe,toggleVisitorMode,visitorMode}) => {
+const ProfileCard = ({userInformation,isMe,toggleVisitorMode,visitorMode,createOverviewMessage,openMessageMenu}) => {
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
     const [updateThumbnailMutation] = useMutation(UPDATE_THUMBNAIL);
@@ -22,23 +20,30 @@ const ProfileCard = ({userInformation,isMe,toggleVisitorMode,visitorMode}) => {
     const [followed,setFollowed] = useState(userInformation.followed);
     const [followMutation] = useMutation(FOLLOW_USER);
     const [unFollowMutation] = useMutation(UN_FOLLOW_USER);
+    const [followNumber,setFollowNumber] = useState(userInformation.numberOfFollowers);
     const updateThumbnail = (pictureUrl) =>{
-        updateThumbnailMutation({variables: {thumbnail:pictureUrl}}).then((result) =>{
+        updateThumbnailMutation({variables: {thumbnail:pictureUrl}}).then(() =>{
             setUserThumbnail(pictureUrl);
             toggleUploadImageWindow(false)
         })
     };
     const toggleFollow = () =>{
         if(followed){
-            unFollowMutation({variables: {followedUserID:userInformation.id}}).then((result)=>{
+            unFollowMutation({variables: {followedUserID:userInformation.id}}).then(()=>{
                 setFollowed(false);
+                setFollowNumber(followNumber-1);
             }).catch((err)=>{console.log(err)})
         }
         else{
-            followMutation({variables: {userIDToFollow:userInformation.id}}).then((result)=>{
+            followMutation({variables: {userIDToFollow:userInformation.id}}).then(()=>{
                 setFollowed(true);
+                setFollowNumber(followNumber+1);
             }).catch((err)=>{console.log(err)})
         }
+    };
+    const sendMessage = () => {
+        createOverviewMessage(userInformation);
+        openMessageMenu(true);
     }
     return (
         <div className="card">
@@ -61,9 +66,9 @@ const ProfileCard = ({userInformation,isMe,toggleVisitorMode,visitorMode}) => {
                     <h1>{userInformation.firstName+' '+ userInformation.lastName}</h1>
                 </div>
                 <div className="profileHeaderAction">
-                    {isMe&& <div id="MyFollowNumber" > <PersonIcon/><span>32k</span></div>}
-                    {!isMe&& <Button id="followNumber" onClick={()=>{toggleFollow()}}> {followed && <DoneIcon/>}{!followed && <PersonAddIcon/>}<span>32k</span></Button>}
-                    {!isMe&&<Button id="message"><SendIcon/> <span>Message</span></Button>}
+                    {isMe&& <div id="MyFollowNumber" > <PersonIcon/><span>{followNumber}</span></div>}
+                    {!isMe&& <Button id="followNumber" onClick={()=>{toggleFollow()}}> {followed && <DoneIcon/>}{!followed && <PersonAddIcon/>}<span>{followNumber}</span></Button>}
+                    {!isMe&&<Button id="message" onClick={()=>sendMessage()}><SendIcon/> <span>Message</span></Button>}
                     {isMe &&<Button id="preview" onClick={toggleVisitorMode}>{!visitorMode&&<VisibilityIcon/>}{visitorMode&&<VisibilityOffIcon/>} <span>Preview</span></Button>}
                 </div>
             </div>

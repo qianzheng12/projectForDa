@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import './profileHomePage.css'
 import DraggableList from "./DraggableList";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import {Formik} from "formik";
 import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
 import {useMutation, useQuery} from "@apollo/react-hooks";
@@ -10,7 +9,7 @@ import {UPDATE_PROFILE_QUESTIONS} from "../graphQL/userMutation";
 import {GET_PROFILE_QUESTIONS} from "../graphQL/userQuery";
 
 const ProfileHomePage = ({visitorMode}) => {
-    const {data,loading,error} = useQuery(GET_PROFILE_QUESTIONS);
+    const {data,loading,error} = useQuery(GET_PROFILE_QUESTIONS,{fetchPolicy:"network-only"});
     if(loading) return <div/>;
     if(error) return <div/>;
     const {me:{profileQuestions}} = data;
@@ -24,13 +23,13 @@ const ProfileHomePage = ({visitorMode}) => {
         processedData = []
     }
 
-    return (<ProfileQuestions visitorMode={visitorMode} processedData={processedData}/>)
+    return (<ProfileQuestions visitorMode={visitorMode} processedData={processedData}/>);
 };
 export default ProfileHomePage;
 
 const ProfileQuestions = ({visitorMode,processedData}) => {
     const [addMode, setAddMode] = useState(false);
-    const [updateProfileQuestions] = useMutation(UPDATE_PROFILE_QUESTIONS)
+    const [updateProfileQuestions] = useMutation(UPDATE_PROFILE_QUESTIONS);
     const [items, setItems] = useState( processedData);
     const [question, setQuestion] = useState('');
     const [answer, setAnswer] = useState('');
@@ -38,19 +37,22 @@ const ProfileQuestions = ({visitorMode,processedData}) => {
         const updateItem = newItems.map(item=>{
             return {question:item.question,answer:item.answer};
         });
-        updateProfileQuestions({variables:{questions:updateItem}}).then(data=>{
-            console.log(data);
+        updateProfileQuestions({variables:{questions:updateItem}}).then(()=>{
         })
     };
 
     const handleAddNewItem = () => {
         if(question === '' || answer === ''){
-            alert('Please enter question and answer');
+
         }
         else{
             const newItems = [...items,{...{question,answer},id:`${items.length}`,isSelected:false}];
             setItems(newItems);
             setAddMode(false);
+            setItems(newItems);
+            setAddMode(false);
+            setQuestion('');
+            setAnswer('');
             updateItems(newItems);
         }
     };
@@ -102,7 +104,7 @@ const ProfileQuestions = ({visitorMode,processedData}) => {
             {
                 visitorMode &&
                 <div className="ProfileContentList">
-                    {items.map((item, index) => (
+                    {items.map((item) => (
                         <div
                             className="ProfileListItem"
                         >
@@ -117,4 +119,4 @@ const ProfileQuestions = ({visitorMode,processedData}) => {
             }
         </div>
     )
-}
+};

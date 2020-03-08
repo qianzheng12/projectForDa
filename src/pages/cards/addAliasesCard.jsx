@@ -3,7 +3,7 @@ import './topicCard.css'
 const AddAliasesCard = () => {
     const [topics,addTopic] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
-    const [topicEmptyError, showEmptyTopicError] = useState(false);
+    const [topicEmptyError] = useState(false);
     const enterTopic = (keyEvent) => {
         if ((keyEvent.charCode || keyEvent.keyCode) === 13) {
             if(currentTopicValue !== ""){

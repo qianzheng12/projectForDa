@@ -19,7 +19,6 @@ const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
     const [unFollowTopicMutation] = useMutation(UN_FOLLOW_TOPIC);
     const [cursorOn, setCursorOn] = useState(false);
     const [uploadImageWindow, toggleUploadImageWindow] = useState(false);
-    console.log(followed)
     const followTopic = () => {
         followTopicMutation({variables:{topicID:topic.id}}).then(result=>{
             if(!result.data.followTopic){
@@ -61,7 +60,7 @@ const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
         else{
             setEditTopicDescription(true)
         }
-    }
+    };
     const updateTopicName = () => {
         if(editTopicName){
             updateTopicMutation({variables:{topicID:topic.id,topicName,topicDescription,topicThumbnail}}).then(result=>{
@@ -78,7 +77,7 @@ const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
         setToolWindowOpen(false);
         setEditTopicDescription(false);
         setEditTopicName(false);
-    }
+    };
     return (
         <div className="card">
             {uploadImageWindow &&

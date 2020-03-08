@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import './changePasswordPage.css'
 import {Formik} from "formik";
 import {Auth} from 'aws-amplify';
@@ -23,7 +23,7 @@ const ChangePasswordPage = () => {
                                 }
                                 return errors;
                             }}
-                            onSubmit={(values, {setSubmitting}) => {
+                            onSubmit={(values) => {
                                 Auth.currentAuthenticatedUser()
                                     .then(user => {
                                         return Auth.changePassword(user, values.oldPassword, values.newPassword);
@@ -31,7 +31,7 @@ const ChangePasswordPage = () => {
                                     .then(data => {
                                         if (data) {
                                             Auth.signOut()
-                                                .then(data => window.location.reload())
+                                                .then(() => window.location.reload())
                                                 .catch(err => console.log(err));
                                         }
                                     })

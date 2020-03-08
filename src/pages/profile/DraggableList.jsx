@@ -1,8 +1,6 @@
-import React, {Component, useState} from "react";
-import ReactDOM from "react-dom";
+import React  from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import DehazeIcon from '@material-ui/icons/Dehaze';
-import it from "react-draft-wysiwyg/src/i18n/it";
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -61,7 +59,7 @@ const DraggableList = ({items, setItems,updateItems,educationList=false}) => {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId="droppable">
-                {(provided, snapshot) => (
+                {(provided) => (
                     <div
                         className="ProfileContentList"
                         {...provided.droppableProps}
@@ -69,7 +67,7 @@ const DraggableList = ({items, setItems,updateItems,educationList=false}) => {
                     >
                         {items.map((item, index) => (
                             <Draggable key={item.id} draggableId={item.id} index={index} >
-                                {(provided, snapshot) => (
+                                {(provided) => (
                                     <div
                                         className="ProfileListItem"
                                         ref={provided.innerRef}
@@ -190,6 +188,6 @@ export const EducationItems = ({item,deleteItem}) =>{
             </div>
         </div>
     )
-}
+};
 
 export default DraggableList;

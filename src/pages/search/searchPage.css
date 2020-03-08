@@ -1,9 +1,8 @@
 .searchPageWrapper{
-    position: fixed;
-    top: 60px;
+    position: relative;
     width: 100%;
-    height: 92%;
     margin:0;
+    height: 92vh;
     align-content: center;
     overflow: auto;
 
@@ -17,7 +16,6 @@
     width: 900px;
     left: 20vw;
     position: relative;
-    height: 100%;
 }
 .filterWrapper{
     box-shadow: 0 0 3px #BCBCBC;
@@ -70,7 +68,7 @@
 .topicFilterHeader h1{
     margin:5px 0 0 0;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri, serif;
     font-weight: normal;
     float: left;
 }
