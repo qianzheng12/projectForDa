@@ -4,6 +4,7 @@ import {useMutation} from "@apollo/react-hooks";import ThumbUpAltOutlinedIcon fr
 import ThumbDownAltOutlinedIcon from '@material-ui/icons/ThumbDownAltOutlined';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ShareRoundedIcon from '@material-ui/icons/ShareRounded';
+import BookmarkRoundedIcon from '@material-ui/icons/BookmarkRounded';
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import {useVotesState} from "../hooks/answerStates";
 import './articleCard.css'
@@ -12,15 +13,28 @@ import Button from "@material-ui/core/Button";
 import {useCommentState} from "../hooks/commentStates";
 import TimeAgo from "react-timeago";
 import HTMLEllipsis from "react-lines-ellipsis/lib/html";
-const ArticleCard = ({article,refetch}) => {
+import {BOOKMARK_ANSWER, UN_BOOKMARK_ANSWER} from "../graphQL/userMutation";
+import Tooltip from "@material-ui/core/Tooltip";
+const ArticleCard = ({article,refetch,bookmarked}) => {
     const {user} = article;
     const {upvote,downvote,id,upvoteStatus} = article;
     const [commentHeight, setCommentHeight] = useState('40px');
     const {thumbUp,thumbDown,toggleThumbDown,toggleThumbUp,upVotes} = useVotesState({upvote,downvote,id,upvoteStatus});
     const {commentContent,commentMode,setCommentContent,setCommentMode,emptyCommentError,setEmptyCommentError} = useCommentState();
-
+    const [bookmarkAnswerMutation] = useMutation(BOOKMARK_ANSWER);
+    const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
     const [sendCommentMutation] = useMutation(COMMENT_ARTICLE);
-
+    const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked);
+    const unBookmarkAnswer = () => {
+        unBookmarkMutation({variables: {answerID: article.id}}).then(() => {
+            setBookmarkedIcon(false);
+        })
+    };
+    const bookmarkAnswer = () => {
+        bookmarkAnswerMutation({variables: {answerID: article.id}}).then(() => {
+            setBookmarkedIcon(true)
+        })
+    };
     const sendComment = () => {
         if (commentContent === ''){
             setEmptyCommentError(true)
@@ -69,7 +83,11 @@ const ArticleCard = ({article,refetch}) => {
                         <span>{article.comments.length}</span>
                     </div>
                     <ShareRoundedIcon/>
-                    <BookmarkBorderOutlinedIcon/>
+                    {bookmarkedIcon &&
+                    <Tooltip title="unbookmark answer"><BookmarkRoundedIcon onClick={unBookmarkAnswer}
+                                                                            style={{color: "#FF9240"}}/></Tooltip>}
+                    {!bookmarkedIcon &&
+                    <Tooltip title="bookmark answer"><BookmarkBorderOutlinedIcon onClick={bookmarkAnswer}/></Tooltip>}
                 </div>
             </div>
             {commentMode &&

@@ -13,7 +13,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ReportWindow from "../utils/reportWindow";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {Link} from "react-router-dom";
 const leftStyle = {float: "left", position: "relative", left: "20px", background: "#bcbcbc"};
 
 const rightStyle = {float: "right", position: "relative", right: "10px", background: "rgba(255, 146, 64, 0.21)"};
@@ -145,11 +144,14 @@ const ChatWindow = ({user, myId, updateOverviewMessage, closeWindow,deleteWindow
         <div style={{bottom: isMessageBlockOpen ? "250px" : "0px"}} className="messageWindow">
             <div className="messageWindowHeader">
                 <div onClick={() => {
-                    openMessageBlock(!isMessageBlockOpen)
+                    openMessageBlock(!isMessageBlockOpen);
+
+                    setToolWindowOpen(false);
                 }} style={{width: "75%", float: "left", height: "100%"}}>
                     <p>{user.firstName} {user.lastName}</p>
                 </div>
                 <MoreVertIcon onClick={() => {
+                    openMessageBlock(true);
                     setToolWindowOpen(!toolWindowOpen)
                 }} id="toolIcon"/>
 
@@ -183,7 +185,7 @@ const ChatWindow = ({user, myId, updateOverviewMessage, closeWindow,deleteWindow
                 <div style={{minHeight:"85%",display:"block",overflow:"auto"}}>
                 {messages.map(message => (
                     <div className="messageContentWrapper" style={{float: message.myMessage ? "right" : "left"}}>
-                        {!message.myMessage && <Link to={"/Profile/"+ user.id}>{user.thumbnail ?<img src={user.thumbnail}/>:<AccountCircleIcon/>}</Link>}
+                        {!message.myMessage && <a href={"/Profile/"+ user.id}>{user.thumbnail ?<img src={user.thumbnail}/>:<AccountCircleIcon/>}</a>}
                         <div className="messageContent" style={message.myMessage ? rightStyle : leftStyle}>
                             <p>{message.content}</p></div>
                     </div>

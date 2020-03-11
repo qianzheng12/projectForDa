@@ -25,11 +25,13 @@
 }
 .sharePopupWrapper .topPart svg{
     float: left;
+    margin:0;
 }
 .sharePopupWrapper .topPart .SocialMediaShareButton{
-    margin-right: 5px;
+    margin-left: 6px;
     position: relative;
-    left:2px;
+    left:5px;
+    top:2px;
 }
 .sharePopupWrapper .bottomPart .shareUrlArea{
     top:10px;

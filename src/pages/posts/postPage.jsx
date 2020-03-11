@@ -145,7 +145,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                                         </li></div>}
                                     {type === "article" &&<div>
                                     <li> Write an article to share your expertise or your personal experience.</li>
-                                        <li> If you are making an argument or taking a stand, be sure to avoid <Link>logical fallacies.</Link></li>
+                                        <li> If you are making an argument or taking a stand, be sure to avoid <a href="https://yourlogicalfallacyis.com/">logical fallacies.</a></li>
                                     <li> Be sure to proofread and double-check for spelling and grammatical errors.</li>
                                     <li> Avoid plagirizing and be sure to obtain approving before using copyrighted materials.</li></div>}
                                 </ul>

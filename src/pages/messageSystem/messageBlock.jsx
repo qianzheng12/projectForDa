@@ -1,8 +1,8 @@
-import React, {Fragment, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import './messageMenu.css'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {useLazyQuery} from "@apollo/react-hooks";
-import {GET_MESSAGE_OVERVIEW, GET_USER_FOR_MESSAGE, SEARCH_USER} from "../graphQL/messageQuery";
+import {GET_MESSAGE_OVERVIEW, SEARCH_USER} from "../graphQL/messageQuery";
 import ChatWindow from "./ChatWindow";
 import CloseIcon from '@material-ui/icons/Close';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -54,7 +54,6 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
     const [searchUserQuery, {data:userData}] = useLazyQuery(SEARCH_USER, {
         onCompleted: () => {
             const {searchUser} = userData;
-            console.log(searchUser);
             setSearchedUser(searchUser)
         }
     });
@@ -86,7 +85,6 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
         }
     };
     const updateOverviewMessage = (userId, content) => {
-        console.log(userId)
         const updatedMessage = messages.map(message => {
             if (message.user.id === userId) {
                 setUnreadAmount(unReadAmount - message.unread);
@@ -131,7 +129,7 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
                 <div className="messageWindowHeader">
                     {!searchUserMode ?
                         <div onClick={() => {
-                            openMessageMenu(!isMessageMenuOpen)
+                            openMessageMenu(!isMessageMenuOpen);
                         }} id="toggleWindowPart">
                             <p>Message</p>
                             {
@@ -195,7 +193,6 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
             </div>
             {messageWindows.map(
                 messageWindow => {
-                    console.log(messageWindow);
                     return (
                         <ChatWindow key={messageWindow.user.id} myId={me.id} user={messageWindow.user}
                                     updateOverviewMessage={updateOverviewMessage} deleteWindow={deleteWindow}

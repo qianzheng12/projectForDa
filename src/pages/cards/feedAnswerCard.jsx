@@ -83,7 +83,7 @@ const FeedAnswerCard = ({question, showAction, answer, profileBookmarkAnswer, bo
                                                           src={(user && user.thumbnail) || require('../../resource/ted.jpg')}/></Link>
                     <div className="answerUserDetail">
                         <Link to={"/Profile/" + user.id}><span>{user.firstName + ' ' + user.lastName}</span></Link>
-                        {question ? <h2><TimeAgo date={question.lastUpdated} live={false}/></h2> :
+                        {question ? <h2><TimeAgo date={answer.lastUpdated} live={false}/></h2> :
                             <h2><TimeAgo date={answer.lastUpdated} live={false}/></h2>}
                         {!user.hideUniversity && <h3>{user.university.name}</h3>}
                     </div>

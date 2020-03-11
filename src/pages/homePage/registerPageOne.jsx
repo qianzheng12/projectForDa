@@ -1,5 +1,4 @@
 import React, {useState} from 'react'
-import ReCAPTCHA from "react-google-recaptcha";
 import './registerPage.css'
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
@@ -10,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import InfoIcon from '@material-ui/icons/Info';
 import {useLazyQuery} from "@apollo/react-hooks";
-import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
 import {GET_UNIVERSITY_BY_DOMAIN} from "../graphQL/query";
 
 /*
@@ -28,9 +26,8 @@ const RegisterPageOne = ({submit,goToSign,selectedMajorYear, setSelectedMajorYea
     const [showPassword , setShowPassword] = useState(false);
     const [showBirthdayNotSelected, setShowBirthdayNotSelected] = useState(false);
 
-    const [getUniversityByDomain, { data }] = useLazyQuery(GET_UNIVERSITY_BY_DOMAIN,
+    const [] = useLazyQuery(GET_UNIVERSITY_BY_DOMAIN,
         {onCompleted: () => {
-                console.log(data);
             },
             fetchPolicy:"network-only"
         });
@@ -128,7 +125,7 @@ const RegisterPageOne = ({submit,goToSign,selectedMajorYear, setSelectedMajorYea
                                   placeholder="Day"/>
                         <Dropdown required options={yearRange} onChange={selectYear} value={selectedYear}
                                   className="yearPicker" placeholder="Year"/>
-                            <Tooltip title="Only your schoolmate can see it."><InfoIcon id="dateInfo"/></Tooltip>
+                            <Tooltip title="Birthday"><InfoIcon id="dateInfo"/></Tooltip>
                             {showBirthdayNotSelected&& <div><h2>Please enter your birthday</h2></div>}
                         </div>
                         <div className="signUpInput">
@@ -148,7 +145,7 @@ const RegisterPageOne = ({submit,goToSign,selectedMajorYear, setSelectedMajorYea
                             <VisibilityOffOutlinedIcon onMouseDown={()=>{setShowPassword(true)}}
                                                        onMouseUp={()=>{setShowPassword(false)}}
                             />
-                            <Tooltip title="Only your schoolmate can see it."><InfoIcon id="passwordInfo"/></Tooltip>
+                            <Tooltip title="Password should be formed with numbers,characters and capital characters."><InfoIcon id="passwordInfo"/></Tooltip>
                         </div>
                         <div className="signUpInput">
                             <input required type=""

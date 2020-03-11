@@ -38,6 +38,18 @@ export const USER_INFORMATION = gql` query($userID:String!)
         secondEmail
         hideUniversity
         numberOfFollowers
+        profileQuestions{
+            question
+            answer
+        }            
+        pastEducation{
+            school
+            from
+            to
+            major
+            degree
+        }
+        
         university{
             id
             name
@@ -122,6 +134,7 @@ export const USER_BOOKMARKED_ANSWERS = gql`
             id
             bookmarkedAnswers {
                 id
+                title
                 content
                 comments {
                     id

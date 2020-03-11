@@ -10,6 +10,7 @@ import {ADD_TOPIC_RELATIONSHIP, REMOVE_TOPIC_RELATIONSHIP} from "../graphQL/topi
 import TopicQuestions from "./topicQuestions";
 const TopicPage = props => {
     const topicID = props.match.params.topicName;
+    const {bookMarkedAnswers} = props;
     const {loading,error,data,refetch}= useQuery(TOPIC_PAGE_QUERY,{
         variables:{topicID},fetchPolicy: "network-only"});
     const [addTopicRelationshipMutation] = useMutation(ADD_TOPIC_RELATIONSHIP);
@@ -74,7 +75,7 @@ const TopicPage = props => {
                         </div>
                             <Button>Submit Changes</Button>
                     </div>}
-                    {!editMode&&<TopicQuestions topic={topic}/>}
+                    {!editMode&&<TopicQuestions bookMarkedAnswers={bookMarkedAnswers} topic={topic}/>}
                 </div>
 
                 <div className="topics">

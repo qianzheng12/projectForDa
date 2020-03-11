@@ -216,6 +216,7 @@ export const SEARCH_ANSWER = gql` query($searchString:String,$topicIDs:[GUID],$l
         }
         answers(orderBy: RECENT){
             content
+            id
             comments{
                 id
             }

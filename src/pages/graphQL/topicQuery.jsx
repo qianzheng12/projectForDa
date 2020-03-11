@@ -24,6 +24,7 @@ export const GET_QUESTION_BY_TOPIC = gql`query($topicName:String!){
         title
         answers(orderBy: RECENT, limit:1){
             content
+            id
             comments{
                 id
             }

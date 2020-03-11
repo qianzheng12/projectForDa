@@ -52,8 +52,8 @@ const ProfilePage = props => {
                         </ul>
                     </div>
                     <div className="profileSection">
-                        {(selectedTopic === 'Profile') && (<ProfileHomePage visitorMode={visitorMode} />)}
-                        {(selectedTopic === 'Education') && <ProfileEducationPage visitorMode={visitorMode}/>}
+                        {(selectedTopic === 'Profile') && (<ProfileHomePage profileQuestions={user.profileQuestions} visitorMode={visitorMode} />)}
+                        {(selectedTopic === 'Education') && <ProfileEducationPage pastEducation={user.pastEducation} visitorMode={visitorMode}/>}
                         {(selectedTopic === 'My bookmarks'  && !visitorMode) && <ProfileBookmarkPage/>}
                         {(selectedTopic === 'My following' && !visitorMode) && <ProfileFollowingPage/>}
                         {(selectedTopic === 'My topics'  && !visitorMode) && <ProfileFollowingTopic />}

@@ -11,6 +11,7 @@ import {USER_FOLLOWED_TOPICS} from "../graphQL/userQuery";
 const SearchPage = props => {
     const searchString = props.match.params.searchString;
     props.setSelectedPage("");
+    const {bookMarkedAnswers} = props;
     const wrapperRef = useRef(null);
     const [searchTopic, setSearchTopic] = useState([]);
     const {loading, error, data} = useQuery(USER_FOLLOWED_TOPICS);
@@ -81,7 +82,7 @@ const SearchPage = props => {
                             if (answers.length > 0) {
                                 return (
                                     <div className="feedAnswer">
-                                        <FeedAnswerCard key={question.id} question={question} answer={answers[0]} showAction={true}/>
+                                        <FeedAnswerCard key={question.id} question={question} answer={answers[0]} bookmarked={bookMarkedAnswers.some(answer=>answer.id === answers[0].id)} showAction={true}/>
                                     </div>
                                 )
                             }

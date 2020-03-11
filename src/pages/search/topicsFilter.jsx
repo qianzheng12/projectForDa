@@ -6,7 +6,6 @@ const TopicsFilter = ({filterTopic}) => {
     const {loading,error,data} = useQuery(MY_FOLLOW_TOPICS);
     if(loading) return <div/>;
     if(error) return <div/>;
-    console.log(111);
     const {me:{followedTopics}}= data;
     return (
         <TopicsWrapper followedTopics={followedTopics} filterTopic={filterTopic}/>
@@ -16,7 +15,6 @@ const TopicsWrapper = ({followedTopics,filterTopic}) => {
 
     const [enteredTopic,setEnteredTopic] = useState('');
     const [topics,setTopics] = useState(followedTopics);
-    console.log(topics);
     const selectTopic = (selectedTopic) => {
         const newTopics = topics.map(topic => {
             if(selectedTopic.id === topic.id){

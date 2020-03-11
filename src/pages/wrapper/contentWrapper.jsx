@@ -73,14 +73,16 @@ const ContentWrapper = () => {
                     render={(props) => <QuestionAnswers {...props} me={me} setGreyCover={setGreyCover} setSelectedPage={setSelectedPage}/>} />
                 <Route
                     path="/searchPage/:searchString"
-                    render={(props) => <SearchPage {...props} setSelectedPage={setSelectedPage}/>} />
+                    render={(props) => <SearchPage {...props} setSelectedPage={setSelectedPage}  bookMarkedAnswers={me.bookmarkedAnswers}/>} />
                 <Route
                     path="/addArticle"
                     render={(props) => <AddArticle {...props} university={me.university.id}/>} />
-                <Route path="/article/:id" component={ArticlePage}/>
+                <Route
+                    path="/article/:id"
+                    render={(props) => <ArticlePage {...props} bookMarkedAnswers={me.bookmarkedAnswers} />}/>
                 <Route
                     path="/Topic/:topicName"
-                    render={(props) => <TopicPage {...props} />} />
+                    render={(props) => <TopicPage {...props}  bookMarkedAnswers={me.bookmarkedAnswers} />} />
                 <Route
                   path="/Profile/:userId"
                   render={(props) => <ProfilePage {...props} me={me} refetchMe={refetch} createOverviewMessage={createOverviewMessage} openMessageMenu={openMessageMenu}/>} />

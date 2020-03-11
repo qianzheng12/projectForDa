@@ -4,15 +4,10 @@ import DraggableList from "./DraggableList";
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
-import {useMutation, useQuery} from "@apollo/react-hooks";
+import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_PROFILE_QUESTIONS} from "../graphQL/userMutation";
-import {GET_PROFILE_QUESTIONS} from "../graphQL/userQuery";
 
-const ProfileHomePage = ({visitorMode}) => {
-    const {data,loading,error} = useQuery(GET_PROFILE_QUESTIONS,{fetchPolicy:"network-only"});
-    if(loading) return <div/>;
-    if(error) return <div/>;
-    const {me:{profileQuestions}} = data;
+const ProfileHomePage = ({visitorMode,profileQuestions}) => {
     let processedData;
     if(profileQuestions){
         processedData =profileQuestions.map((question,index)=>(

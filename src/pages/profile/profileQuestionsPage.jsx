@@ -27,7 +27,7 @@ const ProfileQuestionsPage = ({type, data}) => {
             posts.map(post => (
                 !post.isArticle &&
                 <div className="profileQuestion">
-                    <ProfileQuestionCard post={post} content={post.description} type={"questions"}/>
+                    <ProfileQuestionCard post={post} content={post.description} type={"questions"} topics={post.topics}/>
                 </div>
             ))
             }
@@ -35,7 +35,7 @@ const ProfileQuestionsPage = ({type, data}) => {
             posts.map(answer => (
                 !answer.isArticle &&
                 <div className="profileQuestion">
-                    <ProfileQuestionCard post={answer.question} content={answer.content} type={"answer"}/>
+                    <ProfileQuestionCard post={answer.question} content={answer.content} type={"answer"} topics={answer.question.topics}/>
                 </div>
             ))
             }
@@ -43,7 +43,7 @@ const ProfileQuestionsPage = ({type, data}) => {
             posts.map(post => (
                 post.isArticle &&
                 <div className="profileQuestion">
-                    <ProfileQuestionCard post={post} content={post.content} type={"article"}/>
+                    <ProfileQuestionCard post={post} content={post.content} type={"article"} topics={[]}/>
                 </div>
             ))
             }

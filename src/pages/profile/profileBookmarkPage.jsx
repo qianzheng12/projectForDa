@@ -48,7 +48,7 @@ const ProfileBookmarkPage = () => {
                         <div key={bookmarkAnswer.id} className="feedAnswer">
                             <FeedAnswerCard
                                 bookmarked={true}
-                                key={question.id}
+                                key={bookmarkAnswer.id}
                                 question={question}
                                 answer={bookmarkAnswer}
                                 profileBookmarkAnswer={true}

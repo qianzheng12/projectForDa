@@ -4,7 +4,7 @@ import {useQuery} from "@apollo/react-hooks";
 import {SEARCH_ANSWER} from "../graphQL/query";
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
-const TopicQuestions = ({topic}) => {
+const TopicQuestions = ({topic, bookMarkedAnswers}) => {
     const {loading,data,refetch} = useQuery(SEARCH_ANSWER,{
         variables:{topicIDs:[topic.id]},fetchPolicy: "network-only"});
     const [searchedValue,setSearchedValue] = useState('');
@@ -23,14 +23,12 @@ const TopicQuestions = ({topic}) => {
                 <input placeholder="search" value={searchedValue} onChange={(e)=>searchWithTopic(e.target.value)}/>
             </div>
         {filteredOutQuestions.map(question => {
-                if(question.answers.length >= 1){
-                    return (
-                        <div className="feedAnswer">
-                            <FeedAnswerCard key={question.id} answer={(question.answers)[0]} question={question} showAction={true}/>
-                        </div>
-                    )
-                }
-                return null;
+                const answer = question.answers[0];
+                return (
+                    <div className="feedAnswer">
+                        <FeedAnswerCard key={question.id} answer={answer} bookmarked={bookMarkedAnswers.some(bookMarkedAnswer=>bookMarkedAnswer.id === answer.id)} question={question} showAction={true}/>
+                    </div>
+                )
             })}
         </div>
     )

@@ -7,8 +7,6 @@ import UploadImageWindow from "../uploadImageWindow/uploadImageWindow";
 import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_THUMBNAIL} from "../graphQL/userMutation";
 
-import {Auth} from "aws-amplify";
-
 /* 
     The page for user to upload thumbnail and finish registration.
 */

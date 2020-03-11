@@ -99,7 +99,7 @@ const QuestionCard = ({question, addAnswer, feedCard, followed,me}) => {
                         return (<Link key={topic.id} to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
                     })}
                 </div>
-                <h3>{question.title}</h3>
+                <Link to={`/question/${question.id}`}><h3>{question.title}</h3></Link>
                 {user && <div><p>post by</p>
                     {question.anonymous ?<p style={{color: '#FF9240', marginLeft: '0.5%'}}>Anonymous user</p>
                         : <Link to={"/Profile/"+ user.id}><p style={{color: '#FF9240', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>}

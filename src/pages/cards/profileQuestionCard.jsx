@@ -3,13 +3,18 @@ import Typography from "@material-ui/core/Typography";
 import TimeAgo from "react-timeago";
 import {Link} from "react-router-dom";
 
-const ProfileQuestionCard = ({post,content,type}) => {
+const ProfileQuestionCard = ({post,content,type, topics}) => {
     const {user}=post;
     const link = type === "article" ? "/article/"+post.id : "/question/"+post.id;
     return (
         <div className="card">
             <div className="questionHeader">
-                <div className="questionTopics">
+                <div className="questionTopics">{
+                    topics &&
+                    topics.map(topic => {
+                        return (<Link key={topic.id} to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
+                    })
+                }
                 </div>
                 <Link to={link}><h3>{post.title}</h3></Link>
                 {user &&<div><p>{user.firstName+user.lastName} post on</p> </div>}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
 const SchoolCard = ({university}) => {
     return (

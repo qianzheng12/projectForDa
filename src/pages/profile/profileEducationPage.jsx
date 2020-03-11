@@ -6,15 +6,10 @@ import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
 import  {educationDegree, educationToYearRangeOption, educationFromYearRangeOption} from "../utility/dateFixture";
 import Dropdown from "react-dropdown";
-import {useMutation, useQuery} from "@apollo/react-hooks";
-import {GET_PAST_EDUCATION} from "../graphQL/userQuery";
+import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_PAST_EDUCATIONS} from "../graphQL/userMutation";
 
-const ProfileEducationPage = ({visitorMode}) => {
-    const {data,loading,error} = useQuery(GET_PAST_EDUCATION,{fetchPolicy:"network-only"});
-    if(loading) return <div/>;
-    if(error) return <div/>;
-    const {me:{pastEducation}} = data;
+const ProfileEducationPage = ({visitorMode,pastEducation}) => {
     const processedData =pastEducation.map((education,index)=>{
         return {...education,id:`${index}`};
     });

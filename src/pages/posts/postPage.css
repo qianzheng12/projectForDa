@@ -21,6 +21,7 @@
 .askQuestionFormClose{
     height:50px;
     float: right;
+    right:30px;
     position: relative;
     top:20px;
 }

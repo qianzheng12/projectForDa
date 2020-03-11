@@ -23,7 +23,6 @@ const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
     const [ fetchingMoreSchoolQuery,{data:moreQuestions}] = useLazyQuery(GET_MORE_MY_SCHOOL, {
         fetchPolicy:"network-only",
         onCompleted: ()=>{
-            console.log(moreQuestions);
             setLoadingMoreData(false);
             setQuestions([...questions,...moreQuestions.getMySchool.questions]);
         }
@@ -43,7 +42,6 @@ const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
     };
     const handleScroll = () => {
         if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
-        console.log(321);
         getMoreQuestions()
     };
     return (
