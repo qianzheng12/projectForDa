@@ -60,7 +60,7 @@ const Questions = ({setSelectedPage,setGreyCover,me}) => {
         }
     };
     const handleScroll = () => {
-        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
+        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight > 0) return;
 
         getMoreQuestions()
     };

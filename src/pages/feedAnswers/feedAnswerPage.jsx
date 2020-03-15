@@ -61,7 +61,8 @@ const FeedAnswerPage = ({setSelectedPage}) => {
 
     };
     const handleScroll = () => {
-        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
+        console.log(wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight)
+        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight > 0) return;
         getMoreAnswers()
     };
     return (

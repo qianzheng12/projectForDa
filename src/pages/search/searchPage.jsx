@@ -62,7 +62,7 @@ const SearchPage = props => {
             return;
         }
 
-        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
+        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight > 0) return;
         searchMore()
     };
     const filteredOutQuestions = searchResult.filter(question => question.answers.length > 0);

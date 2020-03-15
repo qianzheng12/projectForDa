@@ -41,7 +41,7 @@ const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
         fetchingMoreSchoolQuery({variables:{limit:5,lastOffset:questions.length}});
     };
     const handleScroll = () => {
-        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight !== 0) return;
+        if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight > 0) return;
         getMoreQuestions()
     };
     return (
