@@ -58,7 +58,7 @@ const Wrapper = () => {
         })
     };
     const client = new ApolloClient({
-        uri:'https://xywzdvhw89.execute-api.us-east-1.amazonaws.com/staging/',
+        uri:'https://qv216ops6c.execute-api.us-east-1.amazonaws.com/prod',
         cache,
         request: (operation) => {
             operation.setContext({

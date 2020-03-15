@@ -48,7 +48,7 @@ const RegisterPageOne = ({submit,goToSign,selectedMajorYear, setSelectedMajorYea
     };
 
     const checkUniversityByDomain = (value) =>{
-        fetch(`https://p3ds5bk9m7.execute-api.eu-west-2.amazonaws.com/dev/?domain=${value.split('@')[1]}`,
+        fetch(`https://pc6ribvsug.execute-api.us-east-1.amazonaws.com/prod/?domain=${value.split('@')[1]}`,
             {    method: 'GET', // *GET, POST, PUT, DELETE, etc.
                 mode: 'cors', // no-cors, *cors, same-origin
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
