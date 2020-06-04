@@ -1,8 +1,7 @@
 .signInPageWrapper{
     position: fixed;
-    top:0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
 }
 .loginFormWrapper{
     height: 100px;
@@ -20,8 +19,7 @@
     background: #55a7ff;
 }
 .authWrapperHeader{
-    width: 100%;
-    height: 100px;
+    height: 55px;
 }
 .authWrapperHeader img{
     position: relative;
@@ -31,26 +29,28 @@
 .authWrapperHeader span{
     font-family: VGARound;
     color:#E36100;
-    font-size: 26px;
+    font-size: 38px;
     position: relative;
-    left: 52px;
-    top:30px;
+    float: left;
+
 }
 .authWrapperHeader span:hover{
     cursor: pointer;
 }
 .signInWrapper {
     position: relative;
-    top:20px;
     height: 150px;
     width: 100%;
+    margin-top:20px;
 }
 .loginInput{
-    width: 230px;
-    height: 25px;
+    width: 500px;
+    height: 40px;
     position: relative;
     margin-bottom: 20px;
     padding-left: 20px;
+    border-radius: 8px;
+    border: 1px solid   gray ;
 }
 .signInHelpTool .checkBox{
     border-radius: 0;
@@ -67,9 +67,12 @@
     height: 15px;
 }
 .signInHelpTool span{
-    font-size: 13px;
+    top: -2px;
+    font-size: 15px;
     position: relative;
     left:5px;
+    color: gray;
+    font-family: Calibri;
 }
 
 .signInWrapper #forgetPassword{
@@ -82,16 +85,15 @@
 }
 .signInActions{
     position: relative;
-    top:20px;
-    width:250px;
-    height: 150px;
+    margin-top:20px;
+    height: 50px;
     padding:0;
 }
 .signInActions button{
-    width: 100%;
-    height: 30px;
+    width: 220px;
+    height: 50px;
     border-radius: 6px;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     color: white;
     font-family: Calibri;

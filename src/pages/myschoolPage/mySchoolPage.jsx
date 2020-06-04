@@ -46,7 +46,7 @@ const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
     };
     return (
         <div className="homePage" ref={wrapperRef} onScroll={handleScroll}>
-            <div className="homePageContent" style={{marginLeft: "20vw"}}>
+            <div className="homePageContent" >
                 <div className="feedAnswers">
                     <div className="schoolIntroduction">
                     <SchoolCard university={getMySchool}/>
@@ -66,7 +66,7 @@ const MySchoolPage = ({setSelectedPage,bookMarkedAnswers}) => {
                 </div>
                 <div className="topics">
                     <div className="topicHeader">
-                        <p>Topics</p>
+                        <p>Followed Topics</p>
                     </div>
                     <TopicWrapper topics={followedTopics}/>
                 </div>

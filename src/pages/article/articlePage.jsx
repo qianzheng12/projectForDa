@@ -6,8 +6,8 @@ import './articlePage.css';
 import CommentCard from "../cards/commentCard";
 const ArticlePage = props => {
     let id = props.match.params.id;
-    const {bookMarkedAnswers} = props
-    const { loading, error, data,client,refetch } = useQuery(GET_ARTICLE,{ variables: { answerID:id,orderBy:"RECENT" },});
+    const {bookMarkedAnswers} = props;
+    const { loading, error, data,client,refetch} = useQuery(GET_ARTICLE,{ variables: { answerID:id,orderBy:"RECENT" },});
 
     if (loading) return <div/>;
     if (error) return <div/>;

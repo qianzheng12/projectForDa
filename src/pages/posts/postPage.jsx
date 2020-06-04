@@ -5,7 +5,6 @@ import {useLazyQuery, useMutation} from '@apollo/react-hooks';
 import {ADD_TOPIC_TO_QUESTION, POST_QUESTION, CREATE_TOPIC, POST_ARTICLE} from '../graphQL/mutations';
 import {Formik} from "formik";
 import Button from "@material-ui/core/Button";
-import {Link} from "react-router-dom";
 import TextInputArea from "./textInputArea";
 import SearchTopicDropDown from "../search/searchTopicDropDown";
 import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
@@ -124,7 +123,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                                     onChange={handleChange}
                                     value={values.title}
                                     name="title"
-                                    placeholder={type === "article"?"What is your headline":"What is your question?"}
+                                    placeholder={type === "article"?"What is your headline?":"What is your question?"}
                                     id="titleInput" />
                                 <input
                                     onChange={handleChange}
@@ -145,7 +144,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                                         </li></div>}
                                     {type === "article" &&<div>
                                     <li> Write an article to share your expertise or your personal experience.</li>
-                                        <li> If you are making an argument or taking a stand, be sure to avoid <a href="https://yourlogicalfallacyis.com/">logical fallacies.</a></li>
+                                        <li> If you are making an argument or taking a stand, be sure to avoid <a href="https://yourlogicalfallacyis.com/" target='_blank'>logical fallacies.</a></li>
                                     <li> Be sure to proofread and double-check for spelling and grammatical errors.</li>
                                     <li> Avoid plagirizing and be sure to obtain approving before using copyrighted materials.</li></div>}
                                 </ul>
@@ -155,7 +154,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                                     <input type="search"
                                            value={currentTopicValue}
                                            onChange={(e)=>{setCurrentTopicValue(e.target.value)}}
-                                           placeholder="Topics"
+                                           placeholder="Add Topics"
                                            id="topicInputArea"/>
                                     {currentTopicValue.length>0 &&
                                     <div className="topicSearchDropdown" style={{width:"198px"}}>
@@ -167,6 +166,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                                     {topics.map(topic => (
                                         <div className="enteredTopic">
                                             #{topic.topicName}
+                                            <CloseIcon className="enteredTopicClose" style={{width:"13px",height:"13px"}}/>
                                         </div>
                                     ))}
                                 </div>

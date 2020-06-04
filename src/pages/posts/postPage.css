@@ -1,7 +1,7 @@
 
 .askQuestionForm{
     width: 100%;
-    min-height: 780px;
+    min-height: 800px;
     background: white;
     opacity: 1;
 
@@ -116,18 +116,23 @@
     border: 1px solid rgba(0, 0, 0, 0.52);
 }
 .enteredTopic{
-    font-size: 0.8em;
-    padding:4px 0 1px 0;
-    text-align: center;
-    color: rgba(51, 51, 51, 0.53);
-    border-radius: 100px / 100px;
-    background: rgba(64, 72, 67, 0.24);
-    height: 25px;
-    min-width: 100px;
+    height: 20px;
     position: relative;
-    margin-left:30px;
-    margin-top:10px;
     float: left;
+    border-radius: 10px;
+    border:1px solid transparent;
+    text-align: center;
+    padding:0 5px 0 12px;
+    font-size: 13px;
+    margin:7px 10px 7px 10px;
+    background-color: #e4e4e4;
+    color: #6b6b6b;
+}
+.enteredTopicClose{
+    width: 10px;
+    position: relative;
+    float: right;
+    border: 3px solid transparent;
 }
 .topicAdvice{
     padding-top: 10px;
@@ -180,12 +185,14 @@
 
 }
 .askButton span{
-    font-size: 15px;
-    font-weight: bold;
-    font-family: Calibri;
-    color:  #E36100;
     position: relative;
-    bottom:2px;
+    color: #E36100;
+    font-family: Calibri, serif;
+    bottom: 2px;
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 15px;
+    text-decoration: none;
 
 }
 .topicSearchDropdown{

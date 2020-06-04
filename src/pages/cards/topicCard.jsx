@@ -13,7 +13,7 @@ const TopicCard = ({topic, editMode, setEditMode,topicFollowed}) => {
     const [editTopicDescription, setEditTopicDescription] = useState(false);
     const [topicName, setTopicName] = useState(topic.name);
     const [topicDescription, setTopicDescription] = useState(topic.description);
-    const [topicThumbnail, setTopicThumbnail] = useState(topic.thumbnail||require('../../resource/topic.svg'));
+    const [topicThumbnail, setTopicThumbnail] = useState(topic.thumbnail||require('../../resource/default_topic_image.png'));
     const [updateTopicMutation] = useMutation(UPDATE_TOPIC);
     const [followTopicMutation] = useMutation(FOLLOW_TOPIC);
     const [unFollowTopicMutation] = useMutation(UN_FOLLOW_TOPIC);

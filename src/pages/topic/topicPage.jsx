@@ -63,7 +63,7 @@ const TopicPage = props => {
     };
     return (
         <div className="topicPageWrapper">
-            <div className="homePageContent" style={{marginLeft: "20vw"}}>
+            <div className="homePageContent" >
                 <div className="topicLeftContent">
                     <div className="topicCard">
                         <TopicCard topic={topic} editMode={editMode} setEditMode={setEditMode} topicFollowed={followedTopics.some((b)=>{return b.id === topic.id})}/>

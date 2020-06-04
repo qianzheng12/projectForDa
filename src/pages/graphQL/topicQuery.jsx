@@ -5,6 +5,7 @@ export const SEARCH_TOPIC = gql`query($topicName:String!)
     searchTopic(searchString:$topicName){
         id
         name
+        thumbnail
     }
 }
 `;

@@ -66,7 +66,7 @@ const Questions = ({setSelectedPage,setGreyCover,me}) => {
     };
     return (
         <div className="homePage"  ref={wrapperRef} onScroll={handleScroll}>
-            <div style={{marginLeft: "20vw"}} className="homePageContent">
+            <div className="homePageContent">
                 <div className="feedQuestions">
                     {questions.map((question)=>(
                         <div className="feedQuestion"><QuestionCard me={me} question={question} feedCard={true} setGreyCover={setGreyCover}
@@ -75,7 +75,7 @@ const Questions = ({setSelectedPage,setGreyCover,me}) => {
                 </div>
                 <div className="topics">
                     <div className="topicHeader">
-                        <p>Topics</p>
+                        <p>Followed Topics</p>
                     </div>
                     <TopicWrapper topics={followedTopics}/>
                 </div>

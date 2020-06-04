@@ -42,8 +42,7 @@ const SignInPage = ({signUp, setSession,needConfirm,setForgotPassword}) => {
                    }) => (
                     <form onSubmit={handleSubmit}>
                         <div className="authWrapperHeader">
-                            <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
-                            <span>Singularity</span>
+                            <span>singularity</span>
                         </div>
                         <div className="signInWrapper">
                             <input
@@ -62,7 +61,7 @@ const SignInPage = ({signUp, setSession,needConfirm,setForgotPassword}) => {
                             <div className="signInHelpTool">
                                 <input type="checkbox" className="checkBox" value={rememberMe} onChange={()=>{setRememberMe(!rememberMe)}}/>
                                 <span id="rememberMe">Remember me</span>
-                                <span id="forgetPassword" onClick={()=>{
+                                <span style={{left:'310px'}} id="forgetPassword" onClick={()=>{
                                     if(values.userEmail === ''){
                                         alert("please enter an valid user email");
                                     }
@@ -75,8 +74,7 @@ const SignInPage = ({signUp, setSession,needConfirm,setForgotPassword}) => {
                         <div className="signInActions">
                             <Button type="submit" style={{background: "#E36100"}}><span>Login</span></Button>
                             <Button onClick={signUp}
-                                    style={{background: "#FFE9D9", marginTop: "20px", color: "#E36100"}}><span>Sign
-                                up</span></Button>
+                                    style={{background: "#FF9240", left:"83px"}}><span>Signup</span></Button>
                         </div>
 
                     </form>

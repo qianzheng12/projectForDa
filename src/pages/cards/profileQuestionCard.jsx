@@ -2,6 +2,7 @@ import React from "react";
 import Typography from "@material-ui/core/Typography";
 import TimeAgo from "react-timeago";
 import {Link} from "react-router-dom";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const ProfileQuestionCard = ({post,content,type, topics}) => {
     const {user}=post;
@@ -16,7 +17,9 @@ const ProfileQuestionCard = ({post,content,type, topics}) => {
                     })
                 }
                 </div>
-                <Link to={link}><h3>{post.title}</h3></Link>
+                <Tooltip title={post.title}>
+                    <Link to={link} ><h3>{post.title.length>60?post.title.substring(0,57)+"...":post.title}</h3></Link>
+                </Tooltip>
                 {user &&<div><p>{user.firstName+user.lastName} post on</p> </div>}
                 <p style={{marginLeft:'0.5%'}}><TimeAgo date={post.lastUpdated} live={false}/></p>
             </div>

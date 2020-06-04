@@ -44,7 +44,7 @@ const ProfileCard = ({userInformation,isMe,toggleVisitorMode,visitorMode,createO
     const sendMessage = () => {
         createOverviewMessage(userInformation);
         openMessageMenu(true);
-    }
+    };
     return (
         <div className="card">
             {uploadImageWindow &&

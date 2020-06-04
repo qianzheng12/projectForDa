@@ -66,7 +66,9 @@ const FeedAnswerCard = ({question, showAction, answer, profileBookmarkAnswer, bo
                                     <Link key={topic.id} to={"/topic/" + topic.id}><span>#{topic.name}</span></Link>)
                             })}
                         </div>}
-                        <Link to={`/question/${question.id}`}><h3>{question.title}</h3></Link>
+                        <Tooltip title={question.title}>
+                          <Link to={`/question/${question.id}`} ><h3>{question.title.length>70?question.title.substring(0,67)+"...":question.title}</h3></Link>
+                        </Tooltip>
                         {question.school && <img id="mySchoolLabel" src={require("../../resource/my_school_label.png")}/>}
                     </Fragment> :
                     <Fragment>

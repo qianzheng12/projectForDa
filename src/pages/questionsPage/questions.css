@@ -13,13 +13,12 @@
 .feedQuestions{
     position: relative;
     left: 0;
-    width: 604px;
+    width: 680px;
     height: 80%;
     float: left;
 }
 .feedQuestion{
-    width: 500px;
-    min-height: 250px;
+    width: 578px;
     padding:16px 51px 23px 51px;
     background: white;
     box-shadow: 0 0 3px #BCBCBC;

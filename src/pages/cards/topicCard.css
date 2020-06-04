@@ -34,7 +34,7 @@
     float: left;
     height: 50px;
     font-size: 20px;
-    width: 200px;
+    width: 300px;
     overflow: hidden;
     font-family: Calibri;
     font-style: italic;
@@ -121,7 +121,7 @@
 }
 .topicCardHeader h1{
     margin: 0;
-    height: 20px;
+    height: 30px;
 }
 .topicCardHeader input{
     float: left;

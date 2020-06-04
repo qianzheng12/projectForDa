@@ -104,8 +104,7 @@ const RegisterPageOne = ({submit,goToSign,selectedMajorYear, setSelectedMajorYea
                     <div className="registerForm">
 
                         <div className="authWrapperHeader">
-                            <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
-                            <span onClick={goToSign}>Singularity</span>
+                            <span onClick={goToSign}>singularity</span>
                         </div>
                         <div className="signUpInput">
                             <input required

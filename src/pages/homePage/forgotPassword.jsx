@@ -21,7 +21,7 @@ const ForgotPassword = ({userEmail,setSighIn}) => {
                 }
 
             );
-    }
+    };
     return (
         <div className="authWrapper">
                 <div className="changePasswordWrapper" id="changePasswordInHomePage">
@@ -46,7 +46,7 @@ const ForgotPassword = ({userEmail,setSighIn}) => {
                             }}
                             onSubmit={(values) => {
                                 Auth.forgotPasswordSubmit(userEmail, values.confirmationCode, values.newPassword)
-                                    .then(data =>
+                                    .then(() =>
                                     {
                                         alert("Password has been reset");
                                         setSighIn();

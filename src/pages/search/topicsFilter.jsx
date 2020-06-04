@@ -88,7 +88,7 @@ const TopicsWrapper = ({followedTopics,filterTopic}) => {
             <div className="topicFilters">
                 {topics.map( topic =>
                     (
-                        <div key={topic.id} className="topicFilter" style={{background:topic.selected?"rgba(255, 146, 64, 0.27)":"rgba(107, 107, 107, 0.2)"}} onClick={()=>{
+                        <div key={topic.id} className="topicFilter" style={{boxShadow:topic.selected?"0 0 0 2px #ff9240":null }} onClick={()=>{
                             if(topic.selected){
                                 unSelectTopic(topic);
                             }
@@ -96,7 +96,7 @@ const TopicsWrapper = ({followedTopics,filterTopic}) => {
                                 selectTopic(topic);
                             }
                         }}>
-                            <span>#{topic.name}</span>
+                            <span key={topic.id} style={{color:topic.selected?"#e36100":null}}>#{topic.name}</span>
                         </div>
                     ))
                 }

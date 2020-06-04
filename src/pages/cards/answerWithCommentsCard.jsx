@@ -33,7 +33,7 @@ const AnswerWithCommentsCard = ({answer, bookmarked,questionId }) => {
         upvoteStatus
     });
     const {commentContent, commentMode, setCommentContent, setCommentMode, emptyCommentError, setEmptyCommentError} = useCommentState();
-    const [commentHeight, setCommentHeight] = useState('40px');
+    const [commentHeight, setCommentHeight] = useState('30px');
     const [sendCommentMutation] = useMutation(SEND_COMMENT);
     const [bookmarkedIcon, setBookmarkedIcon] = useState(bookmarked);
     const [unBookmarkMutation] = useMutation(UN_BOOKMARK_ANSWER);
@@ -142,7 +142,7 @@ const AnswerWithCommentsCard = ({answer, bookmarked,questionId }) => {
                 </Button>
                 {emptyCommentError && <h2>Please enter comment before send.</h2>}
             </div>}
-            <div className="dividerBetweenAnswerAndComments"/>
+
             {comments && comments.length >= 1 && (
                 <div className="commentsForAnswer">
                     {comments.map(comment => (

@@ -16,8 +16,7 @@ const RegisterPageOne = ({submit,resendConfirmationCode,goToSign}) => {
     return (
         <div className="registerForm">
             <div className="authWrapperHeader">
-                <img width="24px" height="42px" src={require('../../resource/icon.png')}/>
-                <span onClick={goToSign}>Singularity</span>
+                <span onClick={goToSign}>singularity</span>
             </div>
             <div className="pinHints">
                 <p>Please check your email for the verification code and enter it below:</p>
@@ -27,9 +26,9 @@ const RegisterPageOne = ({submit,resendConfirmationCode,goToSign}) => {
                     length={6}
                     initialValue=""
                     type="numeric"
-                    style={{padding: '20px', paddingLeft:'20px'}}
+                    style={{padding: '20px 20px 20px 100px'}}
                     inputStyle={
-                        {borderColor: '#808080', width:'25px', height:'25px', marginLeft:"5px", borderRadius:"5px"}}
+                        {borderColor: '#808080', width:'25px', height:'25px', marginLeft:"10px",marginRight:"10px", borderRadius:"5px"}}
                     inputFocusStyle={{borderColor: 'black'}}
                     onComplete={(value) => {enteredPin = value}}
                 />

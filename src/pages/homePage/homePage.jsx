@@ -4,9 +4,9 @@ import './signIn.css';
 import './homePage.css'
 import {Auth} from 'aws-amplify';
 import SignInPage from "./signIn";
-import Button from "@material-ui/core/Button";
 import RegisterPage from "./register";
 import ForgotPassword from "./forgotPassword";
+import './background.css';
 
 /*
   Homepage is the page user going to see when they visit any webpage without valid Auth.
@@ -53,7 +53,22 @@ const HomePage = ({setSession}) => {
     }
 
     return (
-        <div style={{background: `url(${imgUrl})`}} className="signInPageWrapper">
+        <div  className="signInPageWrapper">
+            <div className="backgroundContainer">
+                <div className="whiteHalf">
+                </div>
+                <div className="orangeHalf">
+                    <h1>Global College Community</h1>
+                    <ul>
+                    </ul>
+                    <div className="logoContainer">
+                        <img src={require('../../resource/icon.png')}/>
+                    </div>
+                </div>
+
+            </div>
+
+
             {!signUpMode && <SignInPage setSession={setSession}
                                         needConfirm={
                                             (user) => {

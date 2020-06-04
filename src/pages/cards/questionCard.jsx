@@ -99,7 +99,9 @@ const QuestionCard = ({question, addAnswer, feedCard, followed,me}) => {
                         return (<Link key={topic.id} to={"/topic/"+topic.id}><span>#{topic.name}</span></Link>)
                     })}
                 </div>
-                <Link to={`/question/${question.id}`}><h3>{question.title}</h3></Link>
+
+                <h3>{question.title}</h3>
+
                 {user && <div><p>post by</p>
                     {question.anonymous ?<p style={{color: '#FF9240', marginLeft: '0.5%'}}>Anonymous user</p>
                         : <Link to={"/Profile/"+ user.id}><p style={{color: '#FF9240', marginLeft: '0.5%'}}>{user.firstName + ' ' + user.lastName}</p></Link>}
@@ -130,7 +132,7 @@ const QuestionCard = ({question, addAnswer, feedCard, followed,me}) => {
                                 {searchedUser.map(
                                     user=>(
                                         <div key={user.id} onClick={()=>sendInvitation(user.id)} className="briefMessageContent">
-                                            <img src={user.thumbnail}></img>
+                                            <img src={user.thumbnail}/>
                                             <div id="text">
                                                 <h1>{user.firstName} {user.lastName}</h1>
                                             </div>

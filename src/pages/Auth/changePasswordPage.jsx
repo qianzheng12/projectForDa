@@ -8,7 +8,7 @@ const ChangePasswordPage = () => {
 
     return (
         <div className="homePage">
-            <div className="homePageContent" style={{marginLeft: "20vw"}}>
+            <div className="homePageContent" >
                 <div className="changePasswordWrapper">
                     <div className="changePasswordHeader">
                         <h1>Change Password</h1>

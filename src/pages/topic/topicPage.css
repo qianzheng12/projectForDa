@@ -10,14 +10,14 @@
 .topicLeftContent{
     position: relative;
     left: 0;
-    width: 604px;
+    width: 680px;
     height: 80%;
     float: left;
 }
 .topicCard{
-    width: 500px;
+    width: 578px;
     min-height: 192px;
-    padding:0 51px 0 51px;
+    padding:16px 51px 23px 51px;
     background: white;
     box-shadow: 0 0 3px  #BCBCBC;
     margin-top:10px;
@@ -31,17 +31,19 @@
 .topicContentSearch svg{
     color: #333333;
     position: relative;
-    left: 430px;
+    float: right;
     width:20px;
     height: 20px;
-    top:15px;
+    top:12px;
+    margin-left: 10px;
 }
 .topicContentSearch input{
     position: relative;
     top:10px;
-    left: 440px;
+    float: right;
     width: 140px;
     height: 20px;
+    padding: 0 0 0 10px;
 }
 .editPart button{
     width: 161px;

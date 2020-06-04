@@ -67,7 +67,7 @@ const FeedAnswerPage = ({setSelectedPage}) => {
     };
     return (
         <div className="homePage" ref={wrapperRef} onScroll={handleScroll}>
-            <div className="homePageContent" style={{marginLeft: "20vw"}}>
+            <div className="homePageContent" >
                 <div className="feedAnswers">
                     {answers.map(answer => {
                             return (
@@ -80,7 +80,7 @@ const FeedAnswerPage = ({setSelectedPage}) => {
                 </div>
                 <div className="topics">
                     <div className="topicHeader">
-                        <p>Topics</p>
+                        <p>Followed Topics</p>
                     </div>
                     <TopicWrapper topics={followedTopics}/>
                 </div>

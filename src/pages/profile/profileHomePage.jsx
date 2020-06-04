@@ -67,7 +67,7 @@ const ProfileQuestions = ({visitorMode,processedData}) => {
                     </div>}
                     {addMode &&
                         <form onSubmit={handleAddNewItem}>
-                            <div className="addListArea" style={{height:"230px"}}>
+                            <div className="addListArea" style={{height:"210px"}}>
                                 <CloseIcon className="closeAddProfilePrompt" onClick={() => {
                                     setAddMode(false)
                                 }}/>

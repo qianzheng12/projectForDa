@@ -24,7 +24,7 @@ const CommentCard = ({comment}) => {
         id,
         upvoteStatus
     });
-    const [commentHeight, setCommentHeight] = useState('40px');
+    const [commentHeight, setCommentHeight] = useState('30px');
     const [repliesExpanded, setRepliesExpanded] = useState(false);
     const [createReply] = useMutation(CREATE_REPLY);
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
@@ -99,7 +99,9 @@ const CommentCard = ({comment}) => {
                         setCommentHeight(e.target.scrollHeight + 2 + 'px')
                     }
                 } placeholder="Write your reply"/>
-                <Button onClick={sendReply}>
+                <Button
+                    onClick={sendReply}
+                >
                     <span>{"Send"}</span>
                 </Button>
                 {emptyCommentError && <h2>Please enter reply before send.</h2>}

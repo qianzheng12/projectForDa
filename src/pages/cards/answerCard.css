@@ -2,7 +2,7 @@
 .answerUserInformation{
     position:relative;
     margin-top:10px;
-    height: 50px
+    height: 40px
 }
 .cardToolWrapper{
     float: right;
@@ -31,8 +31,8 @@
 .answerUserInformation img{
     position: relative;
     float: left;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 20px;
     border: 1px rgba(121, 121, 121, 0.38) solid;
 }
@@ -79,12 +79,12 @@
 
 }
 .answerContents{
-    min-height: 80px;
+    min-height: 50px;
     overflow: hidden;
     width: 100%;
     position: relative;
     word-wrap: break-word;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 
 }
 .answerContents pre{
@@ -139,12 +139,12 @@
     margin: 0 0 0 0;
     background: white;
     width: 96%;
-    min-height: 200px;
+    min-height: 100px;
 }
 .comment{
     width: 100%;
     min-height: 100px;
-    margin-top:30px;
+    margin-top:20px;
 }
 .commentContent{
     min-height: 50px;
@@ -166,10 +166,10 @@
     height: 30px;
 }
 .answerActions svg{
-    height: 25px;
+    height: 20px;
     margin-left: 10px;
-    width: 25px;
     margin-top:5px;
+    margin-bottom: 5px;
     float: left;
 }
 .answerActions svg:hover{
@@ -177,7 +177,7 @@
 }
 .rightAnswerActions{
     float: right;
-    width: 140px;
+    width: 118px;
     height: 100%;
 }
 .rightCommentActions{
@@ -191,11 +191,11 @@
 }
 .commentsIconWrapper{
     height: 50px;
-    width: 60px;
+    width: 50px;
     float: left;
 }
 .commentsIconWrapper span{
-    margin-left: 10px;
+    margin-left: 5px;
     position: relative;
     top:5px;
     color: black;

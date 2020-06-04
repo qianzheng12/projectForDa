@@ -139,7 +139,7 @@ const ChatWindow = ({user, myId, updateOverviewMessage, closeWindow,deleteWindow
             )
 
         }
-    }
+    };
     return (
         <div style={{bottom: isMessageBlockOpen ? "250px" : "0px"}} className="messageWindow">
             <div className="messageWindowHeader">

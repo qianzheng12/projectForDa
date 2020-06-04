@@ -5,18 +5,16 @@
     position: relative;
 }
 .questionAnswerContent{
-    width: 850px;
+    width: 875px;
     position: relative;
-    left:20%;
+    margin: auto;
 }
 
 .question{
-    width: 746px;
-    min-height: 280px;
+    width: 773px;
     padding:16px 51px 23px 51px;
     background: white;
-    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
-    border: 1px solid rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0 3px #BCBCBC;
     margin-top:10px;
     -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
     -moz-animation: fadein 1s; /* Firefox < 16 */
@@ -27,8 +25,7 @@
 .answers{
     min-height: 1200px;
     position: relative;
-    width: 746px;
-    top:20px;
+    width: 875px;
     margin-bottom: 50px;
 }
 .answers #loadingCircle{
@@ -39,13 +36,12 @@
 }
 .answer{
     position:relative;
-    width: 746px;
-    min-height: 250px;
+    width: 773px;
+    min-height: 150px;
     position: relative;
     padding:16px 51px 23px 51px;
     background: white;
-    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.36);
-    border: 1px solid rgba(0, 0, 0, 0.24);
+    box-shadow: 0 0 3px #BCBCBC;
     margin-top:10px;
 
     -webkit-animation: fadeinSlideUp 1.5s; /* Safari, Chrome and Opera > 12.1 */
@@ -73,13 +69,14 @@
 }
 
 .questionAnswerGap p{
-    position: relative;
+    position: absolute;
     left: 0;
     font-size: 15px;
     font-family: Calibri, serif;
     margin: 0;
-    top:20px;
+    top:50%;
     float: left;
+    transform: translate(0, -50%);
 }
 
 .sortingSelection{
@@ -90,37 +87,40 @@
 }
 .commentInputArea{
     min-height: 20px;
-    padding:15px 0 10px 40px;
-    width: 93%;
+    padding:10px 0 10px 0;
 
 }
 .commentInputArea textarea{
-    width: 80%;
-    padding:10px 0 10px 10px;
+    width: 85%;
+    padding:5px 0 5px 10px;
     resize: none;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    font-family: Calibri;
+
 }
 .commentInputArea button{
     float: right;
     width: 60px;
     position: relative;
-    right:5px;
-    top:5px;
-    height:35px;
+    height:30px;
     background: rgba(255, 146, 64, 0.24);
     text-align: center;
 }
 .commentInputArea span{
     position: relative;
-    color: rgb(255, 146, 64);
+    color: #E36100;
+    font-family: Calibri, serif;
+    bottom: 2px;
     font-weight: bold;
-    font-size: 0.9em;
+    text-transform: capitalize;
+    font-size: 15px;
+    text-decoration: none;
 }
 .dividerBetweenAnswerAndComments{
     margin-top:20px;
-    border-bottom: 1px solid rgba(73, 73, 73, 0.62);
+    border-bottom: 1px solid rgba(73, 73, 73, 0.2);
 }
 .commentInputArea h2{
     margin: 0;

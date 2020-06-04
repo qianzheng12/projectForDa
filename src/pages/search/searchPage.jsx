@@ -5,16 +5,18 @@ import {useLazyQuery, useQuery} from "@apollo/react-hooks";
 import {SEARCH_ANSWER, SEARCH_MORE_ANSWER} from "../graphQL/query";
 import FeedAnswerCard from "../cards/feedAnswerCard";
 import TopicsFilter from "./topicsFilter";
-import {USER_FOLLOWED_TOPICS} from "../graphQL/userQuery";
-
+import {SEARCH_TOPIC} from "../graphQL/topicQuery";
 
 const SearchPage = props => {
     const searchString = props.match.params.searchString;
     props.setSelectedPage("");
     const {bookMarkedAnswers} = props;
     const wrapperRef = useRef(null);
-    const [searchTopic, setSearchTopic] = useState([]);
-    const {loading, error, data} = useQuery(USER_FOLLOWED_TOPICS);
+    const [searchedTopic, setSearchedTopic] = useState([]);
+    const {loading, error, data} = useQuery(SEARCH_TOPIC,{
+        variables:{topicName:searchString},
+        fetchPolicy:"network-only"
+    });
     const [searchResult,setSearchResult] = useState([]);
     const [loadingMoreData, setLoadingMoreData] = useState(false);
     const [noMoreFetching] = useState(false);
@@ -25,37 +27,37 @@ const SearchPage = props => {
             setSearchResult(search);
         },
         fetchPolicy:"network-only"});
-    const [fetchMoreAnswerQuery,{data:mroeData}] = useLazyQuery(SEARCH_MORE_ANSWER, {
+    const [fetchMoreAnswerQuery,{data:moreData}] = useLazyQuery(SEARCH_MORE_ANSWER, {
         onCompleted: () => {
-            const { search} = mroeData;
+            const { search} = moreData;
             setLoadingMoreData(false);
             setSearchResult([...searchResult,...search]);
         },
         fetchPolicy:"network-only"});
-    const [refechQuestionQuery,{data:refetchedData}] = useLazyQuery(SEARCH_ANSWER, {
+    const [refetchQuestionQuery,{data:refetchedData}] = useLazyQuery(SEARCH_ANSWER, {
         onCompleted: () => {
             const { search} = refetchedData;
             setSearchResult(search);
         },
         fetchPolicy:"network-only"});
     useEffect(() => {
-        searchAnswerQuery({variables: {searchString, searchTopic,lastOffset: 0,limit:5}})
+        searchAnswerQuery({variables: {searchString, searchedTopic,lastOffset: 0,limit:5}})
     },[searchString]);
 
     if (loading) return <div/>;
     if (error) return <div/>;
 
-    const {me:{followedTopics}} =data;
+    const {searchTopic} =data;
     const filterTopic = (topicIDs) => {
-        setSearchTopic(topicIDs);
-        refechQuestionQuery({variables: {searchString, topicIDs:topicIDs,lastOffset: 0,limit:5}})
+        setSearchedTopic(topicIDs);
+        refetchQuestionQuery({variables: {searchString, topicIDs:topicIDs,lastOffset: 0,limit:5}})
     };
     const searchMore = () => {
         if(loadingMoreData){
             return;
         }
         setLoadingMoreData(true);
-        fetchMoreAnswerQuery({variables: {searchString, searchTopic:searchTopic,lastOffset: searchResult.length,limit:5}})
+        fetchMoreAnswerQuery({variables: {searchString, searchedTopic:searchedTopic,lastOffset: searchResult.length,limit:5}})
     };
     const handleScroll = () => {
         if(noMoreFetching){
@@ -66,6 +68,7 @@ const SearchPage = props => {
         searchMore()
     };
     const filteredOutQuestions = searchResult.filter(question => question.answers.length > 0);
+
     return (
         <div className="searchPageWrapper" ref={wrapperRef} onScroll={handleScroll}>
             <div className="searchPageContent">
@@ -91,9 +94,9 @@ const SearchPage = props => {
                 </div>
                 <div className="topics">
                     <div className="topicHeader">
-                        <p>Topics</p>
+                        <p>Relevant Topics</p>
                     </div>
-                    <TopicWrapper topics={followedTopics}/>
+                    <TopicWrapper topics={searchTopic}/>
                 </div>
             </div>
         </div>
