@@ -11,7 +11,7 @@ import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
 import { useHistory } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import Tooltip from "@material-ui/core/Tooltip";
-const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => {
+const PostPage = ({setPopUpWindowType,type,universityId}) => {
     const [topics,setTopics] = useState([]);
     const [currentTopicValue,setCurrentTopicValue] = useState("");
     const history = useHistory();
@@ -90,7 +90,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                                     return topic
                                 });
                                 showEmptyTopicError(false);
-                                toggleAskQuestionMode();
+                                setPopUpWindowType(undefined);
                             }
                         ).catch(
 
@@ -104,6 +104,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                handleChange,
                handleSubmit,
            }) => (
+            <div className="askQuestionPage">
             <form onSubmit={handleSubmit} autocomplete="off" onKeyDown={onKeyDown}>
                 <div>
                     <div className="askQuestionForm">
@@ -111,7 +112,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
                             {type === "question" &&<div> <h1>
                                 Add a question
                             </h1>
-                                <CloseIcon  className="askQuestionFormClose"  onClick={()=>toggleAskQuestionMode(!askQuestionMode)}/></div>}
+                                <CloseIcon  className="askQuestionFormClose"  onClick={()=>setPopUpWindowType(undefined)}/></div>}
                             {type === "article" &&<div> <h1>
                                 Write an article
                             </h1></div>}
@@ -201,6 +202,7 @@ const PostPage = ({askQuestionMode,toggleAskQuestionMode,type,universityId}) => 
 
                 </div>
             </form>
+            </div>
         )}
         </Formik>
     )

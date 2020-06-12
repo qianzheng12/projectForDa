@@ -8,8 +8,11 @@
     overflow: auto;
 }
 .homePageContent{
-    width: 875px;
+    width: 950px;
     height: 100%;
+    position: relative;
+    left:30px;
+    z-index: 1;
     margin: auto;
 }
 .feedAnswers {

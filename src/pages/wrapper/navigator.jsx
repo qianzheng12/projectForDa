@@ -11,7 +11,7 @@ import { Auth } from 'aws-amplify';
     Also provide the account icon for user to access the account management page and search ability.
 */
 
-const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
+const Navigator = ({setPopUpWindow,selectedPage,me}) => {
     const [toolWindowOpen, setToolWindowOpen] = useState(false);
     const signOut = () => {
         Auth.signOut()
@@ -34,12 +34,12 @@ const Navigator = ({setGreyOutCover,selectedPage,greyOutCover,me}) => {
                                 <li className={selectedPage==="Answer"?"activeLink":"unActiveLink"}><Link to='/Answer'>Answer</Link></li>
                                 <li className={selectedPage==="MySchool"?"activeLink":"unActiveLink"}><Link to='/MySchool'>My school</Link></li>
                                 <li className={selectedPage==="Services"?"activeLink":"unActiveLink"}><Link>Services</Link></li>
-                                <li className={selectedPage==="Tutoring"?"activeLink":"unActiveLink" }><Link>Tutoring</Link></li>
+                                <li className={selectedPage==="Tutoring"?"activeLink":"unActiveLink" }><Link to='/Tutoring'>Tutoring</Link></li>
                             </ol>
                         </div>
                         <SearchInput/>
                         <div className="askQuestionWrapper">
-                            <Button id="askQuestionButton" onClick={()=>setGreyOutCover(!greyOutCover)}>
+                            <Button id="askQuestionButton" onClick={()=>setPopUpWindow("postQuestion")}>
                                 <AddBoxOutlined/><span>Question</span>
                             </Button>
                             <Link to='/addArticle'>

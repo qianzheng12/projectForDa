@@ -15,15 +15,32 @@ import PostPage from "../posts/postPage";
 import {useQuery} from "@apollo/react-hooks";
 import {ME} from "../graphQL/userQuery";
 import ChangePasswordPage from "../Auth/changePasswordPage";
+import TutorialPage from "../tutorialPages/TutorialPage";
+import NeedTutoringPopUpPage from "../tutorialPages/popUps/NeedTutoringPopUpPage";
+import ICanTeachPopUpPage from "../tutorialPages/popUps/ICanTeachPopUpPage";
 
 const ContentWrapper = () => {
     const [selectedPage, setSelectedPage] = useState("Home");
     const {loading, error, data, refetch} = useQuery(ME,{fetchPolicy: "network-only"});
 
-    const [postPageMode, setPostPageMode] = useState(false);
+    const [popUpWindow, setPopUpWindow] = useState("iCanTeach");
     const [setGreyCover] = useState(false);
     const [messages, setMessages] = useState(JSON.parse(localStorage.getItem("messages")) || []);
     const [isMessageMenuOpen, openMessageMenu] = useState(false);
+
+    const setPopUpWindowType = (type) => {
+        if(popUpWindow === type){
+            setPopUpWindow(undefined);
+        }
+        else{
+            if(popUpWindow){
+                setPopUpWindow(undefined);
+            }
+            else{
+                setPopUpWindow(type);
+            }
+        }
+    }
     if (loading) return <div/>;
 
     if (error) {
@@ -43,24 +60,39 @@ const ContentWrapper = () => {
     const {me} = data;
     return (
         <div>
-            {postPageMode &&
+            {popUpWindow &&
             <div>
-                <div className="greyOutCoverBackground">
+                <div onClick={()=>setPopUpWindowType(undefined)} className="greyOutCoverBackground">
                 </div>
-                <div className="askQuestionPage">
-                    <PostPage askQuestionMode={postPageMode}
-                              toggleAskQuestionMode={setPostPageMode}
-                              universityId={me.university.id}
-                              type="question"/>
-                </div>
-            </div>}
+                {
+                    (popUpWindow === "postQuestion") &&
+                    <PostPage
+                        setPopUpWindowType={setPopUpWindowType}
+                        universityId={me.university.id}
+                        type="question"
+                    />
+                }
+                {
+                    (popUpWindow === "iNeedTutoring") &&
+                    <NeedTutoringPopUpPage/>
+                }
+                {
+                    (popUpWindow === "iCanTeach") &&
+                    <ICanTeachPopUpPage/>
+                }
+            </div>
+            }
 
 
-            <Navigator me={me} setGreyOutCover={setPostPageMode} selectedPage={selectedPage} greyOutCover={postPageMode}/>
+            <Navigator me={me} setPopUpWindow={setPopUpWindowType} selectedPage={selectedPage} greyOutCover={popUpWindow}/>
             <div className="contentWrapper">
+
 
                 <Route exact path="/">
                     <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
+                </Route>
+                <Route exact path="/Tutoring">
+                    <TutorialPage setSelectedPage={setSelectedPage} setPopUpWindowType={setPopUpWindowType} />
                 </Route>
                 <Route path="/MySchool">
                     <MySchoolPage setSelectedPage={setSelectedPage} bookMarkedAnswers={me.bookmarkedAnswers}/>

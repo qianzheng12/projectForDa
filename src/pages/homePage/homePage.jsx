@@ -60,6 +60,10 @@ const HomePage = ({setSession}) => {
                 <div className="orangeHalf">
                     <h1>Global College Community</h1>
                     <ul>
+                        <li><span>View your peer’s experiences</span></li>
+                        <li><span>Help your juniors</span></li>
+                        <li><span>Explore life’s problems together</span></li>
+                        <li><span>Pioneer your own path to share</span></li>
                     </ul>
                     <div className="logoContainer">
                         <img src={require('../../resource/icon.png')}/>

@@ -1,0 +1,124 @@
+.tutorialCard{
+    position: relative;
+    margin-top:10px;
+    padding:10px 20px 10px 20px;
+    height: 325px;
+    flex: 0 43%;
+    background: white;
+    box-shadow: 0 0 3px #BCBCBC;
+}
+.tutorialTopics{
+
+}
+
+.tutorialTopics span{
+    color: rgba(51, 51, 51, 0.53);
+    font-size:1em;
+    margin-right: 10px;
+
+}
+
+.tutorialTopics a{
+    list-style-type:none;
+    text-decoration:none;
+    overflow: hidden;
+    font-size: 15px;
+    font-weight: lighter;
+    font-family: Calibri;
+}
+
+.tutorialPostHeader {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+
+.tutorialPostHeader h1{
+    font-family: Calibri;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.tutorialPriceTag{
+    width: 44px;
+    height: 20px;
+    border-radius: 6px;
+    border:1px solid #FF9240;
+    position: relative;
+    top:12px;
+    left:10px;
+    padding-top:4px;
+    font-family: Calibri;
+    font-size: 15px;
+    color: #FF9240;
+    text-align: center;
+
+}
+
+.tutorialPostDescription{
+    position: relative;
+    margin-top:30px;
+    width: 100%;
+    height: 125px;
+}
+.tutorialPostDescription p{
+    margin:0;
+}
+.tutorialPostTime{
+    height: 30px;
+    position: relative;
+    text-align: right;
+    font-size: 14px;
+    font-family: Calibri;
+    color: #6B6B6B;
+}
+.tutorialPostFooter{
+    position: relative;
+    height: 50px;
+    border-top: 1px solid #E4E4E4;
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    padding-top:20px;
+}
+
+.tutorialPostFooter button{
+    background: rgba(255, 146, 64, 0.27);
+    border-radius: 6px;
+    height: 30px;
+    width: 65px;
+    font-family: Calibri;
+    font-size: 15px;
+    color: #E36100;
+    font-weight: bold;
+}
+.tutorialPostUser{
+    width: 80%;
+}
+.tutorialPostUser img{
+    position: relative;
+    float: left;
+    width: 30px;
+    top:5px;
+    height: 30px;
+    border-radius: 20px;
+    border: 1px rgba(121, 121, 121, 0.38) solid;
+}
+.tutorialPostUserDetail{
+    width: 70%;
+    float:left;
+    margin-left:5px;
+}
+.tutorialPostUserDetail span{
+    position: relative;
+    font-weight: bold;
+    font-size: 15px;
+    font-family: Calibri, serif;
+}
+.tutorialPostUserDetail h2{
+    margin: 0;
+    font-family: Calibri;
+    font-size: 15px;
+    font-weight: normal;
+    color: #999999;
+}
