@@ -9,8 +9,8 @@
     min-height: 156px;
 }
 .TutorialPopUpPageOneWrapper{
-    height: 308px;
-    width: 100%;
+    min-height: 328px;
+    width: 352px;
     align-content: center;
     padding:27px 46px 27px 46px
 }
@@ -19,6 +19,9 @@
     width: 352px;
     align-content: center;
     padding:27px 46px 27px 46px
+}
+.NeedTutorialPageTwoWrapper ul{
+    padding-left: 0;
 }
 .TutoringPopUpWrapper h1{
     margin:0;
@@ -33,11 +36,11 @@
     font-size: 15px;
 }
 
-.TutoringPopUpWrapper ul{
+.TutorialPopUpPageOneWrapper ul{
     padding-left: 20px;
-    margin-top:30px;
+    margin-top:5px;
 }
-.TutoringPopUpWrapper li{
+.TutorialPopUpPageOneWrapper li{
     font-family: Calibri,serif;
     font-size:15px;
 }
@@ -45,9 +48,9 @@
     height: 35px;
     position: relative;
     width: 280px;
+    display: block;
     background: rgba(255, 146, 64, 0.2);
-    margin-left:35px;
-    margin-top:10px;
+    margin:10px auto 10px auto;
     color: #e36100;
     font-family: Calibri,serif;
     font-size: 18px;
@@ -60,6 +63,7 @@
 .TutoringPopUpWrapper h2{
     font-size: 15px;
     color: #6B6B6B;
+    width: 360px;
     font-family: Calibri,serif;
     font-weight: normal;
 }

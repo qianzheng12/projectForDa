@@ -18,13 +18,15 @@ import ChangePasswordPage from "../Auth/changePasswordPage";
 import TutorialPage from "../tutorialPages/TutorialPage";
 import NeedTutoringPopUpPage from "../tutorialPages/popUps/NeedTutoringPopUpPage";
 import ICanTeachPopUpPage from "../tutorialPages/popUps/ICanTeachPopUpPage";
+import TutoringApplicationPopUp from "../tutorialPages/popUps/TutoringApplicationPopUp";
 
 const ContentWrapper = () => {
     const [selectedPage, setSelectedPage] = useState("Home");
     const {loading, error, data, refetch} = useQuery(ME,{fetchPolicy: "network-only"});
 
-    const [popUpWindow, setPopUpWindow] = useState("iCanTeach");
+    const [popUpWindow, setPopUpWindow] = useState(undefined);
     const [setGreyCover] = useState(false);
+    const [applyTutorPostId, setApplyTutorPostId] = useState();
     const [messages, setMessages] = useState(JSON.parse(localStorage.getItem("messages")) || []);
     const [isMessageMenuOpen, openMessageMenu] = useState(false);
 
@@ -40,7 +42,7 @@ const ContentWrapper = () => {
                 setPopUpWindow(type);
             }
         }
-    }
+    };
     if (loading) return <div/>;
 
     if (error) {
@@ -78,7 +80,11 @@ const ContentWrapper = () => {
                 }
                 {
                     (popUpWindow === "iCanTeach") &&
-                    <ICanTeachPopUpPage/>
+                    <ICanTeachPopUpPage tutorCard={me.tutorCard}/>
+                }
+                {
+                    (popUpWindow === "applyTutoringPost") &&
+                    <TutoringApplicationPopUp postID={applyTutorPostId} setPopUpWindow={setPopUpWindow}/>
                 }
             </div>
             }
@@ -92,7 +98,7 @@ const ContentWrapper = () => {
                     <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
                 </Route>
                 <Route exact path="/Tutoring">
-                    <TutorialPage setSelectedPage={setSelectedPage} setPopUpWindowType={setPopUpWindowType} />
+                    <TutorialPage setSelectedPage={setSelectedPage} setPopUpWindowType={setPopUpWindowType} setApplyTutorPostId={setApplyTutorPostId}/>
                 </Route>
                 <Route path="/MySchool">
                     <MySchoolPage setSelectedPage={setSelectedPage} bookMarkedAnswers={me.bookmarkedAnswers}/>

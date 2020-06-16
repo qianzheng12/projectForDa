@@ -1,0 +1,43 @@
+.tutoringApplicationWrapper{
+    min-height: 300px;
+    width:88%;
+    display: block;
+    padding:20px 6% 27px 6%
+}
+.tutoringApplicationHeader{
+    height: 276px;
+    border-bottom: 1px solid #6B6B6B;
+}
+.tutoringApplicationHeader h1{
+    margin-top:30px;
+}
+
+.tutoringApplicationWrapper h2{
+    font-size: 18px;
+    color: black;
+}
+
+.tutoringDetailItem{
+    display: flex;
+    min-height: 20px;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.tutoringDetailItem h1{
+    font-size: 15px;
+    color: #797979;
+    margin: 0;
+}
+.tutoringDetailItem p{
+    text-align: right;
+    margin: 0;
+    width: 40%;
+}
+.tutoringApplicationWrapper button{
+    width: 281px;
+    display: block;
+
+    margin: auto;
+}

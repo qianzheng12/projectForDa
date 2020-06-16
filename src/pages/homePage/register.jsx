@@ -18,7 +18,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
     const [page, setPage] = useState(signUpStage);
     const [currentUserId, setCurrentUserId] = useState("");
     const [client,setClient] = useState();
-    const [selectedMajorYear, setSelectedMajorYear] = useState(degreeYearRange[0]);
+    const [selectedMajorYear, setSelectedMajorYear] = useState({value:degreeYearRange[0],label:degreeYearRange[0]});
     const submit = (email, password,firstName,lastName,university,major) => {
         Auth.signUp({
             username: email,
@@ -31,7 +31,7 @@ const RegisterPage = ({signUpStage=1,userEmail, setCurrentUserEmail,userPassword
                 "custom:education":JSON.stringify({
                     school:university,
                     major:major,
-                    year:selectedMajorYear.value
+                    year:selectedMajorYear.value || selectedMajorYear
                 })
 
             },

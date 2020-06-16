@@ -1,12 +1,10 @@
 import React, {useState} from 'react'
 import Button from "@material-ui/core/Button";
-import NeedTutoringPageTwo from "./NeedTutoringPageTwo";
-import NeedTutoringPageThree from "./NeedTutoringPageThree";
 import ICanTeachPageTwo from "./ICanTeachPageTwo";
 import './ICanTeachPopUpPage.css'
-const ICanTeachPopUpPage = () => {
-    const [pageNumber, setPageNumber] = useState(1);
-    const [windowTopPosition, setWindowTopPosition] = useState('200px');
+const ICanTeachPopUpPage = ({tutorCard}) => {
+    const [pageNumber, setPageNumber] = useState(tutorCard?3:1);
+    const [windowTopPosition, setWindowTopPosition] = useState('100px');
     return (
         <div className="TutoringPopUpWrapper" style={{width:"345px", top:windowTopPosition}}>
             {pageNumber === 1 &&

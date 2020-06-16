@@ -2,7 +2,7 @@
     position: relative;
     margin-top:10px;
     padding:10px 20px 10px 20px;
-    height: 325px;
+    min-height: 325px;
     flex: 0 43%;
     background: white;
     box-shadow: 0 0 3px #BCBCBC;
@@ -40,14 +40,14 @@
 }
 
 .tutorialPriceTag{
-    width: 44px;
+    min-width: 44px;
     height: 20px;
     border-radius: 6px;
     border:1px solid #FF9240;
     position: relative;
     top:12px;
     left:10px;
-    padding-top:4px;
+    padding:4px 5px 4px 5px;
     font-family: Calibri;
     font-size: 15px;
     color: #FF9240;
@@ -74,7 +74,7 @@
 }
 .tutorialPostFooter{
     position: relative;
-    height: 50px;
+    min-height: 80px;
     border-top: 1px solid #E4E4E4;
     width:100%;
     display: flex;
@@ -87,6 +87,7 @@
     border-radius: 6px;
     height: 30px;
     width: 65px;
+    top:20px;
     font-family: Calibri;
     font-size: 15px;
     color: #E36100;
@@ -107,6 +108,7 @@
 .tutorialPostUserDetail{
     width: 70%;
     float:left;
+    min-height: 70px;
     margin-left:5px;
 }
 .tutorialPostUserDetail span{

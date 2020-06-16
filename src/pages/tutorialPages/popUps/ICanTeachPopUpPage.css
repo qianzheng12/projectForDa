@@ -6,7 +6,7 @@
 }
 
 .ICanTeachPageOneWrapper{
-    height: 388px;
+    height: 368px;
     width: 270px;
     align-content: center;
     padding:27px 26px 27px 26px
@@ -17,4 +17,12 @@
     width: 270px;
     align-content: center;
     padding:27px 26px 27px 26px
+}
+.ICanTeachPageOneWrapper ul{
+    padding-left: 20px;
+    margin-top:5px;
+}
+.ICanTeachPageOneWrapper li{
+    font-family: Calibri,serif;
+    font-size:15px;
 }

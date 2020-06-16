@@ -22,6 +22,9 @@ export const ME = gql`
             followedQuestions{
                 id
             }
+            tutorCard{
+                id
+            }
         }
     }
 `;

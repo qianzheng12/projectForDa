@@ -2,6 +2,8 @@ Array.range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + 
 const yearRange = Array.range(1965,2009).reverse();
 export const educationFromYearRangeOption = Array.range(1965,2020).reverse();
 export const educationToYearRangeOption = Array.range(1965,2030).reverse();
+export const tutorialPostPriceRange = ["Negotiable","$0-$10","$10-$50","$50-$100","$100-$150",
+    "$150-$200","$200-$300","$300-$400","$400-$500"];
 export const educationDegree = [{number:1,value:"High school diploma"},{number:2,value:"Bachelor's degree"},{number:3,value:"Master's degree"},{number:4,value:"PhD"},{number:5,value:"MD"}];
 export const standardDays = Array.range(1,32);
 export const monthRange = [{number:1,value:"January"}, {number:2,value:"February"}, {number:3,value:"March"},

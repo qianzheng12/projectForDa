@@ -1,40 +1,20 @@
 import React, {useState} from 'react'
 import './postPage.css';
 import CloseIcon from '@material-ui/icons/Close';
-import {useLazyQuery, useMutation} from '@apollo/react-hooks';
-import {ADD_TOPIC_TO_QUESTION, POST_QUESTION, CREATE_TOPIC, POST_ARTICLE} from '../graphQL/mutations';
+import {useMutation} from '@apollo/react-hooks';
+import {ADD_TOPIC_TO_QUESTION, POST_QUESTION, POST_ARTICLE} from '../graphQL/mutations';
 import {Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import TextInputArea from "./textInputArea";
 import SearchTopicDropDown from "../search/searchTopicDropDown";
-import {SEARCH_TOPIC_BY_NAME} from "../graphQL/topicQuery";
 import { useHistory } from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import Tooltip from "@material-ui/core/Tooltip";
+import {useTopic} from "../hooks/searchTopicState";
 const PostPage = ({setPopUpWindowType,type,universityId}) => {
-    const [topics,setTopics] = useState([]);
-    const [currentTopicValue,setCurrentTopicValue] = useState("");
     const history = useHistory();
-    const [checkTopicName, { data }] = useLazyQuery(SEARCH_TOPIC_BY_NAME,
-        {onCompleted: () => {
-            const topic = data.getTopicByName;
-            if(topic){
-                chooseTopic(topic.name,topic.id);
-            }
-            else{
-                createTopic({variables: {topicName:currentTopicValue}}).then(
-                    (result)=>{
-                        const {createTopic} = result.data;
-                        chooseTopic(createTopic.name,createTopic.id);
-                    }
-                )
-            }
-        },
-            fetchPolicy:"network-only"
-        });
-
+    const {topics, currentTopicValue, setCurrentTopicValue, chooseTopic, addNewTopic} = useTopic();
     const [askQuestion] = useMutation(POST_QUESTION);
-    const [createTopic] = useMutation(CREATE_TOPIC);
     const [postArticle] = useMutation(POST_ARTICLE);
     const [addTopicToQuestion] = useMutation(ADD_TOPIC_TO_QUESTION);
     const [topicEmptyError, showEmptyTopicError] = useState(false);
@@ -44,23 +24,6 @@ const PostPage = ({setPopUpWindowType,type,universityId}) => {
             keyEvent.preventDefault();
         }
     }
-
-    const chooseTopic = (topicName,topicId) => {
-        const topic = {topicName,topicId};
-        if(!topics.some(i => (i.topicName === topicName))){
-            const newTopicList = topics.concat(topic);
-            setTopics(newTopicList);
-        }
-
-        setCurrentTopicValue("");
-    };
-
-    const addNewTopic = (topic) => {
-        checkTopicName(
-            {
-                variables:{topicName:topic}
-            });
-    };
 
     return (
         <Formik
@@ -104,7 +67,7 @@ const PostPage = ({setPopUpWindowType,type,universityId}) => {
                handleChange,
                handleSubmit,
            }) => (
-            <div className="askQuestionPage">
+            <div className="askQuestionPage" style={{top:(type==="article")?'0px':'80px',left:(type==="article")?'0px':'25%'}}>
             <form onSubmit={handleSubmit} autocomplete="off" onKeyDown={onKeyDown}>
                 <div>
                     <div className="askQuestionForm">

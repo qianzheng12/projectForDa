@@ -1,15 +1,15 @@
 import React from 'react'
 import TutorialPostCard from "../TutorialPostCard";
 
-const NewTutorialPostsPage = () => {
-
+const NewTutorialPostsPage = ({posts, setPopUpWindowType}) => {
+    console.log(posts)
     return (
         <div className="tutorialPosts">
-        {[1,2,3,4,5].map(()=>(
-            <TutorialPostCard/>
-        ))}
-
-    </div>)
+            {posts.map(post=>(
+                <TutorialPostCard post={post} setPopUpWindowType={setPopUpWindowType}/>
+            ))}
+        </div>
+    )
 }
 
 export default NewTutorialPostsPage;
