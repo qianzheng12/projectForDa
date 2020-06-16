@@ -26,7 +26,7 @@ const ContentWrapper = () => {
 
     const [popUpWindow, setPopUpWindow] = useState(undefined);
     const [setGreyCover] = useState(false);
-    const [applyTutorPostId, setApplyTutorPostId] = useState();
+    const [applyTutorPost, setApplyTutorPost] = useState();
     const [messages, setMessages] = useState(JSON.parse(localStorage.getItem("messages")) || []);
     const [isMessageMenuOpen, openMessageMenu] = useState(false);
 
@@ -76,7 +76,7 @@ const ContentWrapper = () => {
                 }
                 {
                     (popUpWindow === "iNeedTutoring") &&
-                    <NeedTutoringPopUpPage/>
+                    <NeedTutoringPopUpPage  setPopUpWindow={setPopUpWindow}/>
                 }
                 {
                     (popUpWindow === "iCanTeach") &&
@@ -84,7 +84,7 @@ const ContentWrapper = () => {
                 }
                 {
                     (popUpWindow === "applyTutoringPost") &&
-                    <TutoringApplicationPopUp postID={applyTutorPostId} setPopUpWindow={setPopUpWindow}/>
+                    <TutoringApplicationPopUp setPopUpWindow={setPopUpWindow} tutorPost={applyTutorPost}/>
                 }
             </div>
             }
@@ -98,7 +98,7 @@ const ContentWrapper = () => {
                     <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
                 </Route>
                 <Route exact path="/Tutoring">
-                    <TutorialPage setSelectedPage={setSelectedPage} setPopUpWindowType={setPopUpWindowType} setApplyTutorPostId={setApplyTutorPostId}/>
+                    <TutorialPage setSelectedPage={setSelectedPage} setPopUpWindowType={setPopUpWindowType} setApplyTutorPost={setApplyTutorPost} me={me}/>
                 </Route>
                 <Route path="/MySchool">
                     <MySchoolPage setSelectedPage={setSelectedPage} bookMarkedAnswers={me.bookmarkedAnswers}/>

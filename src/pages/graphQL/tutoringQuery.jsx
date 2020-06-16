@@ -7,7 +7,12 @@ export const GET_TUTORING_POSTS = gql`query
         title,
         fee,
         lastUpdated,
+        keyConcepts,
+        timeAvailability,
+        finishBy,
+        materials,
         user{
+            id,
             lastName,
             firstName,
             major,
@@ -30,6 +35,48 @@ export const GET_TUTORING_POSTS = gql`query
         tutorCard{
             id
         }
+        myTutorPosts{
+            id,
+            title,
+            fee,
+            lastUpdated,
+            keyConcepts,
+            timeAvailability,
+            finishBy,
+            materials,
+            user{
+                id,
+                lastName,
+                firstName,
+                major,
+                year,
+            }
+            applications{
+                id
+                university{
+                    id
+                    name
+                }
+                major,
+                year,
+                lastName
+                firstName
+                tutorCard{
+                    id
+                    year
+                    major
+                    skills
+                    timeAvailability
+                    preferredSoftware
+                    details
+                }
+            }
+            preferredSoftware,
+            description,
+            topics{
+                id,name
+            }
+        }
     }
 }
 `;
@@ -42,6 +89,7 @@ export const SEARCH_TUTORING_POSTS = gql`query($searchString:String)
         fee,
         lastUpdated,
         user{
+            id,
             lastName,
             firstName,
             major,
@@ -54,5 +102,14 @@ export const SEARCH_TUTORING_POSTS = gql`query($searchString:String)
         }
     }
 
+}
+`;
+
+export const MY_POSTS = gql`query
+{
+    me{
+        id
+
+    }
 }
 `;

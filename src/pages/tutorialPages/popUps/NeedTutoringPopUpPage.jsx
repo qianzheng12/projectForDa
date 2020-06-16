@@ -6,7 +6,7 @@ import NeedTutoringPageThree from "./NeedTutoringPageThree";
 import {useMutation} from "@apollo/react-hooks";
 import {POST_TUTORING_POST} from "../../graphQL/tutoringMutation";
 
-const NeedTutoringPopUpPage = () => {
+const NeedTutoringPopUpPage = ({setPopUpWindow}) => {
     const [pageNumber, setPageNumber] = useState(1);
     const [tutorPostValues, setTutorPostValues] = useState();
     const [postTutoringPost] = useMutation(POST_TUTORING_POST);
@@ -18,7 +18,9 @@ const NeedTutoringPopUpPage = () => {
 
     const submitTutoringPost =  (values) => {
         const tutoringFormFields =  {...tutorPostValues, ...values };
-        postTutoringPost({ variables:tutoringFormFields})
+        postTutoringPost({ variables:tutoringFormFields}).then(()=>{
+            setPopUpWindow(undefined)
+        })
     };
     return (
         <div className="TutoringPopUpWrapper">

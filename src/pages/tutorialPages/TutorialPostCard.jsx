@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import TimeAgo from "react-timeago";
 
 
-const TutorialPostCard = ({setPopUpWindowType, post}) => {
+const TutorialPostCard = ({setPopUpWindowType, post, myPost}) => {
     const { topics, title, fee, description, lastUpdated, user} = post;
     return (
         <div className="tutorialCard">
@@ -38,7 +38,7 @@ const TutorialPostCard = ({setPopUpWindowType, post}) => {
                     </div>
 
                 </div>
-                <Button onClick={()=>setPopUpWindowType(post.id)}>Apply</Button>
+                {!myPost &&<Button onClick={()=>setPopUpWindowType(post)}>Apply</Button>}
             </div>
         </div>
     )

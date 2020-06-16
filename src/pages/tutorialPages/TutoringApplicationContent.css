@@ -5,16 +5,31 @@
     padding:20px 6% 27px 6%
 }
 .tutoringApplicationHeader{
-    height: 276px;
+    min-height: 176px;
     border-bottom: 1px solid #6B6B6B;
 }
+.tutoringApplicationBottomPart h2{
+    font-size: 18px;
+    font-family: Calibri,serif;
+    font-weight: normal;
+}
+.tutoringApplicationHeader p{
+    margin-top:10px;
+    font-family: Calibri, serif;
+    font-size: 15px;
+    font-weight: normal;
+}
 .tutoringApplicationHeader h1{
-    margin-top:30px;
+    margin-top:10px;
+    font-family: Calibri, serif;
+    font-size: 20px;
+    font-weight: normal;
 }
 
-.tutoringApplicationWrapper h2{
+.tutoringApplicationHeader h2{
     font-size: 18px;
     color: black;
+    font-weight: normal;
 }
 
 .tutoringDetailItem{
@@ -25,19 +40,21 @@
     margin-bottom: 10px;
 }
 
-.tutoringDetailItem h1{
+.tutoringDetailItem h3{
     font-size: 15px;
+    font-weight: normal;
     color: #797979;
     margin: 0;
 }
 .tutoringDetailItem p{
     text-align: right;
     margin: 0;
+    font-family: Calibri, serif;
+    font-size: 15px;
     width: 40%;
 }
 .tutoringApplicationWrapper button{
     width: 281px;
     display: block;
-
     margin: auto;
 }

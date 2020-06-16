@@ -2,7 +2,7 @@ import React, {Fragment, useState} from 'react'
 import {Formik} from "formik";
 import Button from "@material-ui/core/Button";
 import Dropdown from "react-dropdown";
-import {degreeYearRange, tutorialPostPriceRange} from "../../utility/dateFixture";
+import {tutorialPostPriceRange} from "../../utility/dateFixture";
 
 const NeedTutoringPageThree = ({submitForm}) =>  {
     const [tutorPrice, setTutorPrice] = useState({label:tutorialPostPriceRange[0],value:tutorialPostPriceRange[0]});
@@ -62,6 +62,6 @@ const NeedTutoringPageThree = ({submitForm}) =>  {
             </Formik>
 
         </Fragment>)
-}
+};
 
 export default NeedTutoringPageThree;

@@ -109,7 +109,16 @@
     width: 70%;
     float:left;
     min-height: 70px;
-    margin-left:5px;
+    margin-left:10px;
+}
+.tutorialPostUserDetail p{
+    font-size: 15px;
+    font-family: Calibri,serif;
+    margin: 0 0 0 10px;
+    color: #6B6B6B;
+    float: left;
+    overflow: hidden;
+    width: 80%;
 }
 .tutorialPostUserDetail span{
     position: relative;
