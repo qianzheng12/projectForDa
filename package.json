@@ -51,7 +51,8 @@
     "react-tooltip": "^3.11.2",
     "react-transition-group": "^4.3.0",
     "react-truncate": "^2.4.0",
-    "react-truncate-html": "^0.1.7"
+    "react-truncate-html": "^0.1.7",
+    "standard": "^14.3.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -75,5 +76,7 @@
       "last 1 Edge version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  }
 }

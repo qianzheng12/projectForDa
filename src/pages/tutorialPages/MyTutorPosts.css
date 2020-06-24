@@ -1,11 +1,12 @@
-.MyTutorPostsWrapper{
+.MyTutorPostsWrapper {
     width: 100%;
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
 }
-.MyTutorPostCardWrapper{
-    margin-top:20px;
+
+.MyTutorPostCardWrapper {
+    margin-top: 20px;
     width: 580px;
     min-height: 270px;
     background: white;
@@ -13,67 +14,68 @@
     padding: 15px 50px 15px 50px
 }
 
-.tutorsApplicationWrapper{
+.tutorsApplicationWrapper {
     min-height: 100px;
-    width:88%;
+    width: 88%;
     display: block;
-    padding:20px 6% 27px 6%
+    padding: 20px 6% 27px 6%
 }
 
-.tutorsApplicationWrapper #lineBreak{
+.tutorsApplicationWrapper #lineBreak {
     width: 100%;
-    border-bottom: 1px solid #6B6B6B;
+    border-bottom: 1px solid #E4E4E4;
 }
-.tutorsApplicationWrapper h1{
-    margin-top:20px;
+
+.tutorsApplicationWrapper h1 {
+    margin-top: 20px;
     font-size: 18px;
-    font-family: Calibri,serif;
+    font-family: Calibri, serif;
     font-weight: normal;
 }
 
-.tutorApplicationCardHeader{
+.tutorApplicationCardHeader {
     height: 60px;
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.tutorApplicationCardHeader svg{
+.tutorApplicationCardHeader svg {
     width: 25px;
     height: 25px;
     position: relative;
-    top:12px;
+    top: 12px;
 }
 
-.tutorApplicationCardHeader svg:hover{
+.tutorApplicationCardHeader svg:hover {
     cursor: pointer;
 }
 
 .tutoringApplicationCardFooter {
     height: 40px;
     display: flex;
-    margin-top:10px;
+    margin-top: 10px;
     justify-content: space-between;
     width: 100%;
 }
 
-.tutoringApplicationCardFooter button{
+.tutoringApplicationCardFooter button {
     border-radius: 6px;
     font-size: 15px;
-    font-family: Calibri,serif;
+    font-family: Calibri, serif;
     height: 30px;
     text-transform: none;
 
 }
 
-.tutoringApplicationCardFooter #deal{
+.tutoringApplicationCardFooter #deal {
     background: rgba(255, 146, 64, 0.2);
     color: #FF9240;
     width: 115px;
 
 }
 
-.tutoringApplicationCardFooter #message{
+.tutoringApplicationCardFooter #message {
     border: 1px solid #FF9240;
     color: #FF9240;
     width: 95px;

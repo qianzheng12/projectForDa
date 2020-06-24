@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import './messageMenu.css'
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import {useLazyQuery} from "@apollo/react-hooks";
@@ -7,9 +7,10 @@ import ChatWindow from "./ChatWindow";
 import CloseIcon from '@material-ui/icons/Close';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
-const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageMenu,createOverviewMessage}) => {
+
+const MessageBlock = ({me, messages, setMessages, isMessageMenuOpen, openMessageMenu, createOverviewMessage, messageWindows, setMessageWindows}) => {
     let timer;
-    const [messageWindows, setMessageWindows] = useState([]);
+
     const [unReadAmount, setUnreadAmount] = useState(0);
     const [searchUserMode, setSearchUserMode] = useState(false);
     const [searchedUser, setSearchedUser] = useState([]);
@@ -32,15 +33,24 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
                         if (oldMessageOverview.user.id === user.id) {
                             isNew = false;
 
-                            return {...oldMessageOverview, overviewMessage: content,user, unread:  user.muted ? 0 : count}
+                            return {
+                                ...oldMessageOverview,
+                                overviewMessage: content,
+                                user,
+                                unread: user.muted ? 0 : count
+                            }
                         }
                         return oldMessageOverview;
                     });
                 }
                 if (isNew) {
-                    updatedOldMessage = [...updatedOldMessage, {user, overviewMessage: content, unread: user.muted ? 0 : count}];
+                    updatedOldMessage = [...updatedOldMessage, {
+                        user,
+                        overviewMessage: content,
+                        unread: user.muted ? 0 : count
+                    }];
                 }
-                if(!user.muted){
+                if (!user.muted) {
                     unReads += count;
                 }
 
@@ -51,25 +61,20 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
         }
     });
 
-    const [searchUserQuery, {data:userData}] = useLazyQuery(SEARCH_USER, {
+    const [searchUserQuery, {data: userData}] = useLazyQuery(SEARCH_USER, {
         onCompleted: () => {
             const {searchUser} = userData;
             setSearchedUser(searchUser)
         }
     });
     const searchUser = (input) => {
-        if(input.length === ""){
+        if (input.length === "") {
             setSearchedUser([]);
-        }
-        else{
-            searchUserQuery({variables:{name:input}});
+        } else {
+            searchUserQuery({variables: {name: input}});
         }
 
     };
-
-
-
-
 
     useEffect(() => {
         getMessageOverviewQuery();
@@ -139,7 +144,7 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
                                 </div>}
                         </div> :
                         <div id="toggleWindowPart">
-                            <input placeholder={"Search user"} onChange={(e)=>searchUser(e.target.value)}/>
+                            <input placeholder={"Search user"} onChange={(e) => searchUser(e.target.value)}/>
                             <SearchIcon/>
                         </div>
                     }
@@ -155,40 +160,43 @@ const MessageBlock = ({me, messages, setMessages,isMessageMenuOpen, openMessageM
 
                 <div className="messageWindowContentWrapper">
                     {searchUserMode &&
-                        <div className="messageSearchUsersWrapper">
-                            <div className="messageWindowSearchModeBackground" style={{opacity:"60%"}}/>
-                            <div className="messageSearchUsersResults">
-                            {searchedUser.map ( user=> (
+                    <div className="messageSearchUsersWrapper">
+                        <div className="messageWindowSearchModeBackground" style={{opacity: "60%"}}/>
+                        <div className="messageSearchUsersResults">
+                            {searchedUser.map(user => (
                                 <div key={user.id} className="briefMessageContent"
-                                     onClick={() => {createMessageWindow(user); createOverviewMessage (user)}}>
+                                     onClick={() => {
+                                         createMessageWindow(user);
+                                         createOverviewMessage(user)
+                                     }}>
                                     <img src={user.thumbnail}></img>
                                     <div id="text">
                                         <h1>{user.firstName} {user.lastName}</h1>
                                     </div>
                                 </div>
                             ))}
-                            </div>
-                        </div>}
-                        <div className="messageBriefWrapper">
-                            {messages.map((messageBrief, id) => {
-                                    const {unread, user} = messageBrief;
-                                    return (
-                                        <div key={id} className="briefMessageContent"
-                                             onClick={() => createMessageWindow(user)}>
-                                            {user.thumbnail &&<img src={user.thumbnail}></img>}
-                                            {!user.thumbnail && <AccountCircleIcon/>}
-                                            <div id="text">
-                                                <h1>{user.firstName} {user.lastName}</h1>
-                                                <p>{messageBrief.overviewMessage}</p>
-                                            </div>
-                                            {unread !== 0 &&
-                                            <div id="unread">
-                                                {unread}
-                                            </div>
-                                            }
-                                        </div>)
-                                }
-                            )}</div>
+                        </div>
+                    </div>}
+                    <div className="messageBriefWrapper">
+                        {messages.map((messageBrief, id) => {
+                                const {unread, user} = messageBrief;
+                                return (
+                                    <div key={id} className="briefMessageContent"
+                                         onClick={() => createMessageWindow(user)}>
+                                        {user.thumbnail && <img src={user.thumbnail}></img>}
+                                        {!user.thumbnail && <AccountCircleIcon/>}
+                                        <div id="text">
+                                            <h1>{user.firstName} {user.lastName}</h1>
+                                            <p>{messageBrief.overviewMessage}</p>
+                                        </div>
+                                        {unread !== 0 &&
+                                        <div id="unread">
+                                            {unread}
+                                        </div>
+                                        }
+                                    </div>)
+                            }
+                        )}</div>
                 </div>
             </div>
             {messageWindows.map(

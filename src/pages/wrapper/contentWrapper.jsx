@@ -24,11 +24,13 @@ const ContentWrapper = () => {
     const [selectedPage, setSelectedPage] = useState("Home");
     const {loading, error, data, refetch} = useQuery(ME,{fetchPolicy: "network-only"});
 
+    const [messageWindows, setMessageWindows] = useState([]);
     const [popUpWindow, setPopUpWindow] = useState(undefined);
     const [setGreyCover] = useState(false);
     const [applyTutorPost, setApplyTutorPost] = useState();
     const [messages, setMessages] = useState(JSON.parse(localStorage.getItem("messages")) || []);
     const [isMessageMenuOpen, openMessageMenu] = useState(false);
+    const [popUpCallBackFunction, setPopUpCallBackFunction] = useState();
 
     const setPopUpWindowType = (type) => {
         if(popUpWindow === type){
@@ -59,6 +61,15 @@ const ContentWrapper = () => {
 
         localStorage.setItem("messages", JSON.stringify(updatedMessage));
     };
+
+    const openSpecificUserWindow = user => {
+        createOverviewMessage(user);
+        if (!messageWindows.some(window => window.user.id === user.id)) {
+            setMessageWindows([...messageWindows, {user}])
+        }
+        openMessageMenu(true)
+    };
+
     const {me} = data;
     return (
         <div>
@@ -84,7 +95,7 @@ const ContentWrapper = () => {
                 }
                 {
                     (popUpWindow === "applyTutoringPost") &&
-                    <TutoringApplicationPopUp setPopUpWindow={setPopUpWindow} tutorPost={applyTutorPost}/>
+                    <TutoringApplicationPopUp setPopUpWindow={setPopUpWindow} tutorPost={applyTutorPost} tutorCard={me.tutorCard} popUpCallBackFunction={popUpCallBackFunction}/>
                 }
             </div>
             }
@@ -95,10 +106,17 @@ const ContentWrapper = () => {
 
 
                 <Route exact path="/">
-                    <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
+                    <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage} me={me}/>
                 </Route>
                 <Route exact path="/Tutoring">
-                    <TutorialPage setSelectedPage={setSelectedPage} setPopUpWindowType={setPopUpWindowType} setApplyTutorPost={setApplyTutorPost} me={me}/>
+                    <TutorialPage
+                        setSelectedPage={setSelectedPage}
+                        setPopUpWindowType={setPopUpWindowType}
+                        setApplyTutorPost={setApplyTutorPost}
+                        me={me}
+                        openSpecificUserWindow={openSpecificUserWindow}
+                        setPopUpCallBackFunction={setPopUpCallBackFunction}
+                    />
                 </Route>
                 <Route path="/MySchool">
                     <MySchoolPage setSelectedPage={setSelectedPage} bookMarkedAnswers={me.bookmarkedAnswers}/>
@@ -125,13 +143,22 @@ const ContentWrapper = () => {
                   path="/Profile/:userId"
                   render={(props) => <ProfilePage {...props} me={me} refetchMe={refetch} createOverviewMessage={createOverviewMessage} openMessageMenu={openMessageMenu}/>} />
                 <Route exact path="/Home">
-                    <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage}/>
+                    <FeedAnswerPage bookMarkedAnswers={me.bookmarkedAnswers} setSelectedPage={setSelectedPage} me={me}/>
                 </Route>
                 <Route exact path="/ChangePassword">
                     <ChangePasswordPage  setSelectedPage={setSelectedPage}/>
                 </Route>
                 <div className="messageWrapper">
-                    <MessageBlock me={me} messages={messages} setMessages={setMessages} isMessageMenuOpen={isMessageMenuOpen} openMessageMenu={openMessageMenu } createOverviewMessage={createOverviewMessage}/>
+                    <MessageBlock
+                        me={me}
+                        messages={messages}
+                        setMessages={setMessages}
+                        isMessageMenuOpen={isMessageMenuOpen}
+                        openMessageMenu={openMessageMenu }
+                        createOverviewMessage={createOverviewMessage}
+                        messageWindows={messageWindows}
+                        setMessageWindows={setMessageWindows}
+                    />
                 </div>
             </div>
         </div>

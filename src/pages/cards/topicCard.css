@@ -20,7 +20,7 @@
     position: relative;
     bottom: 5px;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     font-weight: bold;
 }
 .topicRightDiv{
@@ -36,7 +36,7 @@
     font-size: 20px;
     width: 300px;
     overflow: hidden;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     font-style: italic;
 }
 .topicToolButton{
@@ -60,7 +60,7 @@
     overflow: hidden;
     width: 100%;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
 }
 .topicDescription textarea{
     margin: 0;
@@ -68,7 +68,7 @@
     overflow: hidden;
     width: 100%;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
 }
 .topicDescription span{
     margin: 0;
@@ -85,7 +85,7 @@
     border:1px #BCBCBC solid;
     bottom: 30px;
     width: 78px;
-    height: 68px;
+    min-height: 34px;
     background: white;
     border-radius: 6px;
     box-shadow: 2px 2px 5px #BCBCBC;
@@ -94,9 +94,10 @@
 .topicToolWindowSubSection{
     height: 34px;
     width: 100%;
+    margin:0;
 }
 .topicToolWindowSubSection p{
-    font-family: Calibri;
+    font-family: Calibri,serif;
     font-size: 15px;
     position: relative;
     top: 6px;
@@ -113,7 +114,7 @@
 .lastUpdateInformation p{
     margin:0;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
 }
 .topicCardHeader{
     height: 20px;
@@ -132,7 +133,7 @@
 .topicCardHeader p {
     margin:0;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     float: left;
     position: relative;
     left: 40px;
@@ -147,12 +148,12 @@
 .aliasesHeader h1{
     margin: 0;
     font-size: 20px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     font-weight: normal;
 }
 .aliasesHeader p{
     margin: 10px 0 0 0 ;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     font-size: 15px;
 }
 .topicThumbnailCover{

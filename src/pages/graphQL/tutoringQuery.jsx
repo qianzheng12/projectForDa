@@ -1,115 +1,168 @@
 import {gql} from "apollo-boost";
 
-export const GET_TUTORING_POSTS = gql`query
+export const GET_TUTORING_POSTS = gql`query($lastOffset:Int, $topics:[GUID])
 {
-    tutorPostFeed(lastOffset:0,limit:10){
-        id,
-        title,
-        fee,
-        lastUpdated,
-        keyConcepts,
-        timeAvailability,
-        finishBy,
-        materials,
+    tutorPostFeed(lastOffset:$lastOffset,limit:10,topics:$topics){
+        id
+        title
+        fee
+        lastUpdated
+        keyConcepts
+        timeAvailability
+        finishBy
+        materials
         user{
-            id,
-            lastName,
-            firstName,
-            major,
-            year,
+            id
+            thumbnail
+            lastName
+            firstName
+            major
+            year
         }
-        preferredSoftware,
-        description,
+        preferredSoftware
+        description
         topics{
-            id,name
+            id
+            name
+        }
+        applied
+    }
+}
+`;
+
+export const GET_MY_TUTORING_POSTS = gql`query
+{
+    me{
+        id
+        myTutorPosts{
+            id
+            title
+            fee
+            deal
+            lastUpdated
+            keyConcepts
+            timeAvailability
+            finishBy
+            materials
+            user{
+                id
+                thumbnail
+                lastName
+                firstName
+                major
+                year
+            }
+            tutor{
+                id
+                thumbnail
+                lastName
+                firstName
+                major
+                year
+            }
+            applications{
+                year
+                major
+                skills
+                timeAvailability
+                preferredSoftware
+                details
+                timeNeeded
+                user{
+                    id
+                    thumbnail
+                    university{
+                        id
+                        name
+                    }
+                    major
+                    year
+                    lastName
+                    firstName
+                    tutorRating
+                    ratingCount
+                }
+                lastUpdated
+            }
+            preferredSoftware
+            description
+            topics{
+                id
+                name
+            }
+            rating{
+                id
+                rating
+                detail
+                dateRated
+            }
         }
     }
 
+}
+`;
+
+export const GET_MY_TUTORING_TASKS = gql`query
+{
     me{
         id
-        followedTopics{
+        myTutorTasks{
             id
-            name
-            thumbnail
-        }
-        tutorCard{
-            id
-        }
-        myTutorPosts{
-            id,
-            title,
-            fee,
-            lastUpdated,
-            keyConcepts,
-            timeAvailability,
-            finishBy,
-            materials,
+            title
+            fee
+            deal
+            lastUpdated
+            keyConcepts
+            timeAvailability
+            finishBy
+            materials
             user{
-                id,
-                lastName,
-                firstName,
-                major,
-                year,
-            }
-            applications{
                 id
                 university{
                     id
                     name
                 }
-                major,
-                year,
+                thumbnail
                 lastName
                 firstName
-                tutorCard{
-                    id
-                    year
-                    major
-                    skills
-                    timeAvailability
-                    preferredSoftware
-                    details
-                }
+                major
+                year
             }
-            preferredSoftware,
-            description,
+            preferredSoftware
+            description
             topics{
-                id,name
+                id
+                name
             }
         }
     }
-}
-`;
-
-export const SEARCH_TUTORING_POSTS = gql`query($searchString:String)
-{
-    searchTutorPost(lastOffset:0,limit:10,searchString:$searchString){
-        id,
-        title,
-        fee,
-        lastUpdated,
-        user{
-            id,
-            lastName,
-            firstName,
-            major,
-            year,
-        }
-        preferredSoftware,
-        description,
-        topics{
-            id,name
-        }
-    }
 
 }
 `;
 
-export const MY_POSTS = gql`query
+export const SEARCH_TUTORING_POSTS = gql`query($searchString:String, $lastOffset:Int, $topics:[GUID])
 {
-    me{
+    searchTutorPost(lastOffset:$lastOffset,limit:10,searchString:$searchString, topics:$topics){
         id
-
+        title
+        fee
+        lastUpdated
+        user{
+            id
+            thumbnail
+            lastName
+            firstName
+            major
+            year
+        }
+        preferredSoftware
+        description
+        topics{
+            id
+            name
+        }
+        applied
     }
+
 }
 `;

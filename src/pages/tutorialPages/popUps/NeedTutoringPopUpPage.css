@@ -1,105 +1,123 @@
-.TutoringPopUpWrapper{
+.TutoringPopUpWrapper {
     position: absolute;
-    top:150px;
-    left:35%;
+    top: 150px;
+    left: 35%;
     margin: auto;
     z-index: 100;
     width: 444px;
     background: white;
     min-height: 156px;
 }
-.TutorialPopUpPageOneWrapper{
+
+.TutoringPopUpWrapper #errorMessage {
+
+    margin-bottom: 10px;
+    font-family: Calibri, serif;
+    font-size: 15px;
+    color: #e36100;
+
+}
+
+.TutorialPopUpPageOneWrapper {
     min-height: 328px;
     width: 352px;
     align-content: center;
-    padding:27px 46px 27px 46px
+    padding: 27px 46px 27px 46px
 }
-.NeedTutorialPageTwoWrapper{
+
+.NeedTutorialPageTwoWrapper {
     min-height: 308px;
     width: 352px;
     align-content: center;
-    padding:27px 46px 27px 46px
+    padding: 27px 46px 27px 46px
 }
-.NeedTutorialPageTwoWrapper ul{
+
+.NeedTutorialPageTwoWrapper ul {
     padding-left: 0;
 }
-.TutoringPopUpWrapper h1{
-    margin:0;
+
+.TutoringPopUpWrapper h1 {
+    margin: 0;
     font-family: Calibri, serif;
     font-size: 20px;
     font-weight: normal;
 
 }
 
-.TutoringPopUpWrapper p{
+.TutoringPopUpWrapper p {
     font-family: Calibri, serif;
     font-size: 15px;
 }
 
-.TutorialPopUpPageOneWrapper ul{
+.TutorialPopUpPageOneWrapper ul {
     padding-left: 20px;
-    margin-top:5px;
+    margin-top: 5px;
 }
-.TutorialPopUpPageOneWrapper li{
-    font-family: Calibri,serif;
-    font-size:15px;
+
+.TutorialPopUpPageOneWrapper li {
+    font-family: Calibri, serif;
+    font-size: 15px;
 }
-.TutoringPopUpWrapper button{
+
+.TutoringPopUpWrapper button {
     height: 35px;
     position: relative;
     width: 280px;
     display: block;
     background: rgba(255, 146, 64, 0.2);
-    margin:10px auto 10px auto;
+    margin: 10px auto 10px auto;
     color: #e36100;
-    font-family: Calibri,serif;
+    font-family: Calibri, serif;
     font-size: 18px;
     text-transform: lowercase;
 }
-.TutoringPopUpWrapper input{
+
+.TutoringPopUpWrapper input {
     height: 20px;
     width: 100%;
 }
-.TutoringPopUpWrapper h2{
+
+.TutoringPopUpWrapper h2 {
     font-size: 15px;
     color: #6B6B6B;
     width: 360px;
-    font-family: Calibri,serif;
+    font-family: Calibri, serif;
     font-weight: normal;
 }
 
-.TutoringPopUpWrapper textarea{
+.TutoringPopUpWrapper textarea {
     height: 60px;
     width: 100%;
     resize: none;
 }
 
-.TutoringPopUpWrapper #topicInput{
+.TutoringPopUpWrapper #topicInput {
     width: 35%;
-    padding:0 10px 0 10px;
+    padding: 0 10px 0 10px;
     height: 25px;
-    margin-top:25px;
+    margin-top: 25px;
 }
 
-.TutoringPopUpWrapper #topicsArea{
+.TutoringPopUpWrapper #topicsArea {
     position: relative;
     height: 60px;
-    margin-top:20px;
-    width:100%;
+    margin-top: 20px;
+    width: 100%;
     overflow: auto;
     border: 1px solid rgba(0, 0, 0, 0.52);
     margin-bottom: 10px;
 }
 
-.TutoringPopUpWrapper .Dropdown-root{
+.TutoringPopUpWrapper .Dropdown-root {
     height: 30px;
     font-size: 15px;
     width: 103%;
-    font-family: Calibri,serif;
+    font-family: Calibri, serif;
     margin-bottom: 10px;
 
 }
-.TutoringPopUpWrapper .tutorCardHeader{
+
+.TutoringPopUpWrapper .tutorCardHeader {
     height: 200px;
     border-bottom: 1px solid #6B6B6B;
 }

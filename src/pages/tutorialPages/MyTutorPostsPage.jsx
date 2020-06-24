@@ -1,13 +1,30 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import MyTutorPostCard from "./MyTutorPostCard";
 import './MyTutorPosts.css'
-const MyTutorPostsPage = ({posts}) => {
+import {useLazyQuery} from "@apollo/react-hooks";
+import {GET_MY_TUTORING_POSTS} from "../graphQL/tutoringQuery";
 
+const MyTutorPostsPage = ({openSpecificUserWindow}) => {
+    const [myPosts, setMyPosts] = useState([]);
+    const [getMyPosts, {error, data}] = useLazyQuery(GET_MY_TUTORING_POSTS, {
+        fetchPolicy: "network-only",
+        onCompleted: () => {
+            const {me: {myTutorPosts}} = data;
+            setMyPosts(myTutorPosts);
+        }
+    });
+
+
+    useEffect(() => {
+        getMyPosts();
+    }, []);
+    if (error) return <div/>;
     return (
         <div className="MyTutorPostsWrapper">
             {
-                posts.map (post=>
-                    (<MyTutorPostCard post={post}/>)
+                myPosts.map(post =>
+                    (<MyTutorPostCard post={post} refetch={getMyPosts}
+                                      openSpecificUserWindow={openSpecificUserWindow}/>)
                 )
             }
 

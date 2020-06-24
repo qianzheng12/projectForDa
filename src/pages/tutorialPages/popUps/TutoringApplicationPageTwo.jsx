@@ -1,29 +1,25 @@
-import React, {Fragment, useState} from 'react'
+import React, {useState} from 'react'
 import {Formik} from "formik";
-import Button from "@material-ui/core/Button";
 import Dropdown from "react-dropdown";
 import {degreeYearRange} from "../../utility/dateFixture";
+import Button from "@material-ui/core/Button";
 import {useMutation} from "@apollo/react-hooks";
-import {CREATE_TUTORING_CARD} from "../../graphQL/tutoringMutation";
+import {APPLY_TUTORING_POST} from "../../graphQL/tutoringMutation";
 import validateTutorCardForm from "../../utils/validation";
 
-const ICanTeachPageTwo = ({goToNextPage}) => {
-    const [degreeYear, setDegreeYear] = useState({value: "Undergraduate 2nd year", label: "Undergraduate 2nd year"});
-    const [createTutorCard] = useMutation(CREATE_TUTORING_CARD);
+const TutoringApplicationPageTwo = ({goToNextPage, post, tutorCard, popUpCallBackFunction}) => {
+    const {year, major, skills, timeAvailability, preferredSoftware, details} = tutorCard;
+    const [degreeYear, setDegreeYear] = useState({value: year, label: year});
+    const [applyTutoringPost] = useMutation(APPLY_TUTORING_POST);
 
     return (
-        <Fragment>
-            <div className="tutorCardHeader">
-                <h1>Tutor Card</h1>
-                <p>Tutor card includes information like your skill, academic background, and unique style of tutoring.
-                    Once you set up your first Tutor Card here,
-                    everytime you apply to a tutoring post, this card will automatically fill in the application. You
-                    can always change your Tutor Card information under your profile settings.</p>
-            </div>
+        <div className="tutoringApplicationWrapper">
+            <h1>Apply for {post.title}</h1>
             <Formik
-                initialValues={{major: '', skills: '', timeAvailability: '', preferredSoftware: '', details: ''}}
+                initialValues={{major, skills, timeAvailability, preferredSoftware, details, timeNeeded: ''}}
                 onSubmit={(values) => {
-                    createTutorCard({variables: {...values, year: degreeYear.value}}).then(() => {
+                    applyTutoringPost({variables: {...values, year: degreeYear.value, postID: post.id}}).then(() => {
+                        popUpCallBackFunction({variables: {lastOffset: 0}});
                         goToNextPage();
                     });
                 }}
@@ -80,12 +76,18 @@ const ICanTeachPageTwo = ({goToNextPage}) => {
                         name="details"
                         id="detailsInput"/>
                     {errors.details && <span id='errorMessage'> {errors.details} </span>}
-                    <Button type="submit" style={{marginLeft: '0'}}>Next</Button>
+                    <h2>Estimated time needed for this tutoring</h2>
+                    <input
+                        onChange={handleChange}
+                        value={values.timeNeeded}
+                        name="timeNeeded"
+                        id="timeNeededInput"/>
+                    <Button type="submit" style={{margin: '10px auto 10px auto'}}>Next</Button>
                 </form>
             )}
             </Formik>
 
-        </Fragment>)
+        </div>)
 };
 
-export default ICanTeachPageTwo;
+export default TutoringApplicationPageTwo;

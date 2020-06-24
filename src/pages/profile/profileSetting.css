@@ -1,7 +1,7 @@
 .ProfileSettingListItem{
     margin:0;
     width: 90%;
-    height: 85px;
+    min-height: 85px;
     position: relative;
     left: 30px;
     border-bottom: 1px rgba(0, 0, 0, 0.29) solid;
@@ -19,14 +19,62 @@
     margin:0;
     position: relative;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri, serif;
     top:40%;
 }
 .ProfileSettingListContent{
     width:50%;
     float: left;
     height:84px;
+}
+.TutorCardSettingExpanded{
+    width: 85%;
+    padding: 0 30px 0 30px;
+}
+.TutorCardSettingExpanded p{
+    overflow-wrap: anywhere;
+    text-align: left;
+}
+.TutorCardSettingExpanded #errorMessage{
+    float: right;
+    width: 40%;
+    margin-bottom: 10px;
+    font-family: Calibri,serif;
+    font-size: 15px;
+    color: #e36100;
 
+}
+.TutorCardSettingExpanded input{
+    width: 40%;
+}
+.TutorCardSettingExpanded textarea{
+    width: 40%;
+    min-height: 100px;
+    resize: none;
+}
+.TutorCardSettingListContent{
+    width:50%;
+    float: left;
+    min-height:84px;
+}
+.TutorCardCollapsed{
+    display: flex;
+}
+.TutorCardSettingListContent #rating{
+    position: relative;
+    margin: auto 0 auto 0
+}
+
+.TutorCardSettingListContent #ratingNumber{
+    position: relative;
+    margin: 0 0 10px 10px;
+    height: 33px;
+    top:10px;
+}
+.TutorCardSettingListContent #tutorCardSettingHeader{
+    display: flex;
+    margin-top: 20px;
+    margin-left:20px;
 }
 .ProfileSettingListContent .majorYearPicker{
     position: relative;
@@ -36,22 +84,23 @@
     margin:0;
     position: relative;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     top:40%;
 }
 .ProfileSettingChange{
-    width: 20%;
+    width: 24%;
     float: left;
     height:84px;
+    display: flex;
+    justify-content: flex-end;
     text-align: center;
 }
 .ProfileSettingChange p {
     margin:0 0 0 20px;
-    left: 20px;
     position: relative;
     font-size: 15px;
     float: left;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     top:40%;
     color:#169BD5 ;
 }
@@ -101,13 +150,13 @@
 .profileSettingOverview #introduction h1{
     margin: 0;
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     position: relative;
     top:10px;
 }
 .profileSettingOverview #introduction span{
     font-size: 15px;
-    font-family: Calibri;
+    font-family: Calibri,serif;
     margin:0;
     position: relative;
     top:8px;

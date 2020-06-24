@@ -22,9 +22,21 @@ export const ME = gql`
             followedQuestions{
                 id
             }
+            followedTopics{
+                id
+                name
+                thumbnail
+            }
             tutorCard{
                 id
+                year
+                major, 
+                skills, 
+                timeAvailability, 
+                preferredSoftware, 
+                details, 
             }
+            tutorRating
         }
     }
 `;
@@ -96,6 +108,17 @@ export const USER_INFORMATION = gql` query($userID:String!)
                 year
 
             }
+        }
+        tutorRating
+        ratingCount
+        tutorCard{
+            id
+            year
+            major
+            skills
+            timeAvailability
+            preferredSoftware
+            details
         }
     }
 }

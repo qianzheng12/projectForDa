@@ -5,6 +5,7 @@ import {useMutation} from "@apollo/react-hooks";
 import {UPDATE_SELF} from "../graphQL/userMutation";
 import NameSettingField from "./nameSettingField";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import TutorCardSettingField from "./TutorCardSettingField";
 
 const ProfileSettingPage = ({user,refetch}) => {
     const [firstName,setFirstName] = useState(user.firstName);
@@ -58,6 +59,7 @@ const ProfileSettingPage = ({user,refetch}) => {
                 {settingFields.map(field => (
                     <SettingField field={field} key={field.name} updateSelf={updateSelf}/>
                 ))}
+                <TutorCardSettingField user={user} refetch={refetch}/>
             </div>
         </div>
     )

@@ -5,10 +5,8 @@ import TopicWrapper from "../topic/topicWrapper";
 import {useLazyQuery} from '@apollo/react-hooks';
 import {GET_ANSWERS, GET_FEED_ANSWERS} from '../graphQL/query'
 
-const FeedAnswerPage = ({setSelectedPage}) => {
+const FeedAnswerPage = ({setSelectedPage, me}) => {
     const [answers, setAnswers] = useState([]);
-    const [followedTopics, setFollowedTopics] = useState([]);
-    const [bookmarkedAnswers, setBookmarkedAnswers] = useState([]);
     const [loadingMoreData, setLoadingMoreData] = useState(false);
     const [noMoreFeed, setNoMoreFeed] = useState(false);
     const [nonFeedAnswersIndex,setNonFeedAnswersIndex] = useState(0);
@@ -27,11 +25,7 @@ const FeedAnswerPage = ({setSelectedPage}) => {
         fetchPolicy: "network-only",
         onCompleted: ()=>{
             setLoadingMoreData(false);
-            const {ratingFeed,recentFeed,me:{followedTopics:fetchedTopics,bookmarkedAnswers:fetchedAnswers}} = data;
-            if(answers.length === 0){
-                setBookmarkedAnswers(fetchedAnswers);
-                setFollowedTopics(fetchedTopics);
-            }
+            const {ratingFeed,recentFeed} = data;
             setAnswers([...answers,...ratingFeed,...recentFeed]);
             if(ratingFeed.length+recentFeed.length < 10) {
                 setNoMoreFeed(true);
@@ -61,7 +55,6 @@ const FeedAnswerPage = ({setSelectedPage}) => {
 
     };
     const handleScroll = () => {
-        console.log(wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight)
         if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight > 0) return;
         getMoreAnswers()
     };
@@ -72,7 +65,7 @@ const FeedAnswerPage = ({setSelectedPage}) => {
                     {answers.map(answer => {
                             return (
                                 <div key={answer.id} className="feedAnswer">
-                                    <FeedAnswerCard bookmarked={bookmarkedAnswers.some((b)=>{return b.id === answer.id})}
+                                    <FeedAnswerCard bookmarked={me.bookmarkedAnswers.some((b)=>{return b.id === answer.id})}
                                                     key={answer.id} question={answer.question} answer={answer} profileBookmarkAnswer={false} showAction={true}/>
                                 </div>
                             )
@@ -82,7 +75,7 @@ const FeedAnswerPage = ({setSelectedPage}) => {
                     <div className="topicHeader">
                         <p>Followed Topics</p>
                     </div>
-                    <TopicWrapper topics={followedTopics}/>
+                    <TopicWrapper topics={me.followedTopics}/>
                 </div>
             </div>
         </div>
