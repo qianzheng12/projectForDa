@@ -85,7 +85,6 @@
     font-weight: bold;
     position: relative;
     left:3px;
-    bottom: 2px;
 }
 .profileHeaderAction #followNumber svg{
     position:relative;
@@ -100,14 +99,12 @@
     height: 20px;
     right:2px;
     transform: rotate(-30deg);
-    bottom: 2px;
 }
 .profileHeaderAction #preview svg{
     position:relative;
     width: 20px;
     height: 20px;
     right:2px;
-    bottom: 2px;
 }
 .profileCardBottom{
     height: 120px;

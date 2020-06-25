@@ -4,10 +4,11 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Button from "@material-ui/core/Button";
 import NewTutorialPostsPage from "./NewTutorialPostsPage";
 import Checkbox from '@material-ui/core/Checkbox';
-import {useLazyQuery} from "@apollo/react-hooks";
+import {useLazyQuery, useMutation} from "@apollo/react-hooks";
 import {GET_TUTORING_POSTS, SEARCH_TUTORING_POSTS} from "../graphQL/tutoringQuery";
 import MyTutorPostsPage from "./MyTutorPostsPage";
 import MyTasksPage from "./MyTasksPage";
+import {CLEAR_POST_NOTIFICATION} from "../graphQL/tutoringMutation";
 
 const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, me, openSpecificUserWindow, setPopUpCallBackFunction}) => {
     const [posts, setPosts] = useState([]);
@@ -17,6 +18,8 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
     const [loadingMoreData, setLoadingMoreData] = useState(false);
     const [searchString, setSearchString] = useState('');
     const wrapperRef = useRef(null);
+    const [notifications, setNotifications] = useState(me.applicationNotifications);
+    const [clearNotificationMutation] = useMutation(CLEAR_POST_NOTIFICATION);
 
     const getNavItemBackground = (tagName) => {
         return selectedSubPage === tagName ? {background: '#3F4951', color: "white"} : {}
@@ -100,9 +103,18 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
 
 
     };
+
     const handleScroll = () => {
         if (wrapperRef.current.scrollHeight - wrapperRef.current.scrollTop - wrapperRef.current.clientHeight > 0) return;
         getMoreTutorPosts()
+    };
+
+    const clearNotification = () => {
+        clearNotificationMutation().then(
+            ()=>{
+                setNotifications(0);
+            }
+        )
     };
 
     useEffect(() => {
@@ -122,9 +134,16 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
                             }}>New
                             </li>
                             <li style={getNavItemBackground('My Posts')} onClick={() => {
-                                setSelectedSubPage('My Posts')
+                                setSelectedSubPage('My Posts');
+                                clearNotification();
                             }}>My Posts
+                                {notifications > 0 &&<div className="myTutorPostsNotification">
+                                    <div id="notification">
+                                        {notifications}
+                                    </div>
+                                </div>}
                             </li>
+
                             <li style={getNavItemBackground('My Tasks')} onClick={() => {
                                 setSelectedSubPage('My Tasks')
                             }}>My Tasks
@@ -155,7 +174,7 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
                         </div>
                         <ul>
                             {me.followedTopics.map(topic => (
-                                <li><p>#{topic.name}</p> <Checkbox onClick={() => {
+                                <li key={topic.id}><p>#{topic.name}</p> <Checkbox onClick={() => {
                                     selectTopic(topic.id)
                                 }} id="topicFilterCheckBox"/></li>
                             ))}

@@ -31,7 +31,10 @@ const TutoringApplicationContent = ({tutorPost, myTasksContent = false, myPostsC
                                      reportContent={`We have received a report on tutor post, tutor post id is ${tutorPost.id}`}
                                      closeWindow={() => {
                                          setReport(false)
-                                     }} tutorPostReport={true}/>}
+                                     }}
+                                     tutorPostReport={true}
+                                     reportType="Tutor Post"
+            />}
             <div className="tutoringApplicationWrapper">
                 {
                     deletePopupWindow &&

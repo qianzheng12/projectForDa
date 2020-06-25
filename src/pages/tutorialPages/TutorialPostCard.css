@@ -9,8 +9,15 @@
     box-shadow: 0 0 3px #BCBCBC;
 }
 
-.tutorialTopics {
+.tutorialPostCardHeader{
+    display: flex;
+    justify-content: space-between;
+}
 
+.tutorialTopics {
+    width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tutorialTopics span {
@@ -40,6 +47,7 @@
     font-size: 20px;
     max-width: 70%;
     overflow: hidden;
+    text-overflow: ellipsis;
     font-weight: normal;
 }
 
@@ -64,6 +72,8 @@
     margin-top: 30px;
     width: 100%;
     height: 125px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tutorialPostDescription p {

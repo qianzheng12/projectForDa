@@ -6,6 +6,7 @@ import {useMutation} from "@apollo/react-hooks";
 import {DEAL_TUTORING_APPLICATION} from "../graphQL/tutoringMutation";
 import {Link} from "react-router-dom";
 import TimeAgo from "react-timeago";
+import databaseTimeZoneSuffix from "../utils/constants";
 
 const TutorApplicationCard = ({application, postID, refetch, openSpecificUserWindow}) => {
     const [showDetail, setShowDetail] = useState(true);
@@ -30,7 +31,7 @@ const TutorApplicationCard = ({application, postID, refetch, openSpecificUserWin
                     <div className="tutorialPostUserDetail" style={{width: "85%"}}>
                         <Link to={"/Profile/" + user.id}><span
                             style={{float: "left"}}>{`${user.firstName} ${user.lastName}`}</span></Link>
-                        <p> {<TimeAgo date={lastUpdated} live={false}/>}</p>
+                        <p> {<TimeAgo date={lastUpdated+databaseTimeZoneSuffix} live={false}/>}</p>
                         <h2 id="education">{`${user.university.name} ${user.major} ${user.year}`}</h2>
                     </div>
                     <ArrowDropDownIcon onClick={() => setShowDetail(!showDetail)}/>

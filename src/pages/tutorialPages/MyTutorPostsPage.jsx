@@ -23,7 +23,7 @@ const MyTutorPostsPage = ({openSpecificUserWindow}) => {
         <div className="MyTutorPostsWrapper">
             {
                 myPosts.map(post =>
-                    (<MyTutorPostCard post={post} refetch={getMyPosts}
+                    (<MyTutorPostCard key={post.id} post={post} refetch={getMyPosts}
                                       openSpecificUserWindow={openSpecificUserWindow}/>)
                 )
             }

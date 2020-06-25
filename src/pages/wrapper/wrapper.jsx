@@ -45,7 +45,7 @@ const Wrapper = () => {
     const cache = new InMemoryCache();
     const setSession = (rememberMe) => {
         if (!rememberMe){
-            window.onbeforeunload = ()=>{
+            window.onclose = ()=>{
                 localStorage.clear();
             }
         }

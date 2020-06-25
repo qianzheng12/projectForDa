@@ -39,7 +39,11 @@ const ReplyContent = ({reply,commentId,addReply}) => {
     };
     return (
         <div className="reply">
-            {report && <ReportWindow user={reply.user} reportContent={reportContent} closeWindow={() => {
+            {report && <ReportWindow
+                reportType='Reply'
+                user={reply.user}
+                reportContent={reportContent}
+                closeWindow={() => {
                 setReport(false)
             }}/>}
             <div className="replyHeader">

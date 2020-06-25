@@ -9,7 +9,7 @@ const MyTutorPostCard = ({post, refetch, openSpecificUserWindow}) => {
         <div className="MyTutorPostCardWrapper">
             <TutoringApplicationContent tutorPost={post} myPostsContent={true} refetch={refetch}/>
             <div className="tutorsApplicationWrapper">
-                <div id="lineBreak"/>
+                {applications.length > 0 && <div id="lineBreak"/>}
                 {deal ? <RatingTutor refetch={refetch} post={post}/> :
                     <Fragment>
                         {(applications.length > 0) &&

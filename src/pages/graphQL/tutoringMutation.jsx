@@ -117,3 +117,7 @@ export const DELETE_TUTOR_POST= gql`mutation(
     $postID:GUID!){
     deleteTutorPost(postID:$postID)
 }`;
+
+export const CLEAR_POST_NOTIFICATION= gql`mutation{
+    clearTutorNotification
+}`;

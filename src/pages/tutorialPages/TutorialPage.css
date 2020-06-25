@@ -118,7 +118,6 @@
 
 .tutorialPagePostsTopicFilter li {
     display: flex;
-
     justify-content: space-between;
     font-size: 16px;
     font-family: Calibri,serif;
@@ -129,6 +128,7 @@
 .tutorialPagePostsTopicFilter li p {
     margin: 0;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .tutorialPagePostsTopicFilter li span {
@@ -143,4 +143,26 @@
     width: 24px;
     top: -4px;
     left: -4px;
+}
+
+.myTutorPostsNotification{
+    position: absolute;
+    left:120px;
+}
+.myTutorPostsNotification #notification {
+    height: 18px;
+    width: 18px;
+    background: #FF0000;
+    border-radius: 8px;
+    float: left;
+    font-weight: bold;
+    position: relative;
+    left:30px;
+    z-index: 20;
+    bottom: 25px;
+    text-align: center;
+    color: white;
+    font-family: Calibri, serif;
+    padding-top:2px;
+    font-size: 13px;
 }

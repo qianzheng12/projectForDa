@@ -69,7 +69,10 @@ const CommentCard = ({comment}) => {
                         }} className="topicToolWindowSubSection">
                             <p>Report</p>
                         </div>
-                        {report && <ReportWindow user={user} closeWindow={() => {
+                        {report && <ReportWindow
+                            reportContent={`We have received a report on comment with id ${comment.id}`}
+                            reportType='Comment'
+                            user={user} closeWindow={() => {
                             setReport(false)
                         }}/>}
                     </div>}

@@ -5,7 +5,7 @@ const NewTutorialPostsPage = ({posts, setPopUpWindowType, myId, setPopUpCallBack
     return (
         <div className="tutorialPosts">
             {posts.map(post => (
-                <TutorialPostCard post={post} setPopUpWindowType={setPopUpWindowType} myPost={post.user.id === myId}
+                <TutorialPostCard key={post.id} post={post} setPopUpWindowType={setPopUpWindowType} myPost={post.user.id === myId}
                                   setPopUpCallBackFunction={setPopUpCallBackFunction}/>
             ))}
         </div>

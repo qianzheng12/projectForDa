@@ -3,10 +3,11 @@ import './reportWindow.css'
 import Button from "@material-ui/core/Button";
 
 const ReportWindow = ({
-                          user = {
-                              firstName: "qian",
-                              lastName: "Zheng"
-                          }, closeWindow, reportContent = "You have received a report", tutorPostReport = false
+                          user,
+                          closeWindow,
+                          reportContent = "You have received a report",
+                          tutorPostReport = false,
+                            reportType
                       }) => {
     const [cheatingCheck, setCheatingCheck] = useState(false);
     const [harassmentCheck, setHarassmentCheck] = useState(false);
@@ -46,7 +47,7 @@ const ReportWindow = ({
 
                 <div className="reportHeader">
                     <h1>
-                        <b>Report</b> {user.firstName + ' ' + user.lastName}'s {tutorPostReport ? 'Tutor Post' : 'Answer'}
+                        <b>Report</b> {user?user.firstName + ' ' + user.lastName+"'s ":''} {reportType}
                     </h1>
                 </div>
                 <div className="reportOptions">

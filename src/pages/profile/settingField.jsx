@@ -69,7 +69,7 @@ const SettingField = ({field,updateSelf}) => {
             </div>
             <div className="ProfileSettingChange">
                 {editMode &&<p onClick={()=>{update()}}>save</p>}
-                {editMode &&<p onClick={()=>{setEditMode(false)}}>cancel</p>}
+                {editMode &&<p onClick={()=>{setEditMode(false); field.resetField()}}>cancel</p>}
                 {!editMode &&<p onClick={edit}>{field.changeField}</p>}
                 {field.name==="School" && <p onClick={edit}>{field.changeField?"show":"hide"}</p>}
                 {field.name==="Password" && <Link to={'/ChangePassword'}><p>Change</p></Link>}

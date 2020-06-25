@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import './profileSetting.css'
 
-const NameSettingField = ({firstName,lastName,setFirstName,setLastName,updateSelf}) => {
+const NameSettingField = ({firstName,lastName,setFirstName,setLastName,updateSelf, resetName}) => {
     const [editMode, setEditMode] = useState(false);
     return (
 
@@ -16,7 +16,7 @@ const NameSettingField = ({firstName,lastName,setFirstName,setLastName,updateSel
             </div>
             <div className="ProfileSettingChange">
                 {editMode &&<p onClick={()=>{updateSelf();setEditMode(false)}}>save</p>}
-                {editMode &&<p onClick={()=>{setEditMode(false)}}>cancel</p>}
+                {editMode &&<p onClick={()=>{setEditMode(false); resetName()}}>cancel</p>}
                 {!editMode &&<p onClick={()=>setEditMode(true)}>Edit</p>}
             </div>
         </div>

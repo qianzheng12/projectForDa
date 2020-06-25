@@ -90,7 +90,9 @@ const AnswerWithCommentsCard = ({answer, bookmarked,questionId }) => {
                         }} className="topicToolWindowSubSection">
                             <p>Report</p>
                         </div>
-                        {report && <ReportWindow user={user} reportContent={`We have received a report on this question /question/${questionId}`} closeWindow={() => {
+                        {report && <ReportWindow user={user} reportContent={`We have received a report on this question /question/${questionId}` }
+                                                 reportType={'Answer'}
+                                                 closeWindow={() => {
                             setReport(false)
                         }}/>}
                     </div>}

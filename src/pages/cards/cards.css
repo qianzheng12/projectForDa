@@ -58,6 +58,7 @@
 .questionTopics{
     height: 20px;
     width: 100%;
+    text-overflow: ellipsis;
     overflow: hidden;
 }
 .unBookmarkIcon{

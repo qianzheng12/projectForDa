@@ -22,7 +22,7 @@ const MyTasksPage = () => {
         <div className="MyTutorPostsWrapper">
             {
                 myTasks.map(post =>
-                    (<MyTaskCard post={post}/>)
+                    (<MyTaskCard key={post.id} post={post}/>)
                 )
             }
 

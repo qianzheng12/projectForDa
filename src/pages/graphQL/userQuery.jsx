@@ -4,6 +4,7 @@ import {gql} from "apollo-boost";
 export const ME = gql`
     {
         me {
+            applicationNotifications
             id
             thumbnail
             firstName
@@ -53,6 +54,7 @@ export const USER_INFORMATION = gql` query($userID:String!)
         secondEmail
         hideUniversity
         numberOfFollowers
+        email
         profileQuestions{
             question
             answer

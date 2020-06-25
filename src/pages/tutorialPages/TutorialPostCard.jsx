@@ -1,20 +1,49 @@
-import React, {useState} from 'react'
+import React, {Fragment, useState} from 'react'
 import './TutorialPostCard.css'
 import {Link} from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import TimeAgo from "react-timeago";
+import databaseTimeZoneSuffix from "../utils/constants";
+import ReportWindow from "../utils/reportWindow";
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 
 const TutorialPostCard = ({setPopUpWindowType, post, myPost, setPopUpCallBackFunction}) => {
     const {topics, title, fee, description, lastUpdated, user} = post;
     const [applied, setApplied] = useState(post.applied);
+    const [report, setReport] = useState(false);
+    const [toolWindowOpen, setToolWindowOpen] = useState(false);
+
     return (
+        <Fragment>
+            {report && <ReportWindow user={user}
+                                     reportContent={`We have received a report on tutor post, tutor post id is ${post.id}`}
+                                     closeWindow={() => {
+                                         setReport(false)
+                                     }}
+                                     tutorPostReport={true}
+                                     reportType="Tutor Post"
+            />}
         <div className="tutorialCard">
-            <div className="tutorialTopics">
-                {topics.map(topic => {
-                    return (
-                        <Link key={topic.id} to={"/topic/" + topic.id}><span>#{topic.name}</span></Link>)
-                })}
+            <div className="tutorialPostCardHeader">
+                <div className="tutorialTopics">
+                    {topics.map(topic => {
+                        return (
+                            <Link key={topic.id} to={"/topic/" + topic.id}><span>#{topic.name}</span></Link>)
+                    })}
+                </div>
+                <div className="showTutoringPostDetail" style={{width: "25px"}}>
+                    <MoreHorizIcon onClick={() => setToolWindowOpen(!toolWindowOpen)}/>
+                    {toolWindowOpen &&
+                    <div className="cardToolWindow" style={{position: "absolute"}}>
+                        <div onClick={() => {
+                            setReport(true);
+                        }} className="topicToolWindowSubSection">
+                            <p style={{margin: 0}}>Report</p>
+                        </div>
+
+                    </div>}
+                </div>
             </div>
             <div className="tutorialPostHeader">
                 <h1>{title}</h1>
@@ -28,7 +57,7 @@ const TutorialPostCard = ({setPopUpWindowType, post, myPost, setPopUpCallBackFun
                 </p>
             </div>
             <div className="tutorialPostTime">
-                {<TimeAgo date={lastUpdated} live={false}/>}
+                {<TimeAgo date={lastUpdated+databaseTimeZoneSuffix} live={false}/>}
             </div>
             <div className="tutorialPostFooter">
                 <div className="tutorialPostUser">
@@ -45,9 +74,10 @@ const TutorialPostCard = ({setPopUpWindowType, post, myPost, setPopUpCallBackFun
                         setPopUpCallBackFunction(() => () => setApplied(true));
                         setPopUpWindowType(post)
                     }
-                } disabled={applied}> Apply</Button>}
+                } disabled={applied}> {applied?'Applied':'Apply'}</Button>}
             </div>
         </div>
+        </Fragment>
     )
 };
 export default TutorialPostCard;
