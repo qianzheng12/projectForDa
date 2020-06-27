@@ -51,6 +51,12 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
         }
     });
 
+    const resetStates = () => {
+        setRenewPosts(true);
+        setSelectTopic([]);
+        setSearchString('');
+        setPosts([]);
+    };
     const applyTutoringPost = (post) => {
         if (me.tutorCard) {
             setPopUpWindowType('applyTutoringPost');
@@ -130,12 +136,14 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
                     <div className="tutorialPageHeader">
                         <ul className="tutorialNav">
                             <li style={getNavItemBackground('New')} onClick={() => {
-                                setSelectedSubPage('New')
+                                setSelectedSubPage('New');
+                                getFeedTutoringPosts();
                             }}>New
                             </li>
                             <li style={getNavItemBackground('My Posts')} onClick={() => {
                                 setSelectedSubPage('My Posts');
                                 clearNotification();
+                                resetStates();
                             }}>My Posts
                                 {notifications > 0 &&<div className="myTutorPostsNotification">
                                     <div id="notification">
@@ -145,13 +153,13 @@ const TutorialPage = ({setSelectedPage, setPopUpWindowType, setApplyTutorPost, m
                             </li>
 
                             <li style={getNavItemBackground('My Tasks')} onClick={() => {
-                                setSelectedSubPage('My Tasks')
+                                setSelectedSubPage('My Tasks');
+                                resetStates();
                             }}>My Tasks
                             </li>
                         </ul>
                         {selectedSubPage === 'New' && <div className="tutorialSearch">
                             <input onChange={(e) => searchTutoringPosts(e.target.value)} value={searchString}/>
-                            <SearchOutlinedIcon/>
                         </div>}
                     </div>
                     {selectedSubPage === 'New' &&

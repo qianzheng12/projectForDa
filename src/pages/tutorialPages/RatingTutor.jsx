@@ -38,7 +38,7 @@ const RatingTutor = ({refetch, post}) => {
                         <p>{postRating.detail}</p>
                     </Fragment> :
                     <Fragment>
-                        <p>Don't forget to rate <span>Cris Chen</span> after your tutoring, thank you!</p>
+                        <p>Don't forget to rate <span>{`${tutor.firstName} ${tutor.lastName}`}</span> after your tutoring, thank you!</p>
                         <div className="RatingTutorInfo">
                             <Link to={"/Profile/" + tutor.id}><img
                                 src={tutor.thumbnail || require('../../resource/ted.jpg')}/></Link>
